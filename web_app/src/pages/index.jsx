@@ -15,7 +15,6 @@ const initialViewState = {
 export default function Home({ content }) {
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
-  
   return (
     <main className="relative h-screen bg-white w-75 dark:bg-slate-800">
            <h1>{content.homepage.title}</h1>
@@ -39,7 +38,8 @@ export default function Home({ content }) {
 }
 
 export async function getStaticProps() {
-  const content = loadContent("content.yaml");
+  const content = loadContent("config.yaml");
+
   return {
     props: {
       content,

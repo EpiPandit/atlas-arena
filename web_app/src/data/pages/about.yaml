@@ -1,0 +1,22 @@
+title: "About Us"
+description: "Learn more about our mission, vision, and the team behind this project."
+sections:
+  - id: mission
+    title: "Our Mission"
+    content: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae arcu id elit venenatis consectetur.
+  - id: vision
+    title: "Our Vision"
+    content: |
+      Aenean vel libero id massa tempor dapibus. Sed fringilla lacus in purus scelerisque, at efficitur massa scelerisque.
+  - id: team
+    title: "The Team"
+    members:
+      - name: "John Doe"
+        role: "CEO & Founder"
+        bio: |
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a lectus a est vestibulum pulvinar. 
+      - name: "Jane Smith"
+        role: "CTO"
+        bio: |
+          Aenean convallis velit sit amet dolor egestas, nec accumsan est tempor. Proin facilisis lacus vitae justo tincidunt pharetra.
