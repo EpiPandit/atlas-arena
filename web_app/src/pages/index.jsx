@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { loadContent } from '@/libs/loadYamlContent';
 import ReactMarkdown from 'react-markdown';
+import { useAppContext } from '@/store/context';
 
 import StaticMap, { NavigationControl, ScaleControl } from 'react-map-gl';
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -15,11 +16,15 @@ const initialViewState = {
 export default function Home({ content }) {
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
+
+  const { count } = useAppContext();
   return (
-    <main className='w-75 relative h-screen bg-white dark:bg-slate-800'>
-      <h1>{content.homepage.title}</h1>
+    <div className='w-75 relative h-96 bg-white dark:bg-slate-800'>
+      <h1 className='text-white'>
+        {content.homepage.title} {count}
+      </h1>
       <ReactMarkdown>{content.homepage.body}</ReactMarkdown>
-      <div className='h-screen w-screen'>
+      <div className='h-3/6 w-screen'>
         <StaticMap
           ref={mapRef}
           initialViewState={viewState}
@@ -33,7 +38,7 @@ export default function Home({ content }) {
           <NavigationControl position='top-left' />
         </StaticMap>
       </div>
-    </main>
+    </div>
   );
 }
 
