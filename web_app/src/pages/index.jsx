@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from 'react';
 import { loadContent } from '@/libs/loadYamlContent';
 import ReactMarkdown from 'react-markdown';
 
-import StaticMap, { NavigationControl, ScaleControl } from "react-map-gl";
+import StaticMap, { NavigationControl, ScaleControl } from 'react-map-gl';
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 
@@ -16,10 +16,10 @@ export default function Home({ content }) {
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
   return (
-    <main className="relative h-screen bg-white w-75 dark:bg-slate-800">
-           <h1>{content.homepage.title}</h1>
-           <ReactMarkdown>{content.homepage.body}</ReactMarkdown>
-      <div className="w-screen h-screen">
+    <main className='w-75 relative h-screen bg-white dark:bg-slate-800'>
+      <h1>{content.homepage.title}</h1>
+      <ReactMarkdown>{content.homepage.body}</ReactMarkdown>
+      <div className='h-screen w-screen'>
         <StaticMap
           ref={mapRef}
           initialViewState={viewState}
@@ -29,8 +29,8 @@ export default function Home({ content }) {
           mapStyle={MAPBOX_STYLE}
           mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
         >
-          <ScaleControl position="top-left" />
-          <NavigationControl position="top-left" />
+          <ScaleControl position='top-left' />
+          <NavigationControl position='top-left' />
         </StaticMap>
       </div>
     </main>
@@ -38,7 +38,7 @@ export default function Home({ content }) {
 }
 
 export async function getStaticProps() {
-  const content = loadContent("config.yaml");
+  const content = loadContent('config.yaml');
 
   return {
     props: {
