@@ -1,15 +1,19 @@
-import { actionTypes } from '@/store/actions';
+import { actionTypes, processRawData } from '@/store/actions';
 
 export const initialState = {
-  count: 0,
+  raw_data: [],
+  data: [],
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.INCREMENT:
-      return { ...state, count: state.count + 1 };
-    case actionTypes.DECREMENT:
-      return { ...state, count: state.count - 1 };
+    case actionTypes.SET_RAW_DATA:
+      const raw_data = [...action.payload];
+      const data = processRawData(raw_data);
+
+      return { ...state, raw_data, data };
+    case actionTypes.CLEAN_RAW_DATA:
+      return { ...state, raw_data: [], data: [] };
     default:
       return state;
   }

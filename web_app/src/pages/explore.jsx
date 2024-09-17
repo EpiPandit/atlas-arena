@@ -1,18 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useAppContext } from '@/store/context';
-import {
-  Flex,
-  Box,
-  Center,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  Select,
-  Stack,
-  Checkbox,
-} from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 import StaticMap, {
   NavigationControl,
   ScaleControl,
@@ -33,11 +21,13 @@ const Explore = () => {
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
 
-  const { count } = useAppContext();
+  const { data } = useAppContext();
   // const handleLoad = () => {
   //   const map = mapRef.current.getMap();
   //   map.resize();
   // };
+  console.log({ ...data });
+
   return (
     <Flex flexDirection='row'>
       <Sidebar />

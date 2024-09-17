@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { loadContent } from '@/libs/loadYamlContent';
-import { useAppContext } from '@/store/context';
 import { Flex } from '@chakra-ui/react';
 
 export default function Home({ content }) {
