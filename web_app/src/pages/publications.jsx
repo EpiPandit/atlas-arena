@@ -3,10 +3,10 @@ import { loadContent } from '@/libs/loadYamlContent';
 import { useAppContext } from '@/store/context';
 import { Flex } from '@chakra-ui/react';
 
-export default function Home({ content }) {
+export default function Publications({ content }) {
   return (
     <Flex flexDirection='column'>
-      <h1>about index</h1>
+      <h1>publications</h1>
     </Flex>
   );
 }

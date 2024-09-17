@@ -1,22 +1,31 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
-import { Link } from '@chakra-ui/next-js';
+import { useColorModeValue } from '@chakra-ui/react';
+import { Link as NextLink } from '@chakra-ui/next-js';
+import { useRouter } from 'next/router';
 
 const NavLink = ({ href, text, isExternal = false }) => {
+  const router = useRouter();
+  const isActive = router.pathname === `/${href}`;
+
+  const activeColor = useColorModeValue('blue.500', 'blue.300');
+  const defaultColor = useColorModeValue('gray.500', 'gray.200');
+
   return (
-    <Box
-      as='div'
-      px={2}
+    <NextLink
       py={1}
-      rounded={'md'}
+      href={href || '/'}
+      target={isExternal ? '_blank' : '_self'}
+      fontWeight={isActive ? 'bold' : 'normal'}
+      color={isActive ? activeColor : defaultColor}
+      borderBottom={isActive ? '2px solid' : 'none'}
       _hover={{
         textDecoration: 'none',
-        bg: useColorModeValue('gray.200', 'gray.700'),
+        color: activeColor,
+        borderBottom: '2px solid',
       }}
+      className='uppercase'
     >
-      <Link href={href} target={isExternal ? '_blank' : '_self'}>
-        {text}
-      </Link>
-    </Box>
+      {text}
+    </NextLink>
   );
 };
 

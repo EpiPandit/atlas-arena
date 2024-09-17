@@ -5,6 +5,7 @@ import {
   IconButton,
   useDisclosure,
   useColorModeValue,
+  Text,
   Stack,
 } from '@chakra-ui/react';
 import { RxHamburgerMenu } from 'react-icons/rx';
@@ -17,7 +18,7 @@ import { LINK_HEADER } from '@/config/constants';
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+    <Box bg='yellow.50' px={4} className='border'>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}
@@ -26,7 +27,11 @@ const Header = () => {
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
-        <Box>Logo</Box>
+        <Box>
+          <Text fontSize='md' color='blue.600' as='i' className='uppercase'>
+            Arena atlas
+          </Text>
+        </Box>
         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
           {LINK_HEADER.map((item) => (
             <NavLink key={item.text} {...item} />

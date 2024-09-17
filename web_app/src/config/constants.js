@@ -5,12 +5,12 @@ export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
 
 // HEADER
 export const LINK_HEADER = [
-  { text: 'About', href: 'about' },
+  { text: 'About', href: '' },
   { text: 'Explore', href: 'explore' },
   { text: 'Publications', href: 'publications' },
   {
     text: 'Github',
-    href: 'https://chakra-templates.vercel.app/navigation/navbar',
+    href: 'https://github.com/developmentseed/atlasarena',
     isExternal: true,
   },
 ];
