@@ -7,7 +7,6 @@ import csv
 import subprocess
 
 MAPBOX_USER = os.getenv("MAPBOX_USER")
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 
 @click.command(short_help="Review and clean data")

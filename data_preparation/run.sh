@@ -2,7 +2,7 @@
 
 dataFolder=data
 mkdir -p $dataFolder
-DOCKER_ARENA="docker run --rm -v ${PWD}:/mnt -e ACCESS_TOKEN=$ACCESS_TOKEN -e MAPBOX_USER=$MAPBOX_USER  geocompas/atlasarena:etl"
+DOCKER_ARENA="docker run --rm -v ${PWD}:/mnt -e MAPBOX_ACCESS_TOKEN=$ACCESS_TOKEN -e MAPBOX_USER=$MAPBOX_USER  geocompas/atlasarena:etl"
 
 $DOCKER_ARENA python src/pre_process.py \
   --raw_folder_path=$dataFolder/raw \
