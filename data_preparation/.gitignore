@@ -1,2 +1,4 @@
 data/
 *.zip
+.idea/
+data_clean/

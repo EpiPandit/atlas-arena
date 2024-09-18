@@ -1,0 +1,90 @@
+{
+  "Guanarito_virus": {
+    "short": "g",
+    "spreadsheet": "Guanarito virus"
+  },
+  "Junin_virus": {
+    "short": "j",
+    "spreadsheet": "Junin virus"
+  },
+  "Machupo_virus": {
+    "short": "m",
+    "spreadsheet": "Machupo virus"
+  },
+  "Zygodontomys_brevicauda": {
+    "short": "zb",
+    "spreadsheet": "Zygodontomys brevicauda"
+  },
+  "Sigmodon_alstoni": {
+    "short": "sa",
+    "spreadsheet": "Sigmodon alstoni"
+  },
+  "Calomys_callosus": {
+    "short": "cc",
+    "spreadsheet": "Calomys callosus"
+  },
+  "Calomys_musculinus": {
+    "short": "cm",
+    "spreadsheet": "Calomys musculinus"
+  },
+  "Calomys_laucha": {
+    "short": "cl",
+    "spreadsheet": "Calomys laucha"
+  },
+  "Oligoryzomys_flavescens": {
+    "short": "of",
+    "spreadsheet": "Oligoryzomys flavescens"
+  },
+  "current_1990-2010": {
+    "short": "cu",
+    "spreadsheet": "Current (year 1990-2010)"
+  },
+  "SSP2_2041-2060": {
+    "short": "s2",
+    "spreadsheet": "SSP 2 (years 2041-2060)"
+  },
+  "SSP5_2041-2060": {
+    "short": "s5",
+    "spreadsheet": "SSP 5 (years 2041-2060)"
+  },
+  "delta_SSP2": {
+    "short": "ds2",
+    "spreadsheet": "Delta SSP 2 - current"
+  },
+  "delta_SSP5": {
+    "short": "ds5",
+    "spreadsheet": "Delta SSP 5 - current"
+  },
+  "combined": {
+    "short": "co",
+    "spreadsheet": "Combined"
+  },
+  "rf": {
+    "short": "rf",
+    "spreadsheet": "Random Forest"
+  },
+  "et": {
+    "short": "et",
+    "spreadsheet": "Extra Trees"
+  },
+  "xgb": {
+    "short": "xgb",
+    "spreadsheet": "Extra Gradient Boost"
+  },
+  "lgbm": {
+    "short": "lgbm",
+    "spreadsheet": "Light GBM"
+  },
+  "diff_in_probabilities.tif": {
+    "short": "dp",
+    "spreadsheet": "Difference in probabilities.tif"
+  },
+  "probability_presence.tif": {
+    "short": "pp",
+    "spreadsheet": "Probability_presence.tif"
+  },
+  "force_of_infection.tif": {
+    "short": "foi",
+    "spreadsheet": "Force of Infection.tif"
+  }
+}
