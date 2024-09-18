@@ -59,7 +59,7 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
                 "model": ged_(model, "spreadsheet"),
                 "filename": ged_(filename, "spreadsheet"),
                 "tileset_id": "",
-                "fake_name": fake_name,
+                "new_raster_name": fake_name,
             }
 
             # rescale
