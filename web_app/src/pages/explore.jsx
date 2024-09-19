@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useAppContext } from '@/store/context';
 import { Flex, Box } from '@chakra-ui/react';
 import StaticMap, {
   NavigationControl,
@@ -7,6 +6,8 @@ import StaticMap, {
   Source,
   Layer,
 } from 'react-map-gl';
+import { useAppContext } from '@/store/context';
+
 import Sidebar from '@/components/Sidebar';
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
@@ -18,19 +19,26 @@ const initialViewState = {
 };
 
 const Explore = () => {
+  const { raw_data } = useAppContext();
+
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
+  const [filterTilesId, setFilterTilesId] = useState([]);
 
-  const { data } = useAppContext();
+  const handleFilterTilesId = (data) => {
+    console.log({ ...data });
+  };
+
+  // const [initialState, setInitialState] = useState({ ...data });
+
   // const handleLoad = () => {
   //   const map = mapRef.current.getMap();
   //   map.resize();
   // };
-  console.log({ ...data });
-
+  // console.log('Explore', data);
   return (
     <Flex flexDirection='row'>
-      <Sidebar />
+      <Sidebar handleFilterTilesId={handleFilterTilesId} />
       <Box flex={1}>
         <Box h='calc(100vh - 64px)'>
           <StaticMap
@@ -45,7 +53,7 @@ const Explore = () => {
             <Source
               id='raster-tiles'
               type='raster'
-              url='mapbox://junica123.4hulpvct'
+              url='mapbox://ynctstgeocomp.g_zb_cu_rf_pp'
               tileSize={256}
               rasterNoData={0}
             >
@@ -56,7 +64,7 @@ const Explore = () => {
                 paint={{
                   'raster-resampling': 'nearest',
                   'raster-fade-duration': 0,
-                  'raster-opacity': 0.7,
+                  'raster-opacity': 0.8,
                   'raster-color': [
                     'interpolate',
                     ['linear'],

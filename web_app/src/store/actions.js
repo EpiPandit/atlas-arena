@@ -5,6 +5,7 @@ export const actionTypes = {
   SET_RAW_DATA: 'SET_RAW_DATA',
   DEL_RAW_DATA: 'DEL_RAW_DATA',
 };
+import { DATA_EQUIVALENCE } from '@/config/constants';
 
 export const setRawData = (payload) => {
   return { type: actionTypes.SET_RAW_DATA, payload: payload };
@@ -64,10 +65,10 @@ const filterInvalidData = (data_format_group) => {
   return data_format_group;
 };
 
-export const processRawData = (raw_data) => {
+const buildTree = (raw_data) => {
   try {
     // clear empty lines
-    const data = raw_data.filter((i) => i.Virus && i.Virus !== 'N/A');
+    const data = raw_data.filter((i) => i.virus && i.virus !== 'N/A');
     // convert obj
     const data_format_group = {};
     const getOrInit = (parent, key, defaultValue) => {
@@ -79,13 +80,13 @@ export const processRawData = (raw_data) => {
 
     data.forEach((entry) => {
       const {
-        Virus: virus,
-        'Rodent species': species,
-        'Year/ Time frame': time,
-        'Modeling algorithm': model,
-        'Other parameters': other_param,
-        'Mask layer/ Map': raster,
-        Tileset: tile_id,
+        virus,
+        species,
+        time_frame,
+        model,
+        filename,
+        tileset_id,
+        new_raster_name,
         about,
       } = entry;
 
@@ -103,9 +104,9 @@ export const processRawData = (raw_data) => {
         time_frame: {},
       });
 
-      const timeFrameData = getOrInit(speciesData.time_frame, time, {
-        name: time,
-        folder_name: time,
+      const timeFrameData = getOrInit(speciesData.time_frame, time_frame, {
+        name: time_frame,
+        folder_name: time_frame,
         about: about,
         models: {},
       });
@@ -119,33 +120,165 @@ export const processRawData = (raw_data) => {
       });
 
       // validate 'N/A'
-      if (other_param && other_param !== 'N/A') {
-        const otherParamsData = getOrInit(modelData.other_params, other_param, {
-          name: other_param,
-          folder_name: other_param,
-          about: about,
-          tile_id,
-        });
-        otherParamsData.tile_id = tile_id; //updat
-      }
+      // if (other_param && other_param !== 'N/A') {
+      //   const otherParamsData = getOrInit(modelData.other_params, other_param, {
+      //     name: other_param,
+      //     folder_name: other_param,
+      //     about: about,
+      //     tile_id,
+      //   });
+      //   otherParamsData.tile_id = tile_id; //updat
+      // }
 
       // 'N/A'
-      if (raster && raster !== 'N/A') {
-        const maskLayersData = getOrInit(modelData.mask_layers, raster, {
-          name: raster,
-          folder_name: raster,
-          about: about,
-          tile_id,
+      if (
+        filename &&
+        filename !== 'N/A' &&
+        tileset_id !== 'N/A' &&
+        tileset_id
+      ) {
+        const maskLayersData = getOrInit(modelData.mask_layers, filename, {
+          name: filename,
+          folder_name: filename,
+          filename,
+          tileset_id,
+          new_raster_name,
         });
-        maskLayersData.tile_id = tile_id;
+        maskLayersData.tileset_id = tileset_id;
+        maskLayersData.new_raster_name = new_raster_name;
       }
     });
     // clear values
-    const clean_values = filterInvalidData(data_format_group);
-
-    return [...Object.values(clean_values)];
+    // const clean_values = filterInvalidData(data_format_group);
+    return { ...data_format_group };
   } catch (error) {
     console.error(error);
-    return [];
+    return {};
   }
+};
+
+const removeDuplicates = (arr) => {
+  return arr
+    .reduce((acc, current) => {
+      const x = acc.find((item) => item.key === current.key);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, [])
+    .sort((first, second) => {
+      return first.key.localeCompare(second.key);
+    });
+};
+
+const buildAllVirus = (raw_data) => {
+  const combinations = raw_data.map((i) => {
+    let folder = '';
+    try {
+      folder = DATA_EQUIVALENCE[i.virus]['folder_name'];
+    } catch {}
+    return { key: i.virus, name: i.virus, folder: folder };
+  });
+
+  return removeDuplicates(combinations);
+};
+
+const buildAllSpecies = (raw_data) => {
+  const combinations = raw_data
+    .map((i) => {
+      let folder = '';
+      try {
+        folder = DATA_EQUIVALENCE[i.species]['folder_name'];
+      } catch {}
+      return {
+        key: `${i.species}`,
+        name: i.species,
+        folder: folder,
+      };
+    })
+    .map((i) => ({
+      ...i,
+      virus: [
+        ...new Set(
+          raw_data.filter((j) => i.name == j.species).map((j) => j.virus)
+        ),
+      ],
+    }));
+
+  return removeDuplicates(combinations);
+};
+const buildAllTimeFrame = (raw_data) => {
+  const combinations = raw_data
+    .map((i) => {
+      let folder = '';
+      try {
+        folder = DATA_EQUIVALENCE[i.time_frame]['folder_name'];
+      } catch {}
+      return {
+        key: `${i.time_frame}`,
+        name: i.time_frame,
+        folder: folder,
+      };
+    })
+    .map((i) => ({
+      ...i,
+      virus: [
+        ...new Set(
+          raw_data.filter((j) => i.name == j.time_frame).map((j) => j.virus)
+        ),
+      ],
+      species: [
+        ...new Set(
+          raw_data.filter((j) => i.name == j.time_frame).map((j) => j.species)
+        ),
+      ],
+    }));
+
+  return removeDuplicates(combinations);
+};
+
+const buildAllModels = (raw_data) => {
+  const combinations = raw_data
+    .map((i) => {
+      let folder = '';
+      try {
+        folder = DATA_EQUIVALENCE[i.model]['folder_name'];
+      } catch {}
+      return {
+        key: `${i.model}`,
+        name: i.model,
+        folder: folder,
+      };
+    })
+    .map((i) => ({
+      ...i,
+      virus: [
+        ...new Set(
+          raw_data.filter((j) => i.name == j.model).map((j) => j.virus)
+        ),
+      ],
+      species: [
+        ...new Set(
+          raw_data.filter((j) => i.name == j.model).map((j) => j.species)
+        ),
+      ],
+      time_frame: [
+        ...new Set(
+          raw_data.filter((j) => i.name == j.model).map((j) => j.time_frame)
+        ),
+      ],
+    }));
+
+  return removeDuplicates(combinations);
+};
+
+export const processRawData = (raw_data) => {
+  return {
+    // tree: buildTree(raw_data),
+    allVirus: buildAllVirus(raw_data),
+    allSpecies: buildAllSpecies(raw_data),
+    allTimeFrame: buildAllTimeFrame(raw_data),
+    allModels: buildAllModels(raw_data),
+  };
 };

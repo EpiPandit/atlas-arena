@@ -5,10 +5,14 @@ import {
   FormHelperText,
   Select,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
 const FormControlSelect = ({
-  options,
   label,
+  options,
+  handleAction,
+  value = '',
+  filter_dict = {},
   isvalid = true,
   helpText = '',
   errorText = '',
@@ -18,10 +22,15 @@ const FormControlSelect = ({
       <FormLabel fontSize='sm' className='uppercase'>
         {label}
       </FormLabel>
-      <Select placeholder='Select option' bg='gray.50'>
+      <Select
+        placeholder='Select option'
+        bg='gray.50'
+        value={value}
+        onChange={handleAction}
+      >
         {options.map((i) => (
-          <option key={i} value={i}>
-            {i}
+          <option key={i.key} value={i.key}>
+            {i.name}
           </option>
         ))}
       </Select>
