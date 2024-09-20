@@ -1,0 +1,15 @@
+export const defaultMapColor = [
+  'interpolate',
+  ['linear'],
+  ['raster-value'],
+  0,
+  'rgba(68, 1, 84, 1)',
+  0.25,
+  'rgba(59, 82, 139, 1)',
+  0.5,
+  'rgba(33, 145, 140, 1)',
+  0.75,
+  'rgba(94, 201, 98, 1)',
+  1,
+  'rgba(253, 231, 37, 1)',
+];

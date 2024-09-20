@@ -9,6 +9,8 @@ import StaticMap, {
 import { useAppContext } from '@/store/context';
 import { dynamicFilter } from '@/utils/utils';
 import Sidebar from '@/components/Sidebar';
+import { defaultMapColor } from '@/utils/mapStyle';
+
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 
@@ -40,6 +42,31 @@ const Explore = () => {
   //   map.resize();
   // };
   // console.log('Explore', data);
+
+  const buildRender = filterTilesId
+    .filter((i) => i.tileset_id)
+    .map((item) => (
+      <Source
+        key={item.tileset_id}
+        id={`raster-source-${item.tileset_id}`}
+        type='raster'
+        url={`mapbox://${item.tileset_id}`}
+        tileSize={256}
+        rasterNoData={0}
+      >
+        <Layer
+          id={`raster-layer-${item.tileset_id}`}
+          type='raster'
+          source={`raster-source-${item.tileset_id}`}
+          paint={{
+            'raster-resampling': 'nearest',
+            'raster-fade-duration': 0,
+            'raster-opacity': 0.8,
+            'raster-color': [...defaultMapColor],
+          }}
+        />
+      </Source>
+    ));
   return (
     <Flex flexDirection='row'>
       <Sidebar
@@ -57,41 +84,9 @@ const Explore = () => {
             mapStyle={MAPBOX_STYLE}
             mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
           >
-            <Source
-              id='raster-tiles'
-              type='raster'
-              url='mapbox://ynctstgeocomp.g_zb_cu_rf_pp'
-              tileSize={256}
-              rasterNoData={0}
-            >
-              <Layer
-                id='raster-layer'
-                type='raster'
-                source='raster-tiles'
-                paint={{
-                  'raster-resampling': 'nearest',
-                  'raster-fade-duration': 0,
-                  'raster-opacity': 0.8,
-                  'raster-color': [
-                    'interpolate',
-                    ['linear'],
-                    ['raster-value'],
-                    0,
-                    'rgba(68, 1, 84, 1)',
-                    0.25,
-                    'rgba(59, 82, 139, 1)',
-                    0.5,
-                    'rgba(33, 145, 140, 1)',
-                    0.75,
-                    'rgba(94, 201, 98, 1)',
-                    1,
-                    'rgba(253, 231, 37, 1)',
-                  ],
-                }}
-              />
-            </Source>
-            {/* <ScaleControl position='top-left' />
-            <NavigationControl position='top-left' /> */}
+            {buildRender}
+            <ScaleControl position='top-right' />
+            <NavigationControl position='top-right' />
           </StaticMap>
         </Box>
       </Box>
