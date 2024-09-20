@@ -15,7 +15,7 @@ export default function Home({ content }) {
         'container.xl',
         'container.2xl',
       ]}
-      p={0}
+      p={[2, 4]}
     >
       <h1>{title}</h1>
       <h2>{title}</h2>

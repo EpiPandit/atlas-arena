@@ -3,15 +3,25 @@ import {
   Heading,
   Link,
   Code,
-  ListItem,
   UnorderedList,
+  OrderedList,
+  ListItem,
+  Box,
+  Blockquote,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 const MarkdownTheme = {
   p: (props) => {
     const { children } = props;
     return (
-      <Text variant={'secondary-text'} lineHeight={2} p='0.5em 0'>
+      <Text variant='secondary-text' fontSize='sm' lineHeight='tall' py={2}>
         {children}
       </Text>
     );
@@ -19,7 +29,13 @@ const MarkdownTheme = {
   h1: (props) => {
     const { children } = props;
     return (
-      <Heading variant={'secondary-heading'} lineHeight={2}>
+      <Heading
+        as='h1'
+        variant='secondary-heading'
+        fontSize='2xl'
+        lineHeight='taller'
+        py={4}
+      >
         {children}
       </Heading>
     );
@@ -27,7 +43,69 @@ const MarkdownTheme = {
   h2: (props) => {
     const { children } = props;
     return (
-      <Heading variant={'secondary-heading'} lineHeight={2}>
+      <Heading
+        as='h2'
+        variant='secondary-heading'
+        fontSize='xl'
+        lineHeight='taller'
+        py={3}
+      >
+        {children}
+      </Heading>
+    );
+  },
+  h3: (props) => {
+    const { children } = props;
+    return (
+      <Heading
+        as='h3'
+        fontSize='lg'
+        fontWeight='bold'
+        lineHeight='taller'
+        py={3}
+      >
+        {children}
+      </Heading>
+    );
+  },
+  h4: (props) => {
+    const { children } = props;
+    return (
+      <Heading
+        as='h4'
+        fontSize='md'
+        fontWeight='semibold'
+        lineHeight='taller'
+        py={2}
+      >
+        {children}
+      </Heading>
+    );
+  },
+  h5: (props) => {
+    const { children } = props;
+    return (
+      <Heading
+        as='h5'
+        fontSize='sm'
+        fontWeight='medium'
+        lineHeight='tall'
+        py={2}
+      >
+        {children}
+      </Heading>
+    );
+  },
+  h6: (props) => {
+    const { children } = props;
+    return (
+      <Heading
+        as='h6'
+        fontSize='xs'
+        fontWeight='medium'
+        lineHeight='tall'
+        py={2}
+      >
         {children}
       </Heading>
     );
@@ -37,12 +115,13 @@ const MarkdownTheme = {
     return (
       <Link
         href={href}
-        variant={'secondary-text'}
+        color='blue.500'
         textDecoration='underline'
-        cursor='pointer'
         fontWeight='bold'
-        lineHeight={2}
+        lineHeight='tall'
         target='_blank'
+        rel='noopener noreferrer'
+        _hover={{ color: 'blue.700' }}
       >
         {children}
       </Link>
@@ -50,35 +129,111 @@ const MarkdownTheme = {
   },
   code: (props) => {
     const { children } = props;
-    // console.log("props", props)
-    console.log(children.includes('\n'));
     if (children.includes('\n')) {
       return (
         <Code
-          children={children}
           colorScheme='purple'
           width='100%'
-          p='1em 1em'
-        />
+          p={4}
+          borderRadius='md'
+          whiteSpace='pre-wrap'
+        >
+          {children}
+        </Code>
       );
     } else {
       return (
-        <a style={{ backgroundColor: 'lightgray', padding: '0 0.2em' }}>
+        <Code colorScheme='gray' p={1} borderRadius='md' bg='gray.100'>
           {children}
-        </a>
+        </Code>
       );
     }
+  },
+  blockquote: (props) => {
+    const { children } = props;
+    const bgColor = useColorModeValue('gray.100', 'gray.700');
+    return (
+      <Blockquote
+        bg={bgColor}
+        borderLeft='4px solid'
+        borderColor='gray.400'
+        p={4}
+        m={4}
+        borderRadius='md'
+      >
+        {children}
+      </Blockquote>
+    );
+  },
+  i: (props) => {
+    const { children } = props;
+    return (
+      <Text as='i' fontStyle='italic' lineHeight='tall'>
+        {children}
+      </Text>
+    );
+  },
+  b: (props) => {
+    const { children } = props;
+    return (
+      <Text as='b' fontWeight='bold' lineHeight='tall'>
+        {children}
+      </Text>
+    );
+  },
+  ul: (props) => {
+    const { children } = props;
+    return <UnorderedList pl={4}>{children}</UnorderedList>;
+  },
+  ol: (props) => {
+    const { children } = props;
+    return <OrderedList pl={4}>{children}</OrderedList>;
   },
   li: (props) => {
     const { children } = props;
     return (
-      <UnorderedList>
-        <ListItem>
-          <Text variant={'secondary-text'} lineHeight={2}>
-            {children}
-          </Text>
-        </ListItem>
-      </UnorderedList>
+      <ListItem>
+        <Text variant='secondary-text' lineHeight='tall'>
+          {children}
+        </Text>
+      </ListItem>
+    );
+  },
+  table: (props) => {
+    return (
+      <Table variant='simple' my={4} width='100%' textAlign='left'>
+        {props.children}
+      </Table>
+    );
+  },
+  thead: (props) => {
+    return (
+      <Thead bg={useColorModeValue('gray.200', 'gray.600')}>
+        {props.children}
+      </Thead>
+    );
+  },
+  tbody: (props) => {
+    return <Tbody>{props.children}</Tbody>;
+  },
+  tr: (props) => {
+    return <Tr>{props.children}</Tr>;
+  },
+  th: (props) => {
+    return (
+      <Th
+        fontWeight='bold'
+        borderColor={useColorModeValue('gray.300', 'gray.600')}
+      >
+        {props.children}
+      </Th>
+    );
+  },
+  td: (props) => {
+    return (
+      <Td borderColor={useColorModeValue('gray.300', 'gray.600')}>
+        {props.children}
+      </Td>
     );
   },
 };

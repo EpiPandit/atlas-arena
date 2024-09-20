@@ -1,18 +1,36 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { loadContent } from '@/libs/loadYamlContent';
-import { useAppContext } from '@/store/context';
-import { Flex } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
+import ReactMarkdown from 'react-markdown';
+import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
 export default function Publications({ content }) {
+  const { title, description, sections } = content;
   return (
-    <Flex flexDirection='column'>
-      <h1>publications</h1>
-    </Flex>
+    <Container
+      maxW={[
+        'container.sm',
+        'container.md',
+        'container.lg',
+        'container.xl',
+        'container.2xl',
+      ]}
+      p={[2, 4]}
+    >
+      <h1>{title}</h1>
+      <h2>{title}</h2>
+      <h3>{title}</h3>
+      <ReactMarkdown
+        components={ChakraUIRenderer()}
+        children={description}
+        skipHtml
+      />
+    </Container>
   );
 }
 
 export async function getStaticProps() {
-  const content = loadContent('config.yaml');
+  const content = loadContent('pages/publications.yaml');
 
   return {
     props: {
