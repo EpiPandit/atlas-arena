@@ -7,7 +7,7 @@ import StaticMap, {
   Layer,
 } from 'react-map-gl';
 import { useAppContext } from '@/store/context';
-
+import { dynamicFilter } from '@/utils/utils';
 import Sidebar from '@/components/Sidebar';
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
@@ -25,8 +25,12 @@ const Explore = () => {
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [filterTilesId, setFilterTilesId] = useState([]);
 
-  const handleFilterTilesId = (data) => {
-    console.log({ ...data });
+  const handleFilterTilesId = (data_filter) => {
+    console.log({ ...data_filter });
+    const raw_data_filter = dynamicFilter([...raw_data], { ...data_filter });
+
+    console.log(raw_data_filter.length, raw_data_filter);
+    setFilterTilesId(raw_data_filter);
   };
 
   // const [initialState, setInitialState] = useState({ ...data });
@@ -38,7 +42,10 @@ const Explore = () => {
   // console.log('Explore', data);
   return (
     <Flex flexDirection='row'>
-      <Sidebar handleFilterTilesId={handleFilterTilesId} />
+      <Sidebar
+        handleFilterTilesId={handleFilterTilesId}
+        filterTilesId={filterTilesId}
+      />
       <Box flex={1}>
         <Box h='calc(100vh - 64px)'>
           <StaticMap

@@ -5,14 +5,13 @@ import FormControlCheckBox from '@/components/custom/FormControlCheckBox';
 
 import { Box } from '@chakra-ui/react';
 
-const Sidebar = ({ handleFilterTilesId }) => {
+const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
 
   const [selectedVirus, setSelectedVirus] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState('');
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
-  const [selectedTiff, setSelectedTiff] = useState([]);
   // actions
 
   const handleVirusChange = (event) => {
@@ -20,40 +19,57 @@ const Sidebar = ({ handleFilterTilesId }) => {
     setSelectedSpecies('');
     setSelectedTimeFrame([]);
     setSelectedModel('');
-    setSelectedTiff('');
+    // update
+    handleFilterTilesId({
+      virus: event.target.value,
+      species: selectedSpecies,
+      time_frame: selectedTimeFrame,
+      model: selectedModel,
+    });
   };
 
   const handleSpeciesChange = (event) => {
     setSelectedSpecies(event.target.value);
     setSelectedTimeFrame([]);
     setSelectedModel('');
-    setSelectedTiff('');
+    // update
+    handleFilterTilesId({
+      virus: selectedVirus,
+      species: event.target.value,
+      time_frame: selectedTimeFrame,
+      model: selectedModel,
+    });
   };
 
   const handleTimeFrameChange = (event) => {
     let timeFrame = [...selectedTimeFrame];
     const id = event.target.id;
     if (timeFrame.includes(id)) {
-      timeFrame.pop(id);
+      timeFrame = timeFrame.filter((i) => id !== i);
     } else {
       timeFrame.push(id);
     }
     setSelectedTimeFrame([...timeFrame]);
     setSelectedModel('');
-    setSelectedTiff('');
+    // update
+    handleFilterTilesId({
+      virus: selectedVirus,
+      species: selectedSpecies,
+      time_frame: [...timeFrame],
+      model: selectedModel,
+    });
   };
 
   const handleModelChange = (event) => {
     setSelectedModel(event.target.value);
-    setSelectedTiff('');
+    // update State
+    handleFilterTilesId({
+      virus: selectedVirus,
+      species: selectedSpecies,
+      time_frame: selectedTimeFrame,
+      model: event.target.value,
+    });
   };
-
-  handleFilterTilesId({
-    virus: selectedVirus,
-    species: selectedSpecies,
-    times_frame: selectedTimeFrame,
-    model: selectedModel,
-  });
 
   return (
     <Box
@@ -94,13 +110,14 @@ const Sidebar = ({ handleFilterTilesId }) => {
         options={['Option1', 'Option2', 'Option3']}
         label='force infection'
       />  */}
-      <p> selectedVirus : {selectedVirus}</p>
-      <p> selectedSpecies : {selectedSpecies}</p>
-      <p> selectedTimeFrame : {selectedTimeFrame}</p>
-      <p> selectedModel : {selectedModel}</p>
+      <p>filters</p>
+      <p> virus : {selectedVirus}</p>
+      <p> species : {selectedSpecies}</p>
+      <p> time frame : {selectedTimeFrame}</p>
+      <p> model : {selectedModel}</p>
       <hr />
-      <p> count tiff : {selectedTiff.length}</p>
-      <p> selectedTiff : {selectedTiff}</p>
+      <p>filter tif count : {filterTilesId.length}</p>
+      <p> {filterTilesId.map((i) => i.new_raster_name).join(' , ')}</p>
     </Box>
   );
 };
