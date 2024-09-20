@@ -1,7 +1,7 @@
 import { useAppContext } from '@/store/context';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Box } from '@chakra-ui/react';
+import { Container, Box, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { setRawData, delRawData } from '@/store/actions';
@@ -15,7 +15,6 @@ const MainApp = ({ children }) => {
       flex='1'
       bg='brand.100'
       w='full'
-      // maxW='1280px'
       mx='auto'
       // px={4}
       // py={6}
@@ -44,11 +43,13 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <Box className='flex flex-col min-h-screen' bg='gray.50'>
+    <Flex direction='column' bg='gray.50' minH='100vh' p={0}>
       <Header />
-      <MainApp>{children}</MainApp>
+      <Flex as='main' flex='1'>
+        <MainApp>{children}</MainApp>
+      </Flex>
       {/* <Footer /> */}
-    </Box>
+    </Flex>
   );
 };
 

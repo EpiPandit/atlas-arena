@@ -2,6 +2,14 @@ import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
 const theme = extendTheme({
+  breakpoints: {
+    xs: '320px',
+    sm: '480px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1440px',
+    '2xl': '1920px',
+  },
   colors: {
     gray: {
       700: '#1f2733',
@@ -31,7 +39,7 @@ const theme = extendTheme({
     global: (props) => ({
       body: {
         overflowX: 'hidden',
-        bg: mode('yellow.50', '#FFFFF0')(props),
+        bg: mode('gray.50', '#FFFFF0')(props),
         fontFamily: 'Helvetica, sans-serif',
         fontSize: '12px',
       },

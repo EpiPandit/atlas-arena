@@ -1,10 +1,5 @@
-title: 'About Us'
-description:  |
-  Learn more about our mission, vision, and the team behind this project.
-  ## Learn more about 
-  Learn more about our mission, vision, and the team behind this project.
-  Learn more about our mission, [vision](http://localhost:3000/), and the team behind this project.
-
+title: 'publications'
+description: 'Learn more about our mission, vision, and the team behind this project.'
 sections:
   - id: mission
     title: 'Our Mission'
