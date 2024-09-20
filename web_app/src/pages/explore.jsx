@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Flex, Box } from '@chakra-ui/react';
+import { Flex, Box, Slide, Button, IconButton, Text } from '@chakra-ui/react';
 import StaticMap, {
   NavigationControl,
   ScaleControl,
@@ -9,7 +9,8 @@ import StaticMap, {
 import { useAppContext } from '@/store/context';
 import { dynamicFilter } from '@/utils/utils';
 import Sidebar from '@/components/Sidebar';
-import { defaultMapColor } from '@/utils/mapStyle';
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
+import RasterLayer from '@/components/RasterLayer';
 import axios from 'axios';
 import pako from 'pako';
 
@@ -30,12 +31,14 @@ const Explore = () => {
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [filterTilesId, setFilterTilesId] = useState([]);
   const [boundariesAdm, setBoundariesAdm] = useState(null);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
   const handleFilterTilesId = (data_filter) => {
-    console.log({ ...data_filter });
     const raw_data_filter = dynamicFilter([...raw_data], { ...data_filter });
 
-    console.log(raw_data_filter.length, raw_data_filter);
     setFilterTilesId(raw_data_filter);
   };
   useEffect(() => {
@@ -69,32 +72,11 @@ const Explore = () => {
 
   const buildRender = filterTilesId
     .filter((i) => i.tileset_id)
-    .map((item) => (
-      <Source
-        key={item.tileset_id}
-        id={`raster-source-${item.tileset_id}`}
-        type='raster'
-        url={`mapbox://${item.tileset_id}`}
-        tileSize={256}
-        rasterNoData={0}
-      >
-        <Layer
-          id={`raster-layer-${item.tileset_id}`}
-          type='raster'
-          source={`raster-source-${item.tileset_id}`}
-          paint={{
-            'raster-resampling': 'nearest',
-            'raster-fade-duration': 0,
-            'raster-opacity': 0.8,
-            'raster-color': [...defaultMapColor],
-          }}
-          beforeId='adm_boundaries_layer'
-        />
-      </Source>
-    ));
+    .map((item) => <RasterLayer key={item.tileset_id} />);
+
   const hasTilesId = filterTilesId.length !== 0;
   return (
-    <Flex flexDirection='row'>
+    <Flex position='relative' flexDirection='row'>
       <Sidebar
         handleFilterTilesId={handleFilterTilesId}
         filterTilesId={filterTilesId}
@@ -124,11 +106,64 @@ const Explore = () => {
               </Source>
             )}
             {buildRender}
-            <ScaleControl position='top-right' />
-            <NavigationControl position='top-right' />
+            <ScaleControl position='top-left' />
+            <NavigationControl position='top-left' />
           </StaticMap>
         </Box>
       </Box>
+      <Button
+        position='absolute'
+        top='10px'
+        right='10px'
+        zIndex={9}
+        onClick={togglePanel}
+        bg='gray.100'
+        color='black'
+        hidden={isPanelOpen}
+        p={2}
+        size={'sm'}
+      >
+        {isPanelOpen ? 'Close Panel' : 'Open Panel'}{' '}
+        <IconButton
+          aria-label='Open panel'
+          icon={<IoMdArrowRoundBack />}
+          size='sm'
+          variant='ghost'
+          onClick={togglePanel}
+        />
+      </Button>
+      <Slide direction='right' in={isPanelOpen} style={{ zIndex: 10 }}>
+        <Box
+          w='400px'
+          h='calc(100vh - 64px)'
+          bg='white'
+          boxShadow='md'
+          position='absolute'
+          right={0}
+          top={'64px'}
+          p={2}
+          zIndex={2}
+        >
+          <Flex
+            justifyContent='space-between'
+            alignItems='center'
+            px={2}
+            borderBottom='1px solid'
+            borderColor='gray.200'
+          >
+            <Text fontSize='lg' fontWeight='bold'>
+              PANEL
+            </Text>
+            <IconButton
+              aria-label='Close panel'
+              icon={<IoMdArrowRoundForward />}
+              size='sm'
+              variant='ghost'
+              onClick={togglePanel}
+            />
+          </Flex>
+        </Box>
+      </Slide>
     </Flex>
   );
 };
