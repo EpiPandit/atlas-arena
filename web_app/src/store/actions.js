@@ -16,6 +16,32 @@ export const delRawData = () => {
 };
 
 // process json
+
+export const buildRawDataGoodleSheet = (raw_data_) => {
+  if (!raw_data_) return [];
+  const { values } = raw_data_;
+  if (!values || values.length === 0) return [];
+  const headers = values[0];
+  const data = values.slice(1);
+
+  const dataDicts = data.map((row, rowIndex) => {
+    const rowDict = {};
+
+    headers.forEach((key, colIndex) => {
+      const tmpVal = row[colIndex];
+      if (!tmpVal || tmpVal === 'N/A') {
+        rowDict[key] = null;
+      } else {
+        rowDict[key] = row[colIndex];
+      }
+    });
+
+    return rowDict;
+  });
+
+  return dataDicts;
+};
+
 const filterInvalidData = (data_format_group) => {
   const filterObject = (obj) => {
     for (const key in obj) {

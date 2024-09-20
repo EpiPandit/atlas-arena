@@ -72,7 +72,7 @@ const Explore = () => {
 
   const buildRender = filterTilesId
     .filter((i) => i.tileset_id)
-    .map((item) => <RasterLayer key={item.tileset_id} />);
+    .map((item) => <RasterLayer key={item.tileset_id} item={item} />);
 
   const hasTilesId = filterTilesId.length !== 0;
   return (
@@ -125,6 +125,7 @@ const Explore = () => {
       >
         {isPanelOpen ? 'Close Panel' : 'Open Panel'}{' '}
         <IconButton
+          as='div'
           aria-label='Open panel'
           icon={<IoMdArrowRoundBack />}
           size='sm'

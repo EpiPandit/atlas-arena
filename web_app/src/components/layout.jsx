@@ -4,7 +4,11 @@ import Footer from '@/components/Footer';
 import { Container, Box, Flex } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { setRawData, delRawData } from '@/store/actions';
+import {
+  setRawData,
+  delRawData,
+  buildRawDataGoodleSheet,
+} from '@/store/actions';
 
 const DATA_API = process.env.NEXT_PUBLIC_DATA_API;
 
@@ -28,18 +32,26 @@ const Layout = ({ children }) => {
   const { dispatch } = useAppContext();
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
         const { data } = await axios.get(DATA_API);
-        if (data && data.length) {
-          dispatch(setRawData(data));
+        const raw_data = buildRawDataGoodleSheet(data);
+        if (isMounted && raw_data && raw_data.length) {
+          dispatch(setRawData(raw_data));
         }
       } catch (err) {
         console.error(err);
-        dispatch(delRawData(data));
+        if (isMounted) {
+          dispatch(delRawData());
+        }
       }
     };
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
