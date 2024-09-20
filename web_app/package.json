@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "stage": "next build && surge ./out atlasarena.surge.sh"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.2.0",
@@ -20,6 +21,7 @@
     "fs": "^0.0.1-security",
     "mapbox-gl": "^3.6.0",
     "next": "14.2.5",
+    "pako": "^2.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-map-gl": "^7.1.7",
