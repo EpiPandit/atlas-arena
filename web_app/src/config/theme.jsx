@@ -1,5 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
+import '@fontsource-variable/montserrat';
+import '@fontsource-variable/eb-garamond';
 
 const theme = extendTheme({
   breakpoints: {
@@ -11,28 +13,41 @@ const theme = extendTheme({
     '2xl': '1920px',
   },
   colors: {
+    blue: {
+      50: '#edf5ff',
+      100: '#d7e7ff',
+      200: '#b9d7ff',
+      300: '#88beff',
+      400: '#509bff',
+      500: '#2873ff',
+      600: '#0f4fff',
+      700: '#0a3beb',
+      800: '#0f30be',
+      900: '#132f95',
+    },
+    secondary: {
+      50: '#fbf8ef',
+      100: '#f3eace',
+      200: '#e8d69f',
+      300: '#dcbd6d',
+      400: '#d3a74c',
+      500: '#ca8d36',
+      600: '#b26e2d',
+      700: '#945229',
+      800: '#794227',
+      900: '#653722',
+    },
     gray: {
-      700: '#1f2733',
-    },
-    yellow: {
-      10: '#f9f7f4',
-    },
-    navy: {
-      50: '#d0dcfb',
-      100: '#aac0fe',
-      200: '#a3b9f8',
-      300: '#728fea',
-      400: '#3652ba',
-      500: '#1b3bbb',
-      600: '#24388a',
-      600: '#24388a',
-      700: '#1b254b',
-      800: '#111c44',
-      900: '#0b1437',
-    },
-    brand: {
-      100: '#f7fafc',
-      900: '#1a202c',
+      50: '#f7f7f8',
+      100: '#ededf1',
+      200: '#d8d9df',
+      300: '#b6b7c3',
+      400: '#8e90a2',
+      500: '#707287',
+      600: '#5a5b6f',
+      700: '#49495b',
+      800: '#3f404d',
+      900: '#383842',
     },
   },
   styles: {
@@ -40,11 +55,7 @@ const theme = extendTheme({
       body: {
         overflowX: 'hidden',
         bg: mode('gray.50', '#FFFFF0')(props),
-        fontFamily: 'Helvetica, sans-serif',
-        fontSize: '12px',
-      },
-      html: {
-        fontFamily: 'Helvetica, sans-serif',
+        fontFamily: 'Montserrat Variable, EB Garamond Variable, sans-serif',
       },
     }),
   },
