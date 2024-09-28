@@ -32,8 +32,8 @@ const Header = () => {
             fontSize='md'
             fontFamily='EB Garamond Variable'
             color='blue.800'
-            as='i'
-            className='uppercase'
+            fontStyle='italic'
+            textTransform='uppercase'
           >
             <NextLink
               href={'/'}

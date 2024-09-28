@@ -7,6 +7,7 @@ export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
 export const LINK_HEADER = [
   { text: 'Explore', href: 'explore' },
   { text: 'About', href: 'about' },
+  { text: 'Resources', href: 'resources' },
   { text: 'Publications', href: 'publications' },
   {
     text: 'Github',
@@ -128,3 +129,5 @@ export const DATA_EQUIVALENCE = {
     folder_name: 'force_of_infection.tif',
   },
 };
+
+export const MAP_COLORS = {};

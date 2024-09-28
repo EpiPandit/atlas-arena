@@ -21,7 +21,7 @@ const MarkdownTheme = {
   p: (props) => {
     const { children } = props;
     return (
-      <Text variant='secondary-text' fontSize='sm' lineHeight='tall' py={2}>
+      <Text variant='secondary-text' fontSize='md' lineHeight='tall' py={2}>
         {children}
       </Text>
     );
@@ -29,13 +29,7 @@ const MarkdownTheme = {
   h1: (props) => {
     const { children } = props;
     return (
-      <Heading
-        as='h1'
-        variant='secondary-heading'
-        fontSize='2xl'
-        lineHeight='taller'
-        py={4}
-      >
+      <Heading as='h1' fontSize='2xl' lineHeight='taller' py={4}>
         {children}
       </Heading>
     );

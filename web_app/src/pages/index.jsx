@@ -6,7 +6,6 @@ import { Box } from '@chakra-ui/react';
 
 import MapComponent from '@/components/home/MapComponent';
 import OverlayComponent from '@/components/home/OverlayComponent';
-import { data } from 'autoprefixer';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
@@ -15,8 +14,6 @@ const Home = ({ configYml = {}, mddata = [] }) => {
   const { sub_header, header, intros } = configYml;
   const viruses = (mddata || []).filter((item) => item.layout === 'virus');
   const species = (mddata || []).filter((item) => item.layout === 'specie');
-
-  console.log(configYml, mddata);
 
   return (
     <Box position='relative' h='calc(100vh - 56px)' w='100vw' overflow='hidden'>

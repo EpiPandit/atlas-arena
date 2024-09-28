@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import html from 'remark-html';
 import { remark } from 'remark';
 
-export const getMetadataMd = (customPath) => {
+export const getMetadataMd = (customPath, mdContent = false) => {
   const markdownDirectory = path.join(process.cwd(), ...customPath);
   const filenames = fs.readdirSync(markdownDirectory);
 
@@ -14,6 +14,24 @@ export const getMetadataMd = (customPath) => {
       try {
         const filePath = path.join(markdownDirectory, filename);
         const fileContents = fs.readFileSync(filePath, 'utf8');
+        if (mdContent) {
+          const { data, content } = matter(fileContents);
+          // const processedContent = await remark().use(html).process(content);
+          // const regex = /src="\.\/images\//g;
+
+          // const contentHtml = processedContent.toString();
+          // const contentHtmlFix = contentHtml.replace(
+          //   regex,
+          //   'src="/markdown/images/'
+          // );
+
+          return {
+            path: customPath,
+            filename,
+            ...data,
+            contentHtml: content,
+          };
+        }
         const { data } = matter(fileContents);
 
         return {
@@ -29,30 +47,3 @@ export const getMetadataMd = (customPath) => {
       }
     });
 };
-
-// export const getAllMarkdownSlugs = (customPath) => {
-//   const markdownDirectory = path.join(process.cwd(), ...customPath);
-//   const filenames = fs.readdirSync(markdownDirectory);
-//   return filenames
-//     .filter((i) => i.endsWith('.md'))
-//     .map((filename) => {
-//       return filename.replace(/\.md$/, '');
-//     });
-// };
-
-// export async function getMdFileData(customPath, slug, imageFix) {
-//   const fullPath = path.join(process.cwd(), ...customPath, `${slug}.md`);
-//   const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-//   const { data, content } = matter(fileContents);
-//   const processedContent = await remark().use(html).process(content);
-//   const regex = /src="\.\/images\//g;
-
-//   const contentHtml = processedContent.toString();
-//   const contentHtmlFix = contentHtml.replace(regex, imageFix);
-//   return {
-//     slug,
-//     ...data,
-//     contentHtml: contentHtmlFix,
-//   };
-// }
