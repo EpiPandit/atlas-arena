@@ -4,13 +4,13 @@ import {
   HStack,
   IconButton,
   useDisclosure,
-  useColorModeValue,
   Text,
   Stack,
 } from '@chakra-ui/react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { RiCloseFill } from 'react-icons/ri';
 import { Icon } from '@chakra-ui/react';
+import { Link as NextLink } from '@chakra-ui/next-js';
 
 import NavLink from '@/components/custom/NavLink';
 import { LINK_HEADER } from '@/config/constants';
@@ -35,7 +35,14 @@ const Header = () => {
             as='i'
             className='uppercase'
           >
-            Arena atlas
+            <NextLink
+              href={'/'}
+              _hover={{
+                textDecoration: 'none',
+              }}
+            >
+              Arena atlas
+            </NextLink>
           </Text>
         </Box>
         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>

@@ -1,5 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
+import Tabs from '@/config/components.tabs';
+import Card from '@/config/components.card';
 
 const theme = extendTheme({
   breakpoints: {
@@ -57,6 +59,10 @@ const theme = extendTheme({
           "'Montserrat Variable', 'EB Garamond Variable', 'sans-serif'",
       },
     }),
+  },
+  components: {
+    Tabs,
+    Card,
   },
 });
 export default theme;

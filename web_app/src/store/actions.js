@@ -7,12 +7,12 @@ export const actionTypes = {
 };
 import { DATA_EQUIVALENCE } from '@/config/constants';
 
-export const setRawData = (payload) => {
+export const setRawData = (payload = []) => {
   return { type: actionTypes.SET_RAW_DATA, payload: payload };
 };
 
 export const delRawData = () => {
-  return { type: actionTypes.SET_RAW_DATA };
+  return { type: actionTypes.DEL_RAW_DATA };
 };
 
 // process json

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { loadContent } from '@/libs/loadYamlContent';
+import { loadContent } from '@/libs/yaml';
 import { Container } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';

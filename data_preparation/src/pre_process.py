@@ -8,6 +8,15 @@ import subprocess
 
 MAPBOX_USER = os.getenv("MAPBOX_USER")
 
+def save_csv(csv_file, csv_data):
+    if not csv_data:
+        print("No csv data")
+        return
+    with open(csv_file, "w", newline="") as f:
+        w = csv.DictWriter(f, csv_data[0].keys())
+        w.writeheader()
+        w.writerows(csv_data)
+
 
 @click.command(short_help="Review and clean data")
 @click.option(
@@ -42,9 +51,10 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
             return dict_equivalence[value][type_]
         except:
             return "_____"
-
-    # iterate and change name
-    data_csv = []
+    # ===========
+    # manage tif
+    # ===========
+    csv_data_tiff = []
     for idx, item in tqdm(enumerate(all_tif_raw), desc="Processing tif files"):
         try:
             virus, species, time_frame, model, filename = item.replace(
@@ -87,35 +97,35 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
                 item,
                 rescale_,
             ]
-            result_translate = subprocess.run(
-                cmd_translate,
-                stdout=subprocess.DEVNULL,
-            )
+            # result_translate = subprocess.run(
+            #     cmd_translate,
+            #     stdout=subprocess.DEVNULL,
+            # )
             # upload mapbox
             tileset_id = f"{MAPBOX_USER}.{fake_name}".replace(".tif", "")
             cmd_mapbox = ["mapbox", "upload", tileset_id, rescale_]
 
             try:
-                result = subprocess.run(
-                    cmd_mapbox,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    check=True,
-                )
+                # result = subprocess.run(
+                #     cmd_mapbox,
+                #     stdout=subprocess.DEVNULL,
+                #     stderr=subprocess.DEVNULL,
+                #     check=True,
+                # )
                 row_data["tileset_id"] = tileset_id
-                data_csv.append(row_data)
+                csv_data_tiff.append(row_data)
             except subprocess.CalledProcessError as e:
                 print(f"Error: {e}")
 
         except Exception as ex:
             print(ex)
-    if not data_csv:
-        print("No csv data")
-        return
-    with open(f"{to_upload_folder_path}/data_output.csv", "w", newline="") as f:
-        w = csv.DictWriter(f, data_csv[0].keys())
-        w.writeheader()
-        w.writerows(data_csv)
+
+    save_csv(f"{to_upload_folder_path}/data_output_tiff.csv",csv_data_tiff)
+
+    # ===========
+    # manage txt
+    # ===========
+
 
 
 if __name__ == "__main__":

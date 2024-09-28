@@ -6,9 +6,6 @@ const NavLink = ({ href, text, isExternal = false }) => {
   const router = useRouter();
   const isActive = router.pathname === `/${href}`;
 
-  const activeColor = useColorModeValue('blue.800', 'blue.800');
-  const defaultColor = useColorModeValue('gray.500');
-
   return (
     <NextLink
       py={1}
