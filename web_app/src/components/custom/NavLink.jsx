@@ -6,20 +6,21 @@ const NavLink = ({ href, text, isExternal = false }) => {
   const router = useRouter();
   const isActive = router.pathname === `/${href}`;
 
-  const activeColor = useColorModeValue('blue.500', 'blue.300');
-  const defaultColor = useColorModeValue('gray.500', 'gray.200');
+  const activeColor = useColorModeValue('blue.800', 'blue.800');
+  const defaultColor = useColorModeValue('gray.500');
 
   return (
     <NextLink
       py={1}
       href={href || '/'}
       target={isExternal ? '_blank' : '_self'}
-      fontWeight={isActive ? 'bold' : 'normal'}
-      color={isActive ? activeColor : defaultColor}
+      fontFamily='sans-serif'
+      fontWeight={700}
+      fontSize={12}
+      color={isActive ? 'blue.800' : 'gray.500'}
       borderBottom={isActive ? '2px solid' : 'none'}
       _hover={{
         textDecoration: 'none',
-        color: activeColor,
         borderBottom: '2px solid',
       }}
       className='uppercase'

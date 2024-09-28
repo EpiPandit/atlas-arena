@@ -5,8 +5,8 @@ export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
 
 // HEADER
 export const LINK_HEADER = [
-  { text: 'About', href: '' },
   { text: 'Explore', href: 'explore' },
+  { text: 'About', href: 'about' },
   { text: 'Publications', href: 'publications' },
   {
     text: 'Github',

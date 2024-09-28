@@ -1,7 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
-import '@fontsource-variable/montserrat';
-import '@fontsource-variable/eb-garamond';
 
 const theme = extendTheme({
   breakpoints: {
@@ -54,8 +52,9 @@ const theme = extendTheme({
     global: (props) => ({
       body: {
         overflowX: 'hidden',
-        bg: mode('gray.50', '#FFFFF0')(props),
-        fontFamily: 'Montserrat Variable, EB Garamond Variable, sans-serif',
+        bg: mode('secondary.50', 'gray.900')(props),
+        fontFamily:
+          "'Montserrat Variable', 'EB Garamond Variable', 'sans-serif'",
       },
     }),
   },

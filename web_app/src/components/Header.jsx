@@ -18,8 +18,8 @@ import { LINK_HEADER } from '@/config/constants';
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box bg='yellow.50' px={4} className='border'>
-      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+    <Box bg='secondary.50' py={3} px={4} className='border' h='56px'>
+      <Flex alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}
           icon={<Icon as={isOpen ? RiCloseFill : RxHamburgerMenu} />}
@@ -28,7 +28,13 @@ const Header = () => {
           onClick={isOpen ? onClose : onOpen}
         />
         <Box>
-          <Text fontSize='md' color='blue.600' as='i' className='uppercase'>
+          <Text
+            fontSize='md'
+            fontFamily='EB Garamond Variable'
+            color='blue.800'
+            as='i'
+            className='uppercase'
+          >
             Arena atlas
           </Text>
         </Box>
@@ -39,7 +45,14 @@ const Header = () => {
         </HStack>
       </Flex>
       {isOpen ? (
-        <Box pb={4} display={{ md: 'none' }}>
+        <Box
+          p={2}
+          display={{ md: 'none' }}
+          zIndex={100}
+          position='relative'
+          bg='secondary.50'
+          sx={{ borderBottomRadius: '10px' }}
+        >
           <Stack as={'nav'} spacing={4}>
             {LINK_HEADER.map((item) => (
               <NavLink key={item.text} {...item} />

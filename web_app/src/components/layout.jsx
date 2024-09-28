@@ -14,15 +14,7 @@ const DATA_API = process.env.NEXT_PUBLIC_DATA_API;
 
 const MainApp = ({ children }) => {
   return (
-    <Box
-      as='main'
-      flex='1'
-      bg='brand.100'
-      w='full'
-      mx='auto'
-      // px={4}
-      // py={6}
-    >
+    <Box flex='1' w='full' mx='auto' position='relative'>
       {children}
     </Box>
   );
@@ -55,7 +47,7 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <Flex direction='column' bg='gray.50' minH='100vh' p={0}>
+    <Flex direction='column' minH='100vh' p={0}>
       <Header />
       <Flex as='main' flex='1'>
         <MainApp>{children}</MainApp>

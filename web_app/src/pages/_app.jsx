@@ -1,5 +1,8 @@
 import '@/assets/css/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '@fontsource-variable/montserrat';
+import '@fontsource-variable/eb-garamond/wght-italic.css';
+
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '@/config/theme';
 import Layout from '@/components/Layout';

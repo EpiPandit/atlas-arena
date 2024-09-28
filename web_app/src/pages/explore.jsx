@@ -82,7 +82,7 @@ const Explore = () => {
         filterTilesId={filterTilesId}
       />
       <Box flex={1}>
-        <Box h='calc(100vh - 64px)'>
+        <Box h='calc(100vh - 56px)'>
           <StaticMap
             ref={mapRef}
             initialViewState={viewState}
