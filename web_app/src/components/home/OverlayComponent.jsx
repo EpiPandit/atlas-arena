@@ -51,7 +51,6 @@ const OverlayComponent = ({
   virus = [],
   species = [],
 }) => {
-  console.log(intros);
   const renderViruses = virus.map((item) => (
     <CustomCard
       key={item.name}

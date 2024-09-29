@@ -5,7 +5,7 @@ export const actionTypes = {
   SET_RAW_DATA: 'SET_RAW_DATA',
   DEL_RAW_DATA: 'DEL_RAW_DATA',
 };
-import { DATA_EQUIVALENCE } from '@/config/constants';
+import { DATA_EQUIVALENCE, ALL_VIRUS } from '@/config/constants';
 
 export const setRawData = (payload = []) => {
   return { type: actionTypes.SET_RAW_DATA, payload: payload };
@@ -199,13 +199,16 @@ const removeDuplicates = (arr) => {
 };
 
 const buildAllVirus = (raw_data) => {
-  const combinations = raw_data.map((i) => {
-    let folder = '';
-    try {
-      folder = DATA_EQUIVALENCE[i.virus]['folder_name'];
-    } catch {}
-    return { key: i.virus, name: i.virus, folder: folder };
-  });
+  const combinations = [
+    { key: ALL_VIRUS, name: ALL_VIRUS, folder: '__' },
+    ...raw_data.map((i) => {
+      let folder = '';
+      try {
+        folder = DATA_EQUIVALENCE[i.virus]['folder_name'];
+      } catch {}
+      return { key: i.virus, name: i.virus, folder: folder };
+    }),
+  ];
 
   return removeDuplicates(combinations);
 };
@@ -234,6 +237,7 @@ const buildAllSpecies = (raw_data) => {
 
   return removeDuplicates(combinations);
 };
+
 const buildAllTimeFrame = (raw_data) => {
   const combinations = raw_data
     .map((i) => {

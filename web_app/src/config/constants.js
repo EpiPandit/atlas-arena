@@ -131,3 +131,6 @@ export const DATA_EQUIVALENCE = {
 };
 
 export const MAP_COLORS = {};
+// default values
+export const ALL_VIRUS = 'All (combined)';
+export const DEFAULT_TIME = 'Current (year 1990-2010)';

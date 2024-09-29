@@ -45,7 +45,7 @@ const Explore = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASENAME}/assets/filter_sa.geojson.gz`,
+          `${BASENAME}/assets/data/filter_sa.geojson.gz`,
           {
             responseType: 'arraybuffer',
           }

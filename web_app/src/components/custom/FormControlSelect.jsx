@@ -12,21 +12,24 @@ const FormControlSelect = ({
   options,
   handleAction,
   value = '',
-  filter_dict = {},
-  isvalid = true,
-  helpText = '',
-  errorText = '',
+  isDisabled = false,
 }) => {
   return (
-    <FormControl isInvalid={!isvalid} my={4}>
-      <FormLabel fontSize='sm' className='uppercase'>
+    <FormControl py={2}>
+      <FormLabel
+        fontSize='md'
+        fontStyle='italic'
+        fontFamily='EB Garamond Variable'
+        textTransform='uppercase'
+      >
         {label}
       </FormLabel>
       <Select
-        placeholder='Select option'
-        bg='gray.50'
+        bg='white'
+        borderColor='gray.200'
         value={value}
         onChange={handleAction}
+        fontFamily='Montserrat Variable'
       >
         {options.map((i) => (
           <option key={i.key} value={i.key}>
@@ -34,8 +37,6 @@ const FormControlSelect = ({
           </option>
         ))}
       </Select>
-      {helpText && <FormHelperText>{helpText}</FormHelperText>}
-      {errorText && <FormErrorMessage>{errorText}</FormErrorMessage>}
     </FormControl>
   );
 };

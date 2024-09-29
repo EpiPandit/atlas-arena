@@ -1,35 +1,57 @@
 import React, { useRef, useEffect, useState, use } from 'react';
 import { useAppContext } from '@/store/context';
+import FormControlCheckBoxSpecies from '@/components/custom/FormControlCheckBoxSpecies';
 import FormControlSelect from '@/components/custom/FormControlSelect';
-import FormControlCheckBox from '@/components/custom/FormControlCheckBox';
-
+import FormControlRadioTime from './custom/FormControlRadioTime';
 import { Box } from '@chakra-ui/react';
+import { ALL_VIRUS } from '@/config/constants';
 
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
-
-  const [selectedVirus, setSelectedVirus] = useState('');
-  const [selectedSpecies, setSelectedSpecies] = useState('');
+  const [selectedVirus, setSelectedVirus] = useState(ALL_VIRUS);
+  const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
+
+  useEffect(() => {
+    const tmpSpecies = allSpecies.map((i) => i.name);
+    setSelectedSpecies(tmpSpecies);
+  }, [allSpecies]);
   // actions
 
   const handleVirusChange = (event) => {
-    setSelectedVirus(event.target.value);
-    setSelectedSpecies('');
+    const value = event.target.value;
+    let species = [];
+    if (value === ALL_VIRUS) {
+      species = allSpecies.map((i) => i.name);
+    } else {
+      species = allSpecies.filter((i) => i.virus == value).map((i) => i.name);
+    }
+    setSelectedVirus(value);
+
+    setSelectedSpecies(species);
     setSelectedTimeFrame([]);
     setSelectedModel('');
+
     // update
     handleFilterTilesId({
-      virus: event.target.value,
-      species: selectedSpecies,
+      virus: value,
+      species: species,
       time_frame: selectedTimeFrame,
       model: selectedModel,
     });
   };
 
   const handleSpeciesChange = (event) => {
-    setSelectedSpecies(event.target.value);
+    let species = [...selectedSpecies];
+    const id = event.target.id;
+    if (species.includes(id)) {
+      species = species.filter((i) => id !== i);
+    } else {
+      species.push(id);
+    }
+
+    setSelectedSpecies([...species]);
     setSelectedTimeFrame([]);
     setSelectedModel('');
     // update
@@ -41,21 +63,13 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     });
   };
 
-  const handleTimeFrameChange = (event) => {
-    let timeFrame = [...selectedTimeFrame];
-    const id = event.target.id;
-    if (timeFrame.includes(id)) {
-      timeFrame = timeFrame.filter((i) => id !== i);
-    } else {
-      timeFrame.push(id);
-    }
-    setSelectedTimeFrame([...timeFrame]);
-    setSelectedModel('');
+  const handleTimeFrameChange = (value) => {
+    setSelectedTimeFrame(value);
     // update
     handleFilterTilesId({
       virus: selectedVirus,
       species: selectedSpecies,
-      time_frame: [...timeFrame],
+      time_frame: value,
       model: selectedModel,
     });
   };
@@ -73,10 +87,10 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
 
   return (
     <Box
-      w='260px'
-      maxW='260px'
-      h='calc(100vh - 64px)'
-      px='20px'
+      w='330px'
+      maxW='330px'
+      h='calc(100vh - 55px)'
+      p='32px'
       bg='yellow.10'
       overflowY='auto'
     >
@@ -86,17 +100,16 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         value={selectedVirus}
         handleAction={handleVirusChange}
       />
-      <FormControlSelect
+      <FormControlCheckBoxSpecies
+        label='Reservoir Species'
         options={allSpecies}
-        label='species'
-        value={selectedSpecies}
+        values={selectedSpecies}
         handleAction={handleSpeciesChange}
+        filterValue={selectedVirus}
       />
-
-      <FormControlCheckBox
+      <FormControlRadioTime
         label='Timeframe'
         options={allTimeFrame}
-        values={selectedTimeFrame}
         handleAction={handleTimeFrameChange}
       />
 
@@ -106,18 +119,42 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         value={selectedModel}
         handleAction={handleModelChange}
       />
-      {/* <FormControlSelect
-        options={['Option1', 'Option2', 'Option3']}
+
+      <FormControlSelect
+        options={allModels}
         label='force infection'
-      />  */}
-      <p>filters</p>
-      <p> virus : {selectedVirus}</p>
-      <p> species : {selectedSpecies}</p>
-      <p> time frame : {selectedTimeFrame}</p>
-      <p> model : {selectedModel}</p>
-      <hr />
-      <p>filter tif count : {filterTilesId.length}</p>
-      <p> {filterTilesId.map((i) => i.new_raster_name).join(' , ')}</p>
+        value={selectedModel}
+        handleAction={handleModelChange}
+      />
+      <Box pt={4}>
+        <p>
+          <b>virus : </b>
+          {selectedVirus}
+        </p>
+        <p>
+          <b>species ({selectedSpecies.length}) : </b>
+          <small>{selectedSpecies.join(' , ')}</small>
+        </p>
+        <p>
+          <b> time frame ({selectedTimeFrame.length}): </b>
+          <small>{selectedTimeFrame.join(' , ')}</small>
+        </p>
+        <p>
+          <b>model : </b>
+          <small>{selectedModel}</small>
+        </p>
+        <hr />
+        <p>
+          <b>filter tif count : </b>
+          {filterTilesId.length}
+        </p>
+        <p>
+          {' '}
+          <small>
+            {filterTilesId.map((i) => i.new_raster_name).join(' , ')}
+          </small>
+        </p>
+      </Box>
     </Box>
   );
 };

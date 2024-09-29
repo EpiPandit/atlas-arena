@@ -25,7 +25,7 @@ const MapComponent = ({ mapStyle, accessToken }) => {
       left={0}
       w='100vw'
       h='100vh'
-      mt='35%'
+      mt='30%'
       zIndex={1}
       overflow='hidden'
     >
@@ -34,7 +34,7 @@ const MapComponent = ({ mapStyle, accessToken }) => {
           ref={mapRef}
           latitude={-18.1543810681043}
           longitude={-60.59673635723772}
-          zoom={2.3}
+          zoom={2.2}
           onLoad={handleLoad}
           mapStyle={mapStyle}
           mapboxAccessToken={accessToken}
