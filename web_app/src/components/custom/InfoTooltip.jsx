@@ -6,7 +6,7 @@ const InfoTooltip = ({ label = '' }) => {
   return (
     <Tooltip hasArrow label={label}>
       <span>
-        <Icon as={IoMdInformationCircleOutline} ml={2} />
+        <Icon as={IoMdInformationCircleOutline} ml={2} cursor='pointer' />
       </span>
     </Tooltip>
   );

@@ -1,18 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Flex, Box, Slide, Button, IconButton, Text } from '@chakra-ui/react';
-import StaticMap, {
-  NavigationControl,
-  ScaleControl,
-  Source,
-  Layer,
-} from 'react-map-gl';
+import { Flex, Box } from '@chakra-ui/react';
+import StaticMap, { Source, Layer } from 'react-map-gl';
 import { useAppContext } from '@/store/context';
 import { dynamicFilter } from '@/utils/utils';
 import Sidebar from '@/components/Sidebar';
-import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 import RasterLayer from '@/components/RasterLayer';
 import axios from 'axios';
 import pako from 'pako';
+import ColorLegend from '@/components/explore/ColorLegend';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
@@ -75,6 +70,7 @@ const Explore = () => {
     .map((item) => <RasterLayer key={item.tileset_id} item={item} />);
 
   const hasTilesId = filterTilesId.length !== 0;
+
   return (
     <Flex position='relative' flexDirection='row'>
       <Sidebar
@@ -106,65 +102,22 @@ const Explore = () => {
               </Source>
             )}
             {buildRender}
-            <ScaleControl position='top-left' />
-            <NavigationControl position='top-left' />
           </StaticMap>
         </Box>
-      </Box>
-      <Button
-        position='absolute'
-        top='10px'
-        right='10px'
-        zIndex={9}
-        onClick={togglePanel}
-        bg='gray.100'
-        color='black'
-        hidden={isPanelOpen}
-        p={2}
-        size={'sm'}
-      >
-        {isPanelOpen ? 'Close Panel' : 'Open Panel'}{' '}
-        <IconButton
-          as='div'
-          aria-label='Open panel'
-          icon={<IoMdArrowRoundBack />}
-          size='sm'
-          variant='ghost'
-          onClick={togglePanel}
-        />
-      </Button>
-      <Slide direction='right' in={isPanelOpen} style={{ zIndex: 10 }}>
         <Box
-          w='400px'
-          h='calc(100vh - 64px)'
-          bg='white'
-          boxShadow='md'
           position='absolute'
-          right={0}
-          top={'64px'}
-          p={2}
-          zIndex={2}
+          maxH='calc(100vh - 56px)'
+          top={4}
+          right={6}
+          display='flex'
+          overflowY='auto'
+          flexDirection='column'
+          gap={4}
+          zIndex={10}
         >
-          <Flex
-            justifyContent='space-between'
-            alignItems='center'
-            px={2}
-            borderBottom='1px solid'
-            borderColor='gray.200'
-          >
-            <Text fontSize='lg' fontWeight='bold'>
-              PANEL
-            </Text>
-            <IconButton
-              aria-label='Close panel'
-              icon={<IoMdArrowRoundForward />}
-              size='sm'
-              variant='ghost'
-              onClick={togglePanel}
-            />
-          </Flex>
+          <ColorLegend title='C. Callosus Distribution' />
         </Box>
-      </Slide>
+      </Box>
     </Flex>
   );
 };
