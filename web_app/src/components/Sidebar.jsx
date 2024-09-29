@@ -118,6 +118,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         label='model algorithm'
         value={selectedModel}
         handleAction={handleModelChange}
+        info='model algoritm'
       />
 
       <FormControlSelect

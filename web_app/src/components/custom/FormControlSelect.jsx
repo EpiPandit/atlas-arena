@@ -1,11 +1,6 @@
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Select,
-} from '@chakra-ui/react';
+import { FormControl, FormLabel, Flex, Select } from '@chakra-ui/react';
 import { useState } from 'react';
+import InfoTooltip from './InfoTooltip';
 
 const FormControlSelect = ({
   label,
@@ -13,6 +8,7 @@ const FormControlSelect = ({
   handleAction,
   value = '',
   isDisabled = false,
+  info = '',
 }) => {
   return (
     <FormControl py={2}>
@@ -22,7 +18,10 @@ const FormControlSelect = ({
         fontFamily='EB Garamond Variable'
         textTransform='uppercase'
       >
-        {label}
+        <Flex justifyContent='space-between' alignItems='center'>
+          {label}
+          <InfoTooltip label={info} />
+        </Flex>
       </FormLabel>
       <Select
         bg='white'
