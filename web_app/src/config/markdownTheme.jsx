@@ -15,6 +15,7 @@ import {
   Th,
   Td,
   useColorModeValue,
+  AspectRatio,
 } from '@chakra-ui/react';
 
 const MarkdownTheme = {
@@ -228,6 +229,19 @@ const MarkdownTheme = {
       <Td borderColor={useColorModeValue('gray.300', 'gray.600')}>
         {props.children}
       </Td>
+    );
+  },
+  iframe: (props) => {
+    return (
+      <AspectRatio maxW='100%' ratio={16 / 9}>
+        <Box
+          as='iframe'
+          src={props.src}
+          title={props.title || 'iframe content'}
+          allowFullScreen
+          {...props}
+        />
+      </AspectRatio>
     );
   },
 };

@@ -16,9 +16,10 @@ export const getMetadataMd = (customPath, mdContent = false) => {
         const fileContents = fs.readFileSync(filePath, 'utf8');
         if (mdContent) {
           const { data, content } = matter(fileContents);
-          // const processedContent = await remark().use(html).process(content);
-          // const regex = /src="\.\/images\//g;
 
+          // const processedContent = await remark().use(html).process(content);
+          const imageRegex = /(!\[.*?\]\()(images\/.*?\))/g;
+          const mdFix = content.replace(imageRegex, '$1./markdown/$2');
           // const contentHtml = processedContent.toString();
           // const contentHtmlFix = contentHtml.replace(
           //   regex,
@@ -29,7 +30,7 @@ export const getMetadataMd = (customPath, mdContent = false) => {
             path: customPath,
             filename,
             ...data,
-            contentHtml: content,
+            contentHtml: mdFix,
           };
         }
         const { data } = matter(fileContents);

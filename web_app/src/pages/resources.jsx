@@ -14,7 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import MarkdownTheme from '@/config/markdownTheme';
 import { getMetadataMd } from '@/libs/markdown';
-
+import rehypeRaw from 'rehype-raw';
 const Resources = ({ mdData }) => {
   const allVirus = (mdData || []).filter((item) => item.layout === 'virus');
 
@@ -29,8 +29,9 @@ const Resources = ({ mdData }) => {
         <ReactMarkdown
           key={item.filename}
           components={ChakraUIRenderer(MarkdownTheme)}
+          rehypePlugins={[rehypeRaw]}
           children={item.contentHtml}
-          skipHtml
+          skipHtml={false}
         />
       </Box>
     </TabPanel>
