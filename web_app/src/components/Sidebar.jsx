@@ -67,7 +67,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     // update
     handleFilterTilesId({
       virus: selectedVirus,
-      species: event.target.value,
+      species: [...species],
       time_frame: selectedTimeFrame,
       model: selectedModel,
     });

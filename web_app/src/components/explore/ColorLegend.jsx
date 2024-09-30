@@ -23,22 +23,22 @@ const ColorLegend = ({
   title = '',
   labels = ['0.0', '0.5', '1'],
   handleChange = null,
+  value = {},
 }) => {
-  const [opacity, setOpacity] = useState(100);
   let colors = MAP_COLORS[color];
   if (!color) {
     colors = [...MAP_COLORS.default];
   }
   const handleChangeOpacity = (ev) => {
-    setOpacity(ev);
     handleChange(title, ev);
   };
+
   let customTitle = `${title} distribution `;
   const titleList = title.split(' ');
   if (titleList.length > 1) {
     customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')} distribution`;
   }
-
+  const opacity = title in value ? value[title] : 100;
   return (
     <Box
       w='303px'

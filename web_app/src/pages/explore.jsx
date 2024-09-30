@@ -103,7 +103,7 @@ const Explore = () => {
             initialViewState={viewState}
             // onLoad={handleLoad}
             minZoom={3.5}
-            maxZoom={10}
+            maxZoom={8}
             mapStyle={MAPBOX_STYLE}
             mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
           >
