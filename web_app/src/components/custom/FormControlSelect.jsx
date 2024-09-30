@@ -1,7 +1,6 @@
 import { FormControl, FormLabel, Flex, Select } from '@chakra-ui/react';
 import { useState } from 'react';
-import InfoTooltip from './InfoTooltip';
-
+import InfoTooltip from '@/components/custom/InfoTooltip';
 const FormControlSelect = ({
   label,
   options,
@@ -17,6 +16,8 @@ const FormControlSelect = ({
         fontStyle='italic'
         fontFamily='EB Garamond Variable'
         textTransform='uppercase'
+        px={0}
+        mx={0}
       >
         <Flex justifyContent='space-between' alignItems='center'>
           {label}

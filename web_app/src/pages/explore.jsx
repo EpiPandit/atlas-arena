@@ -3,8 +3,8 @@ import { Flex, Box } from '@chakra-ui/react';
 import StaticMap, { Source, Layer } from 'react-map-gl';
 import { useAppContext } from '@/store/context';
 import { dynamicFilter, getUniqueCombinations } from '@/utils/utils';
-import Sidebar from '@/components/Sidebar';
-import RasterLayer from '@/components/RasterLayer';
+import Sidebar from '@/components/explore/Sidebar';
+import RasterLayer from '@/components/explore/RasterLayer';
 import axios from 'axios';
 import pako from 'pako';
 import ColorLegend from '@/components/explore/ColorLegend';
@@ -21,7 +21,6 @@ const initialViewState = {
 
 const Explore = () => {
   const { raw_data } = useAppContext();
-
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [filterTilesId, setFilterTilesId] = useState([]);

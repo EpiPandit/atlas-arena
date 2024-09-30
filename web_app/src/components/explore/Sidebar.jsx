@@ -2,23 +2,33 @@ import React, { useRef, useEffect, useState, use } from 'react';
 import { useAppContext } from '@/store/context';
 import FormControlCheckBoxSpecies from '@/components/custom/FormControlCheckBoxSpecies';
 import FormControlSelect from '@/components/custom/FormControlSelect';
-import FormControlRadioTime from './custom/FormControlRadioTime';
+import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
+import FormControlRadioCard from '../custom/FormControlRadioCard';
 import { Box } from '@chakra-ui/react';
 import { ALL_VIRUS, DEFAULT_MODEL, DEFAULT_TIME } from '@/config/constants';
 
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
+  const viewModeOptions = ['Species Distribution', 'Viral Hotspots'];
+
   const [selectedVirus, setSelectedVirus] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
+  const [selectedViewM, setSelectedViewM] = useState(viewModeOptions[0]);
 
   useEffect(() => {
     const tmpSpecies = allSpecies.map((i) => i.name);
-    handleSetDefault(ALL_VIRUS, tmpSpecies, [DEFAULT_TIME], DEFAULT_MODEL);
+    handleSetDefault(
+      ALL_VIRUS,
+      tmpSpecies,
+      [DEFAULT_TIME],
+      DEFAULT_MODEL,
+      viewModeOptions[0]
+    );
   }, [allVirus]);
   // actions
-  const handleSetDefault = (virus, species, time_frame, model) => {
+  const handleSetDefault = (virus, species, time_frame, model, view_mode) => {
     setSelectedVirus(virus);
     setSelectedSpecies(species);
     setSelectedTimeFrame(time_frame);
@@ -29,6 +39,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species,
       time_frame,
       model,
+      view_mode,
     });
   };
 
@@ -50,6 +61,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: species,
       time_frame: selectedTimeFrame,
       model: selectedModel,
+      view_mode: selectedViewM,
     });
   };
 
@@ -70,6 +82,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: [...species],
       time_frame: selectedTimeFrame,
       model: selectedModel,
+      view_mode: selectedViewM,
     });
   };
 
@@ -81,6 +94,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: selectedSpecies,
       time_frame: value,
       model: selectedModel,
+      view_mode: selectedViewM,
     });
   };
 
@@ -92,6 +106,19 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: selectedSpecies,
       time_frame: selectedTimeFrame,
       model: event.target.value,
+      view_mode: selectedViewM,
+    });
+  };
+
+  const handleViewModeChange = (value) => {
+    setSelectedViewM(value);
+    // update State
+    handleFilterTilesId({
+      virus: selectedVirus,
+      species: selectedSpecies,
+      time_frame: selectedTimeFrame,
+      model: selectedModel,
+      view_mode: value,
     });
   };
 
@@ -104,6 +131,13 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       bg='yellow.10'
       overflowY='auto'
     >
+      <FormControlRadioCard
+        label='view mode'
+        options={viewModeOptions}
+        value={selectedViewM}
+        handleAction={handleViewModeChange}
+        info='info'
+      />
       <FormControlSelect
         options={allVirus}
         label='Virus'
@@ -139,8 +173,12 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       /> */}
       <Box pt={4}>
         <p>
+          <b>viewmode : </b>
+          <small>{selectedViewM}</small>
+        </p>
+        <p>
           <b>virus : </b>
-          {selectedVirus}
+          <small>{selectedVirus}</small>
         </p>
         <p>
           <b>species ({selectedSpecies.length}) : </b>

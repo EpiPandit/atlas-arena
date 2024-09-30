@@ -1,4 +1,3 @@
-import { ALL_VIRUS } from '@/config/constants';
 import {
   FormControl,
   FormLabel,
@@ -6,10 +5,13 @@ import {
   Radio,
   RadioGroup,
   Checkbox,
+  Flex,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { DEFAULT_TIME } from '@/config/constants';
-const FormControlRadioTime = ({ label, options, handleAction }) => {
+import InfoTooltip from '@/components/custom/InfoTooltip';
+
+const FormControlRadioTime = ({ label, options, handleAction, info = '' }) => {
   const [selectRadio, setSelectRadio] = useState(DEFAULT_TIME);
   const [selectCheck, setSelectCheck] = useState(false);
 
@@ -60,8 +62,13 @@ const FormControlRadioTime = ({ label, options, handleAction }) => {
         fontSize='sm'
         fontFamily='EB Garamond Variable'
         textTransform='uppercase'
+        px={0}
+        mx={0}
       >
-        {label}
+        <Flex justifyContent='space-between' alignItems='center'>
+          {label}
+          <InfoTooltip label={info} />
+        </Flex>
       </FormLabel>
       <RadioGroup defaultValue={selectRadio} onChange={handleChangeRadio}>
         <Stack pl={0} py={1} spacing={1}>
