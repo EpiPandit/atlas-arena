@@ -68,15 +68,17 @@ const ColorLegend = ({
         >
           {customTitle}
         </Text>
-        <Popover placement='right-end'>
+        <Popover placement='bottom-end'>
           <PopoverTrigger>
-            <Icon as={PiDrop} boxSize={4} color='gray.500' cursor='pointer' />
+            <Flex>
+              <Icon as={PiDrop} boxSize={4} color='gray.500' />
+            </Flex>
           </PopoverTrigger>
           <PopoverContent
             w='163px'
             h='42px'
             p={0}
-            mt={7}
+            mt={0}
             ml='127px'
             _focus={{ outline: 'none' }}
             zIndex={10}
@@ -96,7 +98,7 @@ const ColorLegend = ({
                   <SliderFilledTrack />
                 </SliderTrack>
                 <SliderThumb boxSize={4}>
-                  <Box color='blue.500' as={PiDrop} />
+                  <PiDrop />
                 </SliderThumb>
               </Slider>
             </PopoverBody>
