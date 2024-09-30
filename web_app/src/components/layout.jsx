@@ -1,6 +1,5 @@
 import { useAppContext } from '@/store/context';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Box, Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -52,7 +51,6 @@ const Layout = ({ children }) => {
       <Flex as='main' flex='1'>
         <MainApp>{children}</MainApp>
       </Flex>
-      {/* <Footer /> */}
     </Flex>
   );
 };

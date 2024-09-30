@@ -16,7 +16,6 @@ import {
 } from '@chakra-ui/react';
 import { PiDrop } from 'react-icons/pi';
 import { MAP_COLORS } from '@/config/constants';
-import { useState } from 'react';
 
 const ColorLegend = ({
   color = '',

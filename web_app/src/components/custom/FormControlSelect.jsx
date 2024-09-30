@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Flex, Select } from '@chakra-ui/react';
-import { useState } from 'react';
 import InfoTooltip from '@/components/custom/InfoTooltip';
+
 const FormControlSelect = ({
   label,
   options,

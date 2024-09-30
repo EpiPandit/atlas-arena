@@ -1,6 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import { Source, Layer } from 'react-map-gl';
-import { defaultMapColor } from '@/utils/mapStyle';
 import { buildColorLayer } from '@/utils/utils';
 
 const RasterLayer = ({ item, opacity_filter = {} }) => {

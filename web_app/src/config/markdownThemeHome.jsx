@@ -2,7 +2,6 @@ import {
   Text,
   Heading,
   Link,
-  Code,
   UnorderedList,
   OrderedList,
   ListItem,

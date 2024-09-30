@@ -1,4 +1,3 @@
-import { useColorModeValue } from '@chakra-ui/react';
 import { Link as NextLink } from '@chakra-ui/next-js';
 import { useRouter } from 'next/router';
 
