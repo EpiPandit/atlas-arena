@@ -8,9 +8,9 @@ import {
   Checkbox,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-
+import { DEFAULT_TIME } from '@/config/constants';
 const FormControlRadioTime = ({ label, options, handleAction }) => {
-  const [selectRadio, setSelectRadio] = useState('');
+  const [selectRadio, setSelectRadio] = useState(DEFAULT_TIME);
   const [selectCheck, setSelectCheck] = useState(false);
 
   if (!options.length) return null;
@@ -63,7 +63,7 @@ const FormControlRadioTime = ({ label, options, handleAction }) => {
       >
         {label}
       </FormLabel>
-      <RadioGroup onChange={handleChangeRadio}>
+      <RadioGroup defaultValue={selectRadio} onChange={handleChangeRadio}>
         <Stack pl={0} py={1} spacing={1}>
           {renderOptions}
         </Stack>

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
 import StaticMap, { Source, Layer } from 'react-map-gl';
 import { useAppContext } from '@/store/context';
-import { dynamicFilter } from '@/utils/utils';
+import { dynamicFilter, getUniqueCombinations } from '@/utils/utils';
 import Sidebar from '@/components/Sidebar';
 import RasterLayer from '@/components/RasterLayer';
 import axios from 'axios';
@@ -14,9 +14,9 @@ const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 const BASENAME = (process.env.PUBLIC_URL || '').replace('//', '/');
 
 const initialViewState = {
-  latitude: 8.44830069039078,
-  longitude: -76.68246056031643,
-  zoom: 6,
+  latitude: 6,
+  longitude: -70,
+  zoom: 4.5,
 };
 
 const Explore = () => {
@@ -27,15 +27,8 @@ const Explore = () => {
   const [filterTilesId, setFilterTilesId] = useState([]);
   const [boundariesAdm, setBoundariesAdm] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [opacityFilter, setLayerStyle] = useState({});
 
-  const togglePanel = () => {
-    setIsPanelOpen(!isPanelOpen);
-  };
-  const handleFilterTilesId = (data_filter) => {
-    const raw_data_filter = dynamicFilter([...raw_data], { ...data_filter });
-
-    setFilterTilesId(raw_data_filter);
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,20 +50,46 @@ const Explore = () => {
 
     fetchData();
   }, []);
-  // const [initialState, setInitialState] = useState({ ...data });
 
-  // const handleLoad = () => {
-  //   const map = mapRef.current.getMap();
-  //   map.resize();
-  // };
-  // console.log('Explore', data);
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
+
+  const handleFilterTilesId = (data_filter) => {
+    const raw_data_filter = dynamicFilter([...raw_data], { ...data_filter });
+
+    setFilterTilesId(raw_data_filter);
+  };
+
+  const handleChangeLayerStyle = (specie, val) => {
+    let tmpOpacityFilter = { ...opacityFilter };
+    tmpOpacityFilter[specie] = val;
+    setLayerStyle({ ...tmpOpacityFilter });
+  };
 
   const buildRender = filterTilesId
     .filter((i) => i.tileset_id)
-    .map((item) => <RasterLayer key={item.tileset_id} item={item} />);
+    .map((item) => (
+      <RasterLayer
+        key={item.tileset_id}
+        item={item}
+        opacity_filter={opacityFilter}
+      />
+    ));
 
-  const hasTilesId = filterTilesId.length !== 0;
-
+  const renderVirusSelect = getUniqueCombinations(
+    filterTilesId.filter((i) => i.species),
+    'species',
+    'color'
+  ).map((item) => (
+    <ColorLegend
+      key={item.species}
+      title={item.species}
+      color={item.color}
+      value={opacityFilter}
+      handleChange={handleChangeLayerStyle}
+    />
+  ));
   return (
     <Flex position='relative' flexDirection='row'>
       <Sidebar
@@ -83,7 +102,7 @@ const Explore = () => {
             ref={mapRef}
             initialViewState={viewState}
             // onLoad={handleLoad}
-            minZoom={4}
+            minZoom={3.5}
             maxZoom={10}
             mapStyle={MAPBOX_STYLE}
             mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
@@ -95,7 +114,7 @@ const Explore = () => {
                   type='line'
                   source='adm_boundaries'
                   paint={{
-                    'line-width': hasTilesId ? 0.5 : 0,
+                    'line-width': filterTilesId.length !== 0 ? 0.5 : 0,
                     'line-color': 'rgba(255, 255, 255, 0.8)',
                   }}
                 />
@@ -110,12 +129,11 @@ const Explore = () => {
           top={4}
           right={6}
           display='flex'
-          overflowY='auto'
           flexDirection='column'
           gap={4}
           zIndex={10}
         >
-          <ColorLegend title='C. Callosus Distribution' />
+          {renderVirusSelect}
         </Box>
       </Box>
     </Flex>

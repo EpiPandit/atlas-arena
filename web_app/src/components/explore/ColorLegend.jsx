@@ -16,15 +16,27 @@ import {
 } from '@chakra-ui/react';
 import { PiDrop } from 'react-icons/pi';
 import { MAP_COLORS } from '@/config/constants';
+import { useState } from 'react';
 
 const ColorLegend = ({
   color = '',
   title = '',
   labels = ['0.0', '0.5', '1'],
+  handleChange = null,
 }) => {
+  const [opacity, setOpacity] = useState(100);
   let colors = MAP_COLORS[color];
   if (!color) {
     colors = [...MAP_COLORS.default];
+  }
+  const handleChangeOpacity = (ev) => {
+    setOpacity(ev);
+    handleChange(title, ev);
+  };
+  let customTitle = `${title} distribution `;
+  const titleList = title.split(' ');
+  if (titleList.length > 1) {
+    customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')} distribution`;
   }
 
   return (
@@ -53,8 +65,9 @@ const ColorLegend = ({
           fontWeight={600}
           fontStyle='italic'
           color='base.700'
+          textTransform='uppercase'
         >
-          {title}
+          {customTitle}
         </Text>
         <Popover placement='right-end'>
           <PopoverTrigger>
@@ -75,7 +88,11 @@ const ColorLegend = ({
               <Text fontSize='10px' m={0}>
                 Opacity
               </Text>
-              <Slider aria-label='slider-ex-1' defaultValue={50}>
+              <Slider
+                aria-label='slider-ex-1'
+                defaultValue={opacity}
+                onChange={handleChangeOpacity}
+              >
                 <SliderTrack>
                   <SliderFilledTrack />
                 </SliderTrack>

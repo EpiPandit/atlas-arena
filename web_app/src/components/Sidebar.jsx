@@ -4,20 +4,33 @@ import FormControlCheckBoxSpecies from '@/components/custom/FormControlCheckBoxS
 import FormControlSelect from '@/components/custom/FormControlSelect';
 import FormControlRadioTime from './custom/FormControlRadioTime';
 import { Box } from '@chakra-ui/react';
-import { ALL_VIRUS } from '@/config/constants';
+import { ALL_VIRUS, DEFAULT_MODEL, DEFAULT_TIME } from '@/config/constants';
 
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
-  const [selectedVirus, setSelectedVirus] = useState(ALL_VIRUS);
+  const [selectedVirus, setSelectedVirus] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
 
   useEffect(() => {
     const tmpSpecies = allSpecies.map((i) => i.name);
-    setSelectedSpecies(tmpSpecies);
-  }, [allSpecies]);
+    handleSetDefault(ALL_VIRUS, tmpSpecies, [DEFAULT_TIME], DEFAULT_MODEL);
+  }, [allVirus]);
   // actions
+  const handleSetDefault = (virus, species, time_frame, model) => {
+    setSelectedVirus(virus);
+    setSelectedSpecies(species);
+    setSelectedTimeFrame(time_frame);
+    setSelectedModel(model);
+
+    handleFilterTilesId({
+      virus,
+      species,
+      time_frame,
+      model,
+    });
+  };
 
   const handleVirusChange = (event) => {
     const value = event.target.value;
@@ -30,8 +43,6 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     setSelectedVirus(value);
 
     setSelectedSpecies(species);
-    setSelectedTimeFrame([]);
-    setSelectedModel('');
 
     // update
     handleFilterTilesId({
@@ -52,8 +63,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     }
 
     setSelectedSpecies([...species]);
-    setSelectedTimeFrame([]);
-    setSelectedModel('');
+
     // update
     handleFilterTilesId({
       virus: selectedVirus,
@@ -121,12 +131,12 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         info='model algoritm'
       />
 
-      <FormControlSelect
-        options={allModels}
+      {/* <FormControlSelect
+        options={[]}
         label='force infection'
         value={selectedModel}
         handleAction={handleModelChange}
-      />
+      /> */}
       <Box pt={4}>
         <p>
           <b>virus : </b>

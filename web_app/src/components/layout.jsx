@@ -1,8 +1,8 @@
 import { useAppContext } from '@/store/context';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Container, Box, Flex } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Flex } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import {
   setRawData,

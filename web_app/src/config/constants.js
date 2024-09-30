@@ -132,7 +132,17 @@ export const DATA_EQUIVALENCE = {
 
 export const MAP_COLORS = {
   default: ['#D1FAE5', '#A7F3D0', '#6EE7B7', '#34D399', '#059669'],
+  red: ['#FED7D7', '#FC8181', '#E53E3E', '#9B2C2C', '#63171B'],
+  orange: ['FEEBC8', '#F6AD55', '#DD6B20', '#9C4221', '#652B19'],
+  yellow: ['#FEFCBF', '#F6E05E', '#D69E2E', '#975A16', '#5F370E'],
+  green: ['#C6F6D5', '#68D391', '#38A169', '#276749', '#1C4532'],
+  teal: ['#B2F5EA', '#4FD1C5', '#319795', '#285E61', '#1D4044'],
+  blue: ['#bee3f8', '#63b3ed', '#3182ce', '#2c5282', '#1A365D'],
+  cyan: ['#C4F1F9', '#76E4F7', '#00B5D8', '#0987A0', '#065666'],
+  purple: ['#E9D8FD', '#B794F4', '#805AD5', '#553C9A', '#322659'],
+  pink: ['#FED7E2', '#F687B3', '#D53F8C', '#97266D', '#521B41'],
 };
 // default values
 export const ALL_VIRUS = 'All (combined)';
 export const DEFAULT_TIME = 'Current (year 1990-2010)';
+export const DEFAULT_MODEL = 'Combined';
