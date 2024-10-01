@@ -111,15 +111,13 @@ const OverlayComponent = ({
             </Text>
           </Box>
           <Box py={4} px={2}>
-            {intros &&
-              intros.map((item) => (
-                <ReactMarkdown
-                  key={item.id}
-                  components={ChakraUIRenderer(MarkdownThemeHome)}
-                  children={item.content}
-                  skipHtml
-                />
-              ))}
+            {intros && (
+              <ReactMarkdown
+                components={ChakraUIRenderer(MarkdownThemeHome)}
+                children={intros}
+                skipHtml={false}
+              />
+            )}
           </Box>
         </Box>
       </Container>

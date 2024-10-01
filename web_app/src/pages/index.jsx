@@ -1,6 +1,5 @@
 import React from 'react';
-import { loadContent } from '@/libs/yaml';
-import { getMetadataMd } from '@/libs/markdown';
+import { getMetadataMd, getMdContent } from '@/libs/markdown';
 
 import { Box } from '@chakra-ui/react';
 
@@ -10,8 +9,8 @@ import OverlayComponent from '@/components/home/OverlayComponent';
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 
-const Home = ({ configYml = {}, mddata = [] }) => {
-  const { sub_header, header, intros } = configYml;
+const Home = ({ mddata = [], pageData = {} }) => {
+  const { kicker, title, contentHtml } = pageData;
   const viruses = (mddata || []).filter((item) => item.layout === 'virus');
   const species = (mddata || []).filter((item) => item.layout === 'specie');
 
@@ -19,9 +18,9 @@ const Home = ({ configYml = {}, mddata = [] }) => {
     <Box position='relative' h='calc(100vh - 56px)' w='100vw' overflow='hidden'>
       <MapComponent accessToken={MAPBOX_ACCESS_TOKEN} mapStyle={MAPBOX_STYLE} />
       <OverlayComponent
-        subHeader={sub_header}
-        header={header}
-        intros={intros}
+        subHeader={kicker}
+        header={title}
+        intros={contentHtml}
         virus={viruses}
         species={species}
       />
@@ -30,13 +29,14 @@ const Home = ({ configYml = {}, mddata = [] }) => {
 };
 
 export async function getStaticProps() {
-  const configYml = loadContent('general.yaml');
   const dataPromises = getMetadataMd(['public', 'markdown']);
   const data = await Promise.all(dataPromises);
+  // home data
+  const homeData = await getMdContent('home.md', true);
   return {
     props: {
-      configYml,
       mddata: data,
+      pageData: homeData,
     },
   };
 }
