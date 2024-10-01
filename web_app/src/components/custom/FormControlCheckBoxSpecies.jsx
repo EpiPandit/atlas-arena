@@ -15,16 +15,17 @@ const FormControlCheckBoxSpecies = ({
   values = [],
   filterValue = ALL_VIRUS,
   info = '',
+  isDisabled = false,
 }) => {
   if (!options.length) return null;
 
   // filter
   const renderOptions = options.map((item) => {
-    let isDisabled = false;
+    let isDisabledTmp = false;
     if (filterValue === ALL_VIRUS) {
-      isDisabled = false;
+      isDisabledTmp = false;
     } else {
-      isDisabled = !(item.virus || []).includes(filterValue);
+      isDisabledTmp = !(item.virus || []).includes(filterValue);
     }
 
     return (
@@ -33,7 +34,7 @@ const FormControlCheckBoxSpecies = ({
         onChange={handleAction}
         key={item.key}
         id={item.key}
-        isDisabled={isDisabled}
+        isDisabled={isDisabled || isDisabledTmp}
       >
         {item.name}
       </Checkbox>
@@ -41,7 +42,7 @@ const FormControlCheckBoxSpecies = ({
   });
 
   return (
-    <FormControl my={4}>
+    <FormControl my={4} isDisabled={isDisabled}>
       <FormLabel
         fontSize='sm'
         fontFamily='EB Garamond Variable'
@@ -51,7 +52,7 @@ const FormControlCheckBoxSpecies = ({
       >
         <Flex justifyContent='space-between' alignItems='center'>
           {label}
-          <InfoTooltip label={info} />
+          <InfoTooltip label={info} props={{ isDisabled: isDisabled }} />
         </Flex>
       </FormLabel>
       <Stack pl={0} mt={1} spacing={1}>

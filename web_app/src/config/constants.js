@@ -146,3 +146,14 @@ export const MAP_COLORS = {
 export const ALL_VIRUS = 'All (combined)';
 export const DEFAULT_TIME = 'Current (year 1990-2010)';
 export const DEFAULT_MODEL = 'Combined';
+// force infection
+export const FORCE_INFECTION = [
+  {
+    name: 'B = 0.02',
+    key: 'B = 0.02',
+  },
+  {
+    name: 'B = 0.05',
+    key: 'B = 0.05',
+  },
+];

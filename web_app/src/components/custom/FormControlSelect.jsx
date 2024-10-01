@@ -10,9 +10,9 @@ const FormControlSelect = ({
   info = '',
 }) => {
   return (
-    <FormControl py={2}>
+    <FormControl py={2} isDisabled={isDisabled}>
       <FormLabel
-        fontSize='md'
+        fontSize='sm'
         fontStyle='italic'
         fontFamily='EB Garamond Variable'
         textTransform='uppercase'
@@ -21,7 +21,7 @@ const FormControlSelect = ({
       >
         <Flex justifyContent='space-between' alignItems='center'>
           {label}
-          <InfoTooltip label={info} />
+          <InfoTooltip label={info} props={{ isDisabled: isDisabled }} />
         </Flex>
       </FormLabel>
       <Select

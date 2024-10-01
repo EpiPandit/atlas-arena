@@ -11,7 +11,13 @@ import { useState } from 'react';
 import { DEFAULT_TIME } from '@/config/constants';
 import InfoTooltip from '@/components/custom/InfoTooltip';
 
-const FormControlRadioTime = ({ label, options, handleAction, info = '' }) => {
+const FormControlRadioTime = ({
+  label,
+  options,
+  handleAction,
+  info = '',
+  isDisabled = false,
+}) => {
   const [selectRadio, setSelectRadio] = useState(DEFAULT_TIME);
   const [selectCheck, setSelectCheck] = useState(false);
 
@@ -26,7 +32,6 @@ const FormControlRadioTime = ({ label, options, handleAction, info = '' }) => {
           isChecked={selectRadio === item.name}
           key={item.key}
           value={item.key}
-          isDisabled={false}
         >
           {item.name}
         </Radio>
@@ -57,7 +62,7 @@ const FormControlRadioTime = ({ label, options, handleAction, info = '' }) => {
   };
 
   return (
-    <FormControl my={4}>
+    <FormControl my={4} isDisabled={isDisabled}>
       <FormLabel
         fontSize='sm'
         fontFamily='EB Garamond Variable'
@@ -67,10 +72,14 @@ const FormControlRadioTime = ({ label, options, handleAction, info = '' }) => {
       >
         <Flex justifyContent='space-between' alignItems='center'>
           {label}
-          <InfoTooltip label={info} />
+          <InfoTooltip label={info} props={{ isDisabled: isDisabled }} />
         </Flex>
       </FormLabel>
-      <RadioGroup defaultValue={selectRadio} onChange={handleChangeRadio}>
+      <RadioGroup
+        defaultValue={selectRadio}
+        onChange={handleChangeRadio}
+        isDisabled={isDisabled}
+      >
         <Stack pl={0} py={1} spacing={1}>
           {renderOptions}
         </Stack>
@@ -79,7 +88,7 @@ const FormControlRadioTime = ({ label, options, handleAction, info = '' }) => {
         <Checkbox
           onChange={handleChangeCheck}
           isChecked={selectCheck}
-          isDisabled={deltaOptions.length === 0}
+          isDisabled={isDisabled || deltaOptions.length === 0}
         >
           Show Delta
         </Checkbox>

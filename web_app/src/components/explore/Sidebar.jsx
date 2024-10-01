@@ -5,7 +5,12 @@ import FormControlSelect from '@/components/custom/FormControlSelect';
 import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
 import FormControlRadioCard from '../custom/FormControlRadioCard';
 import { Box } from '@chakra-ui/react';
-import { ALL_VIRUS, DEFAULT_MODEL, DEFAULT_TIME } from '@/config/constants';
+import {
+  ALL_VIRUS,
+  DEFAULT_MODEL,
+  DEFAULT_TIME,
+  FORCE_INFECTION,
+} from '@/config/constants';
 
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
@@ -15,6 +20,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
+  const [selectedFI, setSelectedFI] = useState('');
   const [selectedViewM, setSelectedViewM] = useState(viewModeOptions[0]);
 
   useEffect(() => {
@@ -121,6 +127,11 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       view_mode: value,
     });
   };
+  const handleFIChange = (value) => {
+    setSelectedFI(value);
+  };
+
+  const isForceActive = selectedViewM === 'Species Distribution';
 
   return (
     <Box
@@ -136,6 +147,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         options={viewModeOptions}
         value={selectedViewM}
         handleAction={handleViewModeChange}
+        isDisabled={!isForceActive}
         info='info'
       />
       <FormControlSelect
@@ -143,6 +155,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         label='Virus'
         value={selectedVirus}
         handleAction={handleVirusChange}
+        isDisabled={!isForceActive}
       />
       <FormControlCheckBoxSpecies
         label='Reservoir Species'
@@ -150,11 +163,14 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         values={selectedSpecies}
         handleAction={handleSpeciesChange}
         filterValue={selectedVirus}
+        isDisabled={!isForceActive}
       />
       <FormControlRadioTime
         label='Timeframe'
         options={allTimeFrame}
         handleAction={handleTimeFrameChange}
+        isDisabled={!isForceActive}
+        info='Timeframe'
       />
 
       <FormControlSelect
@@ -162,15 +178,19 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         label='model algorithm'
         value={selectedModel}
         handleAction={handleModelChange}
+        isDisabled={!isForceActive}
         info='model algoritm'
       />
 
-      {/* <FormControlSelect
-        options={[]}
-        label='force infection'
-        value={selectedModel}
-        handleAction={handleModelChange}
-      /> */}
+      <FormControlSelect
+        options={FORCE_INFECTION}
+        label='force of infection'
+        value={selectedFI}
+        handleAction={handleFIChange}
+        isDisabled={isForceActive}
+        info='force infectio'
+      />
+
       <Box pt={4}>
         <p>
           <b>viewmode : </b>
