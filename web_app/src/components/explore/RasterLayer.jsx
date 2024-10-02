@@ -24,7 +24,12 @@ const RasterLayer = ({ item, opacity_filter = {} }) => {
           'raster-resampling': 'nearest',
           'raster-fade-duration': 0,
           'raster-opacity': opacity / 100,
-          'raster-color': [...rasterColor],
+          'raster-color': [
+            'case',
+            ['==', ['raster-value'], 0],
+            'rgba(0, 0, 0, 0)',
+            [...rasterColor],
+          ],
         }}
         beforeId='adm_boundaries_layer'
       />
@@ -33,3 +38,4 @@ const RasterLayer = ({ item, opacity_filter = {} }) => {
 };
 
 export default RasterLayer;
+['case', ['==', ['raster-value'], 255], 'rgba(0, 0, 0, 0)'];
