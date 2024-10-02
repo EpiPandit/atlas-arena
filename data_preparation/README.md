@@ -28,7 +28,7 @@ docker compose build
 2. export credentials from  [mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/)
 
 ```shell
-export CCESS_TOKEN=
+export ACCESS_TOKEN=
 export MAPBOX_USER=
 ```
 

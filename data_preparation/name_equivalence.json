@@ -13,27 +13,33 @@
   },
   "Zygodontomys_brevicauda": {
     "short": "zb",
-    "spreadsheet": "Zygodontomys brevicauda"
+    "spreadsheet": "Zygodontomys brevicauda",
+    "color": "cyan"
   },
   "Sigmodon_alstoni": {
     "short": "sa",
-    "spreadsheet": "Sigmodon alstoni"
+    "spreadsheet": "Sigmodon alstoni",
+    "color": "purple"
   },
   "Calomys_callosus": {
     "short": "cc",
-    "spreadsheet": "Calomys callosus"
+    "spreadsheet": "Calomys callosus",
+    "color": "blue"
   },
   "Calomys_musculinus": {
     "short": "cm",
-    "spreadsheet": "Calomys musculinus"
+    "spreadsheet": "Calomys musculinus",
+    "color": "pink"
   },
   "Calomys_laucha": {
     "short": "cl",
-    "spreadsheet": "Calomys laucha"
+    "spreadsheet": "Calomys laucha",
+    "color": "yellow"
   },
   "Oligoryzomys_flavescens": {
     "short": "of",
-    "spreadsheet": "Oligoryzomys flavescens"
+    "spreadsheet": "Oligoryzomys flavescens",
+    "color": "green"
   },
   "current_1990-2010": {
     "short": "cu",
