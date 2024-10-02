@@ -5,7 +5,7 @@ from tqdm import tqdm
 import os
 import csv
 import subprocess
-
+import time
 MAPBOX_USER = os.getenv("MAPBOX_USER")
 
 
@@ -131,15 +131,18 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
             cmd_mapbox = ["mapbox", "upload", tileset_id, rescale_]
 
             try:
-                # result = subprocess.run(
-                #     cmd_mapbox,
-                #     stdout=subprocess.DEVNULL,
-                #     stderr=subprocess.DEVNULL,
-                #     check=True,
-                # )
+                result = subprocess.run(
+                    cmd_mapbox,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    check=True,
+                )
                 row_data["tileset_id"] = tileset_id
                 csv_data_tiff.append(row_data)
+                # reduce errors
+                time.sleep(3)
             except subprocess.CalledProcessError as e:
+                row_data["tileset_id"] = "N/A"
                 print(f"Error: {e}")
 
         except Exception as ex:
