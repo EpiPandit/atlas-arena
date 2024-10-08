@@ -9,9 +9,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import ReactMarkdown from 'react-markdown';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import MarkdownThemeHome from '@/config/markdownThemeHome';
+import InnerHeading from '../custom/InnerHeading';
 import { Link as NextLink } from '@chakra-ui/next-js';
 
 const CustomCard = ({ title = '', subTitle = '', href = '' }) => {
@@ -46,9 +44,9 @@ const CustomCard = ({ title = '', subTitle = '', href = '' }) => {
 };
 
 const OverlayComponent = ({
-  subHeader = '',
-  header = '',
-  intros = [],
+  kicker = '',
+  title = '',
+  contentHtml = '',
   virus = [],
   species = [],
 }) => {
@@ -78,48 +76,7 @@ const OverlayComponent = ({
       pt={{ base: 4, md: 8, lg: 12 }}
     >
       <Container px={2} py={2} maxW='960px'>
-        <Box p={0} maxW='700px' mx='auto'>
-          <Flex py={1} justifyContent='center'>
-            <Text
-              fontSize='xs'
-              fontWeight='bold'
-              color='blue.900'
-              textTransform='uppercase'
-              letterSpacing='wider'
-              textAlign='center'
-              borderBottom={2}
-              p={0}
-              m={0}
-              borderBottomColor='blue.800'
-              borderStyle='solid'
-            >
-              {subHeader}
-            </Text>
-          </Flex>
-
-          <Box py={1} px={2}>
-            <Text
-              fontSize={{ base: '4xl', md: '6xl' }}
-              fontWeight='bold'
-              color='blue.900'
-              lineHeight='shorter'
-              letterSpacing='wider'
-              fontStyle='italic'
-              textAlign='center'
-            >
-              {header}
-            </Text>
-          </Box>
-          <Box py={4} px={2}>
-            {intros && (
-              <ReactMarkdown
-                components={ChakraUIRenderer(MarkdownThemeHome)}
-                children={intros}
-                skipHtml={false}
-              />
-            )}
-          </Box>
-        </Box>
+        <InnerHeading kicker={kicker} title={title} contentHtml={contentHtml} />
       </Container>
       <Container textAlign='start' px={0} py={2} maxW='960px'>
         <Tabs variant='unstyled'>

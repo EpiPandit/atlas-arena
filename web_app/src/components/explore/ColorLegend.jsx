@@ -23,6 +23,7 @@ const ColorLegend = ({
   labels = ['0.0', '0.5', '1'],
   handleChange = null,
   value = {},
+  has_many = false,
 }) => {
   let colors = MAP_COLORS[color];
   if (!color) {
@@ -37,7 +38,7 @@ const ColorLegend = ({
   if (titleList.length > 1) {
     customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')} distribution`;
   }
-  const opacity = title in value ? value[title] : 100;
+  const opacity = title in value ? value[title] : has_many ? 50 : 100;
   return (
     <Box
       w='303px'
@@ -106,11 +107,13 @@ const ColorLegend = ({
         </Popover>
       </Flex>
 
-      <Box h='12px' mb={0} display='flex' width='full'>
-        {colors.map((color, index) => (
-          <Box key={index} w='20%' h='full' bg={color}></Box>
-        ))}
-      </Box>
+      <Box
+        h='12px'
+        mb={0}
+        display='flex'
+        width='full'
+        bgGradient={`linear(to-r, ${colors[0]}, ${colors[colors.length - 1]})`}
+      />
 
       <Box display='flex' mt={0} justifyContent='space-between' width='full'>
         {labels.map((i) => (

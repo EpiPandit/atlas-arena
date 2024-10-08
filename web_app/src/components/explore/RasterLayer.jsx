@@ -2,10 +2,11 @@ import React from 'react';
 import { Source, Layer } from 'react-map-gl';
 import { buildColorLayer } from '@/utils/utils';
 
-const RasterLayer = ({ item, opacity_filter = {} }) => {
+const RasterLayer = ({ item, opacity_filter = {}, has_many = true }) => {
   const { tileset_id, species, color } = item;
 
-  let opacity = species in opacity_filter ? opacity_filter[species] : 100;
+  let opacity =
+    species in opacity_filter ? opacity_filter[species] : has_many ? 50 : 100;
   const rasterColor = buildColorLayer(color);
   return (
     <Source
@@ -26,7 +27,7 @@ const RasterLayer = ({ item, opacity_filter = {} }) => {
           'raster-opacity': opacity / 100,
           'raster-color': [
             'case',
-            ['==', ['raster-value'], 0],
+            ['<=', ['raster-value'], 0.009],
             'rgba(0, 0, 0, 0)',
             [...rasterColor],
           ],
@@ -38,4 +39,3 @@ const RasterLayer = ({ item, opacity_filter = {} }) => {
 };
 
 export default RasterLayer;
-['case', ['==', ['raster-value'], 255], 'rgba(0, 0, 0, 0)'];

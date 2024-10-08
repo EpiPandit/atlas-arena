@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, HStack, Flex } from '@chakra-ui/react';
 import RadioCard from '@/components/custom/RadioCard';
 import { useRadioGroup } from '@chakra-ui/react';
-import InfoTooltip from '@/components/custom/InfoTooltip';
+import FormLabelFlex from '@/components/custom/FormLabelFlex';
 
 const FormControlRadioCard = ({
   label,
@@ -20,19 +20,7 @@ const FormControlRadioCard = ({
 
   return (
     <FormControl py={2}>
-      <FormLabel
-        fontSize='md'
-        fontStyle='italic'
-        fontFamily='EB Garamond Variable'
-        textTransform='uppercase'
-        px={0}
-        mx={0}
-      >
-        <Flex justifyContent='space-between' alignItems='center'>
-          {label}
-          <InfoTooltip label={info} />
-        </Flex>
-      </FormLabel>
+      <FormLabelFlex label={label} info={info} isDisabled={isDisabled} />
       <HStack {...group} gap={0}>
         {options.map((value, k) => {
           const radio = getRadioProps({ value });

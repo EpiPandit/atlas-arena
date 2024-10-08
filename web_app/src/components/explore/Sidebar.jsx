@@ -3,25 +3,31 @@ import { useAppContext } from '@/store/context';
 import FormControlCheckBoxSpecies from '@/components/custom/FormControlCheckBoxSpecies';
 import FormControlSelect from '@/components/custom/FormControlSelect';
 import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
-import FormControlRadioCard from '../custom/FormControlRadioCard';
+import FormControlSwitch from '@/components/custom/FormControlSwitch';
+import FormControlText from '@/components/custom/FormControlText';
 import { Box } from '@chakra-ui/react';
 import {
   ALL_VIRUS,
   DEFAULT_MODEL,
   DEFAULT_TIME,
-  FORCE_INFECTION,
+  SIDEBAR_TITLE,
+  SIDEBAR_SUBTITLE,
 } from '@/config/constants';
+import {
+  INFO_VIRUS,
+  INFO_TIMEFRAME,
+  INFO_SPECIES,
+  INFO_MODEL,
+} from '@/config/constants.info';
 
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
-  const viewModeOptions = ['Species Distribution', 'Viral Hotspots'];
 
   const [selectedVirus, setSelectedVirus] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
-  const [selectedFI, setSelectedFI] = useState('');
-  const [selectedViewM, setSelectedViewM] = useState(viewModeOptions[0]);
+  const [selectedDistribution, setSelectedDistribution] = useState(true);
 
   useEffect(() => {
     const tmpSpecies = allSpecies.map((i) => i.name);
@@ -30,22 +36,29 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       tmpSpecies,
       [DEFAULT_TIME],
       DEFAULT_MODEL,
-      viewModeOptions[0]
+      true
     );
   }, [allVirus]);
   // actions
-  const handleSetDefault = (virus, species, time_frame, model, view_mode) => {
+  const handleSetDefault = (
+    virus,
+    species,
+    time_frame,
+    model,
+    distribution
+  ) => {
     setSelectedVirus(virus);
     setSelectedSpecies(species);
     setSelectedTimeFrame(time_frame);
     setSelectedModel(model);
+    setSelectedDistribution(distribution);
 
     handleFilterTilesId({
       virus,
       species,
       time_frame,
       model,
-      view_mode,
+      distribution,
     });
   };
 
@@ -67,7 +80,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: species,
       time_frame: selectedTimeFrame,
       model: selectedModel,
-      view_mode: selectedViewM,
+      distribution: selectedDistribution,
     });
   };
 
@@ -88,7 +101,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: [...species],
       time_frame: selectedTimeFrame,
       model: selectedModel,
-      view_mode: selectedViewM,
+      distribution: selectedDistribution,
     });
   };
 
@@ -100,7 +113,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: selectedSpecies,
       time_frame: value,
       model: selectedModel,
-      view_mode: selectedViewM,
+      distribution: selectedDistribution,
     });
   };
 
@@ -112,26 +125,21 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: selectedSpecies,
       time_frame: selectedTimeFrame,
       model: event.target.value,
-      view_mode: selectedViewM,
+      distribution: selectedDistribution,
     });
   };
 
-  const handleViewModeChange = (value) => {
-    setSelectedViewM(value);
-    // update State
+  const handleDistributionChange = () => {
+    setSelectedDistribution(!selectedDistribution);
+    // update stats
     handleFilterTilesId({
       virus: selectedVirus,
       species: selectedSpecies,
       time_frame: selectedTimeFrame,
-      model: selectedModel,
-      view_mode: value,
+      model: event.target.value,
+      distribution: !selectedDistribution,
     });
   };
-  const handleFIChange = (value) => {
-    setSelectedFI(value);
-  };
-
-  const isForceActive = selectedViewM === 'Species Distribution';
 
   return (
     <Box
@@ -142,60 +150,43 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       bg='yellow.10'
       overflowY='auto'
     >
-      <FormControlRadioCard
-        label='view mode'
-        options={viewModeOptions}
-        value={selectedViewM}
-        handleAction={handleViewModeChange}
-        isDisabled={!isForceActive}
-        info='info'
-      />
+      <FormControlText label={SIDEBAR_TITLE} text={SIDEBAR_SUBTITLE} />
       <FormControlSelect
-        options={allVirus}
         label='Virus'
+        options={allVirus}
+        info={INFO_VIRUS}
         value={selectedVirus}
         handleAction={handleVirusChange}
-        isDisabled={!isForceActive}
+      />
+
+      <FormControlRadioTime
+        label='Timeframe'
+        options={allTimeFrame}
+        info={INFO_TIMEFRAME}
+        handleAction={handleTimeFrameChange}
+      />
+      <FormControlSwitch
+        label='Show rodent reservoirs distribution'
+        value={selectedDistribution}
+        handleAction={handleDistributionChange}
       />
       <FormControlCheckBoxSpecies
         label='Reservoir Species'
         options={allSpecies}
+        info={INFO_SPECIES}
         values={selectedSpecies}
         handleAction={handleSpeciesChange}
         filterValue={selectedVirus}
-        isDisabled={!isForceActive}
       />
-      <FormControlRadioTime
-        label='Timeframe'
-        options={allTimeFrame}
-        handleAction={handleTimeFrameChange}
-        isDisabled={!isForceActive}
-        info='Timeframe'
-      />
-
       <FormControlSelect
-        options={allModels}
         label='model algorithm'
+        options={allModels}
+        info={INFO_MODEL}
         value={selectedModel}
         handleAction={handleModelChange}
-        isDisabled={!isForceActive}
-        info='model algoritm'
-      />
-
-      <FormControlSelect
-        options={FORCE_INFECTION}
-        label='force of infection'
-        value={selectedFI}
-        handleAction={handleFIChange}
-        isDisabled={isForceActive}
-        info='force infectio'
       />
 
       <Box pt={4}>
-        <p>
-          <b>viewmode : </b>
-          <small>{selectedViewM}</small>
-        </p>
         <p>
           <b>virus : </b>
           <small>{selectedVirus}</small>

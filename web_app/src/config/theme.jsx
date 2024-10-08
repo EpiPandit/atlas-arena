@@ -56,7 +56,7 @@ const theme = extendTheme({
         overflowX: 'hidden',
         bg: mode('secondary.50', 'gray.900')(props),
         fontFamily:
-          "'Montserrat Variable', 'EB Garamond Variable', 'sans-serif'",
+          "'sans-serif','Montserrat Variable', 'EB Garamond Variable' ",
       },
     }),
   },

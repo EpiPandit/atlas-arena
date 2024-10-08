@@ -1,5 +1,5 @@
 ---
-name: Arena Atlas
+name: home
 kicker: WELCOME TO THE
 title: Arena Atlas
 layout: page

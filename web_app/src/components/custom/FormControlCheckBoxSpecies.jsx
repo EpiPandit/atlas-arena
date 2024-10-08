@@ -1,12 +1,6 @@
 import { ALL_VIRUS } from '@/config/constants';
-import {
-  FormControl,
-  FormLabel,
-  Stack,
-  Checkbox,
-  Flex,
-} from '@chakra-ui/react';
-import InfoTooltip from '@/components/custom/InfoTooltip';
+import { FormControl, Stack, Checkbox } from '@chakra-ui/react';
+import FormLabelFlex from '@/components/custom/FormLabelFlex';
 
 const FormControlCheckBoxSpecies = ({
   label,
@@ -43,18 +37,7 @@ const FormControlCheckBoxSpecies = ({
 
   return (
     <FormControl my={4} isDisabled={isDisabled}>
-      <FormLabel
-        fontSize='sm'
-        fontFamily='EB Garamond Variable'
-        textTransform='uppercase'
-        px={0}
-        mx={0}
-      >
-        <Flex justifyContent='space-between' alignItems='center'>
-          {label}
-          <InfoTooltip label={info} props={{ isDisabled: isDisabled }} />
-        </Flex>
-      </FormLabel>
+      <FormLabelFlex label={label} info={info} isDisabled={isDisabled} />
       <Stack pl={0} mt={1} spacing={1}>
         {renderOptions}
       </Stack>

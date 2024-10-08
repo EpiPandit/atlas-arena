@@ -13,7 +13,7 @@ import { Icon } from '@chakra-ui/react';
 import { Link as NextLink } from '@chakra-ui/next-js';
 
 import NavLink from '@/components/custom/NavLink';
-import { LINK_HEADER } from '@/config/constants';
+import { LINK_HEADER, PAGE_TITLE } from '@/config/constants';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,9 +30,11 @@ const Header = () => {
         <Box>
           <Text
             fontSize='md'
-            fontFamily='EB Garamond Variable'
+            fontFamily='sans-serif'
             color='blue.800'
-            fontStyle='italic'
+            fontWeight={600}
+            lineHeight='21px'
+            letterSpacing={2}
             textTransform='uppercase'
           >
             <NextLink
@@ -41,7 +43,7 @@ const Header = () => {
                 textDecoration: 'none',
               }}
             >
-              Arena atlas
+              {PAGE_TITLE}
             </NextLink>
           </Text>
         </Box>

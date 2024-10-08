@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { DEFAULT_TIME } from '@/config/constants';
-import InfoTooltip from '@/components/custom/InfoTooltip';
+import FormLabelFlex from '@/components/custom/FormLabelFlex';
 
 const FormControlRadioTime = ({
   label,
@@ -63,18 +63,7 @@ const FormControlRadioTime = ({
 
   return (
     <FormControl my={4} isDisabled={isDisabled}>
-      <FormLabel
-        fontSize='sm'
-        fontFamily='EB Garamond Variable'
-        textTransform='uppercase'
-        px={0}
-        mx={0}
-      >
-        <Flex justifyContent='space-between' alignItems='center'>
-          {label}
-          <InfoTooltip label={info} props={{ isDisabled: isDisabled }} />
-        </Flex>
-      </FormLabel>
+      <FormLabelFlex label={label} info={info} isDisabled={isDisabled} />
       <RadioGroup
         defaultValue={selectRadio}
         onChange={handleChangeRadio}

@@ -21,6 +21,7 @@ const initialViewState = {
 
 const Explore = () => {
   const { raw_data } = useAppContext();
+
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [filterTilesId, setFilterTilesId] = useState([]);
@@ -73,6 +74,7 @@ const Explore = () => {
         key={item.tileset_id}
         item={item}
         opacity_filter={opacityFilter}
+        has_many={filterTilesId.length > 0}
       />
     ));
 
@@ -86,6 +88,7 @@ const Explore = () => {
       title={item.species}
       color={item.color}
       value={opacityFilter}
+      has_many={filterTilesId.length > 0}
       handleChange={handleChangeLayerStyle}
     />
   ));
@@ -113,8 +116,8 @@ const Explore = () => {
                   type='line'
                   source='adm_boundaries'
                   paint={{
-                    'line-width': filterTilesId.length !== 0 ? 0.5 : 0,
-                    'line-color': 'rgba(255, 255, 255, 0.8)',
+                    'line-width': filterTilesId.length !== 0 ? 0.7 : 0,
+                    'line-color': 'rgba(1, 1, 1, 0.5)',
                   }}
                 />
               </Source>

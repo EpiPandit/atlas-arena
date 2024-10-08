@@ -1,5 +1,5 @@
 import { FormControl, FormLabel, Flex, Select } from '@chakra-ui/react';
-import InfoTooltip from '@/components/custom/InfoTooltip';
+import FormLabelFlex from '@/components/custom/FormLabelFlex';
 
 const FormControlSelect = ({
   label,
@@ -11,19 +11,7 @@ const FormControlSelect = ({
 }) => {
   return (
     <FormControl py={2} isDisabled={isDisabled}>
-      <FormLabel
-        fontSize='sm'
-        fontStyle='italic'
-        fontFamily='EB Garamond Variable'
-        textTransform='uppercase'
-        px={0}
-        mx={0}
-      >
-        <Flex justifyContent='space-between' alignItems='center'>
-          {label}
-          <InfoTooltip label={info} props={{ isDisabled: isDisabled }} />
-        </Flex>
-      </FormLabel>
+      <FormLabelFlex label={label} info={info} isDisabled={isDisabled} />
       <Select
         bg='white'
         borderColor='gray.200'

@@ -11,6 +11,7 @@ const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 
 const Home = ({ mddata = [], pageData = {} }) => {
   const { kicker, title, contentHtml } = pageData;
+
   const viruses = (mddata || []).filter((item) => item.layout === 'virus');
   const species = (mddata || []).filter((item) => item.layout === 'specie');
 
@@ -18,9 +19,9 @@ const Home = ({ mddata = [], pageData = {} }) => {
     <Box position='relative' h='calc(100vh - 56px)' w='100vw' overflow='hidden'>
       <MapComponent accessToken={MAPBOX_ACCESS_TOKEN} mapStyle={MAPBOX_STYLE} />
       <OverlayComponent
-        subHeader={kicker}
-        header={title}
-        intros={contentHtml}
+        kicker={kicker}
+        title={title}
+        contentHtml={contentHtml}
         virus={viruses}
         species={species}
       />

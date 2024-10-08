@@ -16,16 +16,7 @@ export default function Publications({ content }) {
         'container.2xl',
       ]}
       p={[2, 4]}
-    >
-      <h1>{title}</h1>
-      <h2>{title}</h2>
-      <h3>{title}</h3>
-      <ReactMarkdown
-        components={ChakraUIRenderer()}
-        children={description}
-        skipHtml
-      />
-    </Container>
+    ></Container>
   );
 }
 

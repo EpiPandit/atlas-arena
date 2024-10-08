@@ -1,4 +1,4 @@
-export const PAGE_TITLE = 'arena atlas';
+export const PAGE_TITLE = 'atlas arena';
 export const PAGE_KEYWORDS = 'arena atlas';
 export const PAGE_DESCRIPTION = 'arena atlas';
 export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
@@ -15,8 +15,11 @@ export const LINK_HEADER = [
     isExternal: true,
   },
 ];
+// Explore
+export const SIDEBAR_TITLE = 'EXPLORE';
+export const SIDEBAR_SUBTITLE = 'Explore the risk of Arena Viruses';
 
-// DATA
+// DATA EQUIVALENCE
 export const DATA_EQUIVALENCE = {
   'Guanarito virus': {
     short: 'g',
@@ -129,7 +132,7 @@ export const DATA_EQUIVALENCE = {
     folder_name: 'force_of_infection.tif',
   },
 };
-
+// MAP_COLORS
 export const MAP_COLORS = {
   default: ['#D1FAE5', '#A7F3D0', '#6EE7B7', '#34D399', '#059669'],
   red: ['#FED7D7', '#FC8181', '#E53E3E', '#9B2C2C', '#63171B'],
@@ -142,11 +145,12 @@ export const MAP_COLORS = {
   purple: ['#E9D8FD', '#B794F4', '#805AD5', '#553C9A', '#322659'],
   pink: ['#FED7E2', '#F687B3', '#D53F8C', '#97266D', '#521B41'],
 };
-// default values
+// DEFAULT VALUES
 export const ALL_VIRUS = 'All (combined)';
 export const DEFAULT_TIME = 'Current (year 1990-2010)';
 export const DEFAULT_MODEL = 'Combined';
-// force infection
+
+// FORCE INFECTION
 export const FORCE_INFECTION = [
   {
     name: 'B = 0.02',
