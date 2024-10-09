@@ -17,7 +17,7 @@ const MarkdownThemeHome = {
         fontSize='lg'
         color='gray.700'
         textAlign='start'
-        mt={3}
+        mx={1}
       >
         {children}
       </Text>

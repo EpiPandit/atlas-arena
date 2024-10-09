@@ -1,7 +1,8 @@
 ---
 name: home
-kicker: WELCOME TO THE
+kicker:
 title: Arena Atlas
+sub_title: Climate change alters human risk for infectious diseases
 layout: page
 ---
 

@@ -10,7 +10,7 @@ const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 
 const Home = ({ mddata = [], pageData = {} }) => {
-  const { kicker, title, contentHtml } = pageData;
+  const { kicker, title, sub_title, contentHtml } = pageData;
 
   const viruses = (mddata || []).filter((item) => item.layout === 'virus');
   const species = (mddata || []).filter((item) => item.layout === 'specie');
@@ -21,6 +21,7 @@ const Home = ({ mddata = [], pageData = {} }) => {
       <OverlayComponent
         kicker={kicker}
         title={title}
+        sub_title={sub_title}
         contentHtml={contentHtml}
         virus={viruses}
         species={species}
