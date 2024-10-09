@@ -27,7 +27,6 @@ const Resources = ({ mdData, pageData }) => {
   const renderPanels = allVirus.map((item) => (
     <TabPanel key={item.filename}>
       <Box>
-        <Text as='h2'>{item.name}</Text>
         <ReactMarkdown
           key={item.filename}
           components={ChakraUIRenderer(MarkdownTheme)}

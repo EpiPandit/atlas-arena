@@ -1,5 +1,5 @@
 ---
-name: Guanarito
+name: Guanarito virus
 species:
   - Zygodontomys brevicauda
   - Sigmodon alstoni

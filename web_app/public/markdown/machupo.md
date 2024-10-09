@@ -1,5 +1,5 @@
 ---
-name: Machupo
+name: Machupo virus
 species:
   - Calomys callosus
 layout: virus

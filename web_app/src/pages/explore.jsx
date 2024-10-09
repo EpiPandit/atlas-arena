@@ -8,6 +8,8 @@ import RasterLayer from '@/components/explore/RasterLayer';
 import axios from 'axios';
 import pako from 'pako';
 import ColorLegend from '@/components/explore/ColorLegend';
+import { getMetadataMd } from '@/libs/markdown';
+import CustomModal from '@/components/explore/CustomModal';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
@@ -19,15 +21,15 @@ const initialViewState = {
   zoom: 4.5,
 };
 
-const Explore = () => {
+const Explore = ({ mddata }) => {
   const { raw_data } = useAppContext();
 
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [filterTilesId, setFilterTilesId] = useState([]);
   const [boundariesAdm, setBoundariesAdm] = useState(null);
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [opacityFilter, setLayerStyle] = useState({});
+  const [dataVirus, setDataVirus] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,14 +53,18 @@ const Explore = () => {
     fetchData();
   }, []);
 
-  const togglePanel = () => {
-    setIsPanelOpen(!isPanelOpen);
-  };
-
   const handleFilterTilesId = (data_filter) => {
     const raw_data_filter = dynamicFilter([...raw_data], { ...data_filter });
 
     setFilterTilesId(raw_data_filter);
+    // show virus draw
+    const { virus } = data_filter;
+
+    if (virus && mddata) {
+      setDataVirus(mddata[virus] || {});
+    } else {
+      setDataVirus({});
+    }
   };
 
   const handleChangeLayerStyle = (specie, val) => {
@@ -92,14 +98,15 @@ const Explore = () => {
       handleChange={handleChangeLayerStyle}
     />
   ));
+
   return (
     <Flex position='relative' flexDirection='row'>
       <Sidebar
         handleFilterTilesId={handleFilterTilesId}
         filterTilesId={filterTilesId}
       />
-      <Box flex={1}>
-        <Box h='calc(100vh - 56px)'>
+      <Box flex={1} position='relative'>
+        <Box h='calc(100vh - 56px)' flex={1}>
           <StaticMap
             ref={mapRef}
             initialViewState={viewState}
@@ -137,9 +144,27 @@ const Explore = () => {
         >
           {renderVirusSelect}
         </Box>
+        <CustomModal dataVirus={dataVirus} />
       </Box>
     </Flex>
   );
 };
+
+export async function getStaticProps() {
+  const dataPromises = getMetadataMd(['public', 'markdown'], true);
+  const data = await Promise.all(dataPromises);
+  const result = data
+    .filter((item) => item.layout === 'virus')
+    .reduce((acc, item) => {
+      acc[item.name] = { ...item };
+      return acc;
+    }, {});
+  // home data
+  return {
+    props: {
+      mddata: result,
+    },
+  };
+}
 
 export default Explore;

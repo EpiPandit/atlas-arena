@@ -36,7 +36,7 @@ const ColorLegend = ({
   let customTitle = `${title} distribution `;
   const titleList = title.split(' ');
   if (titleList.length > 1) {
-    customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')} distribution`;
+    customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')}`;
   }
   const opacity = title in value ? value[title] : has_many ? 50 : 100;
   return (
@@ -72,7 +72,7 @@ const ColorLegend = ({
         <Popover placement='bottom-end'>
           <PopoverTrigger>
             <Flex>
-              <Icon as={PiDrop} boxSize={4} color='gray.500' />
+              <Icon as={PiDrop} boxSize={4} color='gray.500' cursor='pointer' />
             </Flex>
           </PopoverTrigger>
           <PopoverContent

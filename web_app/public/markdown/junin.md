@@ -1,5 +1,5 @@
 ---
-name: Junin
+name: Junin virus
 species:
   - Calomys musculinus
   - Calomys laucha
