@@ -42,16 +42,29 @@ const FormControlRadioTime = ({
     .map((item) => item.name);
 
   // action
-  const sendAction = (radioVal, checkVal) => {
-    let newVal = [];
-    if (radioVal) {
-      newVal.push(radioVal);
+  const sendAction = (radioVal = '', checkVal = false) => {
+    const newVal = [];
+
+    if (!radioVal || radioVal === DEFAULT_TIME) {
+      newVal.push(DEFAULT_TIME);
+    } else {
+      const typeSSP = radioVal.substring(0, 6).trim().toLowerCase();
+
+      if (checkVal) {
+        const filteredOption = deltaOptions.find((item) =>
+          item.toLowerCase().includes(typeSSP)
+        );
+        if (filteredOption) {
+          newVal.push(filteredOption);
+        }
+      } else {
+        newVal.push(radioVal);
+      }
     }
-    if (checkVal && deltaOptions.length) {
-      newVal = newVal.concat(deltaOptions);
-    }
+
     handleAction([...newVal]);
   };
+
   const handleChangeRadio = (val) => {
     setSelectRadio(val);
     sendAction(val, selectCheck);
