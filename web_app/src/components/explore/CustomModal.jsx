@@ -52,7 +52,7 @@ const CustomModal = ({ dataVirus = {} }) => {
             ? 0
             : isCentered
               ? 'auto'
-              : '-100%'
+              : '0'
         }
         top={isCentered ? '10%' : 'auto'}
         left='50%'
