@@ -18,7 +18,14 @@ import { LINK_HEADER, PAGE_TITLE, H_HEADER } from '@/config/constants/general';
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box bg='secondary.50' py={3} px={4} className='border' h={`${H_HEADER}px`}>
+    <Box
+      bg='secondary.50'
+      py={3}
+      px={4}
+      borderBottom={'1px'}
+      borderBottomColor='gray.300'
+      h={`${H_HEADER}px`}
+    >
       <Flex alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}

@@ -19,7 +19,7 @@ const Home = ({ mddata = [], pageData = {} }) => {
     <Box
       position='relative'
       h={`calc(100vh - ${H_HEADER}px)`}
-      w='100vw'
+      maxW='100vw'
       overflow='hidden'
     >
       <MapComponent accessToken={MAPBOX_ACCESS_TOKEN} mapStyle={MAPBOX_STYLE} />

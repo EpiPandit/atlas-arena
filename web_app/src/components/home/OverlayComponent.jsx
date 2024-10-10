@@ -67,14 +67,17 @@ const OverlayComponent = ({
       position='absolute'
       top={0}
       left={0}
+      right={0}
       w='100vw'
-      h='100vh'
+      minH={{ base: '100vh', md: 'auto' }}
+      maxH={{ base: '100vh', md: 'auto' }}
       zIndex={2}
       display='flex'
       flexDirection='column'
       justifyContent='start'
       overflowY='auto'
       pt={{ base: 4, md: 8, lg: 12 }}
+      pb={{ base: 4, md: 8, lg: 12 }}
     >
       <Container px={2} py={2} maxW='960px'>
         <InnerHeading
@@ -84,7 +87,7 @@ const OverlayComponent = ({
           contentHtml={contentHtml}
         />
       </Container>
-      <Container textAlign='start' px={0} py={2} maxW='960px'>
+      <Container textAlign='start' px={0} py={4} maxW='960px'>
         <Tabs variant='unstyled'>
           <TabList justifyContent='center'>
             <Tab>VIRUSES</Tab>

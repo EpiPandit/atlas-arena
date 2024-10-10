@@ -55,7 +55,7 @@ const InnerHeading = ({
       {renderKicker}
       <Box py={1} px={2}>
         <Text
-          fontSize='6xl'
+          fontSize={['3xl', '5xl', '6xl']}
           fontWeight={600}
           color='blue.900'
           lineHeight='shorter'

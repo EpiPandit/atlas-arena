@@ -25,9 +25,10 @@ const MapComponent = ({ mapStyle, accessToken }) => {
       left={0}
       w='100vw'
       h='100vh'
-      mt='25%'
+      mt={{ base: '15%', md: '25%' }}
       zIndex={1}
       overflow='hidden'
+      px={0}
     >
       <Box w='full' h='full'>
         <StaticMap

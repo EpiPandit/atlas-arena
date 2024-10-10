@@ -13,7 +13,7 @@ const DATA_API = process.env.NEXT_PUBLIC_DATA_API;
 
 const MainApp = ({ children }) => {
   return (
-    <Box flex='1' w='full' mx='auto' position='relative'>
+    <Box position='relative' h='100%' overflow='hidden'>
       {children}
     </Box>
   );
@@ -46,9 +46,9 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <Flex direction='column' h='100vh' p={0}>
+    <Flex direction='column' minH='100vh' p={0} m={0}>
       <Header />
-      <Flex as='main' flex='1'>
+      <Flex as='main' flex='1' direction='column' overflow='hidden'>
         <MainApp>{children}</MainApp>
       </Flex>
     </Flex>
