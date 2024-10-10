@@ -17,7 +17,6 @@ const FormControlSelect = ({
         borderColor='gray.200'
         value={value}
         onChange={handleAction}
-        fontFamily='Montserrat Variable'
       >
         {options.map((i) => (
           <option key={i.key} value={i.key}>
