@@ -26,3 +26,7 @@ export const MODEL_INFO = 'model';
 
 // LEGEND
 export const LEGEND_OPACITY = 'Opacity';
+
+// MODAL
+
+export const FIRST_LINE_MODAL = 'About the virus';
