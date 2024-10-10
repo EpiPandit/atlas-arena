@@ -13,12 +13,12 @@ import { Icon } from '@chakra-ui/react';
 import { Link as NextLink } from '@chakra-ui/next-js';
 
 import NavLink from '@/components/custom/NavLink';
-import { LINK_HEADER, PAGE_TITLE } from '@/config/constants';
+import { LINK_HEADER, PAGE_TITLE, H_HEADER } from '@/config/constants/general';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box bg='secondary.50' py={3} px={4} className='border' h='56px'>
+    <Box bg='secondary.50' py={3} px={4} className='border' h={`${H_HEADER}px`}>
       <Flex alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}

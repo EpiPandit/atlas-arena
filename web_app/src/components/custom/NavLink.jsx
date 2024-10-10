@@ -12,12 +12,12 @@ const NavLink = ({ href, text, isExternal = false }) => {
       target={isExternal ? '_blank' : '_self'}
       fontFamily='sans-serif'
       fontWeight={700}
-      fontSize={12}
+      fontSize='xs'
       color={isActive ? 'blue.800' : 'gray.500'}
       borderBottom={isActive ? '2px solid' : 'none'}
       _hover={{
         textDecoration: 'none',
-        borderBottom: '2px solid',
+        color: 'blue.800',
       }}
       className='uppercase'
     >

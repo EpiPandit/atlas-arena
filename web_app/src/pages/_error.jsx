@@ -8,13 +8,13 @@ const ErrorPage = ({ statusCode }) => {
       align='center'
       justify='center'
       h='100vh - 64px'
-      bg='gray.50'
+      bg='yellow.10'
       p={4}
+      my='auto'
     >
       <Icon as={IoWarningOutline} boxSize={64} color='red.500' mb={4} />
-
       <Box textAlign='center'>
-        <Text fontSize='3xl' fontWeight='bold' color='gray.700' mb={2}>
+        <Text fontSize='4xl' fontWeight='bold' color='gray.700' mb={2}>
           {statusCode ? `Error ${statusCode}` : 'Application error'}
         </Text>
         <Text fontSize='lg' color='gray.500' mb={6}>
@@ -25,7 +25,7 @@ const ErrorPage = ({ statusCode }) => {
         </Text>
 
         <Button
-          colorScheme='teal'
+          colorScheme='gray'
           size='lg'
           onClick={() => (window.location.href = '/')}
         >

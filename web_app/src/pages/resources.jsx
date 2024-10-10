@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import MarkdownTheme from '@/config/markdownTheme';
+import MarkdownTheme from '@/config/md/markdownTheme';
 import { getMetadataMd, getMdContent } from '@/libs/markdown';
 import rehypeRaw from 'rehype-raw';
 import InnerHeading from '@/components/custom/InnerHeading';

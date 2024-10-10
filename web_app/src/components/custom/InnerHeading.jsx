@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text, Flex } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import MarkdownThemeHome from '@/config/markdownThemeHome';
+import MarkdownThemeHome from '@/config/md/markdownThemeHome';
 
 const InnerHeading = ({
   kicker = '',

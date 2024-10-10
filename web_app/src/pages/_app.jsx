@@ -13,7 +13,7 @@ import {
   PAGE_DESCRIPTION,
   PAGE_KEYWORDS,
   PAGE_AUTHOR,
-} from '@/config/constants';
+} from '@/config/constants/general';
 
 export default function MyApp({ Component, pageProps }) {
   return (

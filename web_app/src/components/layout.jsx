@@ -46,7 +46,7 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <Flex direction='column' minH='100vh' p={0}>
+    <Flex direction='column' h='100vh' p={0}>
       <Header />
       <Flex as='main' flex='1'>
         <MainApp>{children}</MainApp>

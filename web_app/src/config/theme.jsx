@@ -1,7 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
-import Tabs from '@/config/components.tabs';
-import Card from '@/config/components.card';
+import Tabs from '@/config/styles/components.tabs';
+import Card from '@/config/styles/components.card';
 
 const theme = extendTheme({
   breakpoints: {
@@ -49,6 +49,11 @@ const theme = extendTheme({
       800: '#3f404d',
       900: '#383842',
     },
+  },
+  fonts: {
+    body: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
+    heading: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
+    mono: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
   },
   styles: {
     global: (props) => ({

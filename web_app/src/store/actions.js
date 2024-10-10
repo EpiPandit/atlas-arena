@@ -5,7 +5,7 @@ export const actionTypes = {
   SET_RAW_DATA: 'SET_RAW_DATA',
   DEL_RAW_DATA: 'DEL_RAW_DATA',
 };
-import { DATA_EQUIVALENCE, ALL_VIRUS } from '@/config/constants';
+import { DATA_EQUIVALENCE, ALL_VIRUS } from '@/config/constants/general';
 
 export const setRawData = (payload = []) => {
   return { type: actionTypes.SET_RAW_DATA, payload: payload };

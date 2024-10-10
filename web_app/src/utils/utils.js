@@ -1,4 +1,4 @@
-import { ALL_VIRUS, MAP_COLORS } from '@/config/constants';
+import { ALL_VIRUS, MAP_COLORS } from '@/config/constants/general';
 export const dynamicFilter = (dataList, filterObj) => {
   if (!filterObj || Object.keys(filterObj).length === 0) return [];
 

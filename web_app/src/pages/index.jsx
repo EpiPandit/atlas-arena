@@ -2,7 +2,7 @@ import React from 'react';
 import { getMetadataMd, getMdContent } from '@/libs/markdown';
 
 import { Box } from '@chakra-ui/react';
-
+import { H_HEADER } from '@/config/constants/general';
 import MapComponent from '@/components/home/MapComponent';
 import OverlayComponent from '@/components/home/OverlayComponent';
 
@@ -16,7 +16,12 @@ const Home = ({ mddata = [], pageData = {} }) => {
   const species = (mddata || []).filter((item) => item.layout === 'specie');
 
   return (
-    <Box position='relative' h='calc(100vh - 56px)' w='100vw' overflow='hidden'>
+    <Box
+      position='relative'
+      h={`calc(100vh - ${H_HEADER}px)`}
+      w='100vw'
+      overflow='hidden'
+    >
       <MapComponent accessToken={MAPBOX_ACCESS_TOKEN} mapStyle={MAPBOX_STYLE} />
       <OverlayComponent
         kicker={kicker}

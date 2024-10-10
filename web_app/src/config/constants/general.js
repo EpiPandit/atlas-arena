@@ -1,9 +1,10 @@
+// PAGE METADATA
 export const PAGE_TITLE = 'atlas arena';
 export const PAGE_KEYWORDS = 'arena atlas';
 export const PAGE_DESCRIPTION = 'arena atlas';
 export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
 
-// HEADER
+// HEADER LINKS
 export const LINK_HEADER = [
   { text: 'Explore', href: 'explore' },
   { text: 'About', href: 'about' },
@@ -15,11 +16,12 @@ export const LINK_HEADER = [
     isExternal: true,
   },
 ];
-// Explore
-export const SIDEBAR_TITLE = 'EXPLORE';
-export const SIDEBAR_SUBTITLE = 'Explore the risk of Arena Viruses';
 
-// DATA EQUIVALENCE
+// ==============
+// DATA VALUES
+// ==============
+
+// API EQUIVALENCE
 export const DATA_EQUIVALENCE = {
   'Guanarito virus': {
     short: 'g',
@@ -150,14 +152,9 @@ export const ALL_VIRUS = 'All (combined)';
 export const DEFAULT_TIME = 'Current (year 1990-2010)';
 export const DEFAULT_MODEL = 'Combined';
 
-// FORCE INFECTION
-export const FORCE_INFECTION = [
-  {
-    name: 'B = 0.02',
-    key: 'B = 0.02',
-  },
-  {
-    name: 'B = 0.05',
-    key: 'B = 0.05',
-  },
-];
+// DEFAULT LEGEND OPACITY
+export const DEFAULT_OPACITY_SINGLE = 100;
+export const DEFAULT_OPACITY_MULTIPLE = 50;
+
+// HEIGHT HEADER
+export const H_HEADER = 56;

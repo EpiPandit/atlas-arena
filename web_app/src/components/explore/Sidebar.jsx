@@ -10,15 +10,21 @@ import {
   ALL_VIRUS,
   DEFAULT_MODEL,
   DEFAULT_TIME,
+  H_HEADER,
+} from '@/config/constants/general';
+import {
   SIDEBAR_TITLE,
   SIDEBAR_SUBTITLE,
-} from '@/config/constants';
-import {
-  INFO_VIRUS,
-  INFO_TIMEFRAME,
-  INFO_SPECIES,
-  INFO_MODEL,
-} from '@/config/constants.info';
+  VIRUS_LABEL,
+  VIRUS_INFO,
+  TIMEFRAME_LABEL,
+  TIMEFRAME_INFO,
+  RODENT_DISTRIBUTION_LABEL,
+  SPECIES_LABEL,
+  SPECIES_INFO,
+  MODEL_LABEL,
+  MODEL_INFO,
+} from '@/config/constants/constants.explore';
 
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
@@ -145,43 +151,43 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     <Box
       w='330px'
       maxW='330px'
-      h='calc(100vh - 55px)'
+      h={`calc(100vh - ${H_HEADER}px)`}
       p='32px'
       bg='yellow.10'
       overflowY='auto'
     >
       <FormControlText label={SIDEBAR_TITLE} text={SIDEBAR_SUBTITLE} />
       <FormControlSelect
-        label='Virus'
+        label={VIRUS_LABEL}
         options={allVirus}
-        info={INFO_VIRUS}
+        info={VIRUS_INFO}
         value={selectedVirus}
         handleAction={handleVirusChange}
       />
 
       <FormControlRadioTime
-        label='Timeframe'
+        label={TIMEFRAME_LABEL}
         options={allTimeFrame}
-        info={INFO_TIMEFRAME}
+        info={TIMEFRAME_INFO}
         handleAction={handleTimeFrameChange}
       />
       <FormControlSwitch
-        label='Show rodent reservoirs distribution'
+        label={RODENT_DISTRIBUTION_LABEL}
         value={selectedDistribution}
         handleAction={handleDistributionChange}
       />
       <FormControlCheckBoxSpecies
-        label='Reservoir Species'
+        label={SPECIES_LABEL}
         options={allSpecies}
-        info={INFO_SPECIES}
+        info={SPECIES_INFO}
         values={selectedSpecies}
         handleAction={handleSpeciesChange}
         filterValue={selectedVirus}
       />
       <FormControlSelect
-        label='model algorithm'
+        label={MODEL_LABEL}
         options={allModels}
-        info={INFO_MODEL}
+        info={MODEL_INFO}
         value={selectedModel}
         handleAction={handleModelChange}
       />
@@ -209,7 +215,6 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
           {filterTilesId.length}
         </p>
         <p>
-          {' '}
           <small>
             {filterTilesId.map((i) => i.new_raster_name).join(' , ')}
           </small>

@@ -10,7 +10,7 @@ import pako from 'pako';
 import ColorLegend from '@/components/explore/ColorLegend';
 import { getMetadataMd } from '@/libs/markdown';
 import CustomModal from '@/components/explore/CustomModal';
-
+import { H_HEADER } from '@/config/constants/general';
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 const BASENAME = (process.env.PUBLIC_URL || '').replace('//', '/');
@@ -106,7 +106,7 @@ const Explore = ({ mddata }) => {
         filterTilesId={filterTilesId}
       />
       <Box flex={1} position='relative'>
-        <Box h='calc(100vh - 56px)' flex={1}>
+        <Box h={`calc(100vh - ${H_HEADER}px)`} flex={1}>
           <StaticMap
             ref={mapRef}
             initialViewState={viewState}
@@ -134,7 +134,7 @@ const Explore = ({ mddata }) => {
         </Box>
         <Box
           position='absolute'
-          maxH='calc(100vh - 56px)'
+          maxH={`calc(100vh - ${H_HEADER}px)`}
           top={4}
           right={6}
           display='flex'

@@ -15,7 +15,12 @@ import {
   SliderThumb,
 } from '@chakra-ui/react';
 import { PiDrop } from 'react-icons/pi';
-import { MAP_COLORS } from '@/config/constants';
+import {
+  MAP_COLORS,
+  DEFAULT_OPACITY_SINGLE,
+  DEFAULT_OPACITY_MULTIPLE,
+} from '@/config/constants/general';
+import { LEGEND_OPACITY } from '@/config/constants/constants.explore';
 
 const ColorLegend = ({
   color = '',
@@ -33,12 +38,18 @@ const ColorLegend = ({
     handleChange(title, ev);
   };
 
-  let customTitle = `${title} distribution `;
+  let customTitle = `${title}`;
   const titleList = title.split(' ');
   if (titleList.length > 1) {
     customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')}`;
   }
-  const opacity = title in value ? value[title] : has_many ? 50 : 100;
+  const opacity =
+    title in value
+      ? value[title]
+      : has_many
+        ? DEFAULT_OPACITY_MULTIPLE
+        : DEFAULT_OPACITY_SINGLE;
+
   return (
     <Box
       w='303px'
@@ -88,7 +99,7 @@ const ColorLegend = ({
             <PopoverCloseButton boxSize={3} />
             <PopoverBody p={1}>
               <Text fontSize='10px' m={0}>
-                Opacity
+                {LEGEND_OPACITY}
               </Text>
               <Slider
                 aria-label='slider-ex-1'

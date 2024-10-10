@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Flex, Box, Text, Heading, Icon } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
-import markdownTheme from '@/config/markdownTheme';
+import markdownTheme from '@/config/md/markdownTheme';
 import rehypeRaw from 'rehype-raw';
 
 import { FiChevronsUp } from 'react-icons/fi';

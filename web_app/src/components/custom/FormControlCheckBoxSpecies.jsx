@@ -1,4 +1,4 @@
-import { ALL_VIRUS } from '@/config/constants';
+import { ALL_VIRUS } from '@/config/constants/general';
 import { FormControl, Stack, Checkbox } from '@chakra-ui/react';
 import FormLabelFlex from '@/components/custom/FormLabelFlex';
 

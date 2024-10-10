@@ -1,14 +1,12 @@
 import {
   FormControl,
-  FormLabel,
   Stack,
   Radio,
   RadioGroup,
   Checkbox,
-  Flex,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { DEFAULT_TIME } from '@/config/constants';
+import { DEFAULT_TIME } from '@/config/constants/general';
 import FormLabelFlex from '@/components/custom/FormLabelFlex';
 
 const FormControlRadioTime = ({
