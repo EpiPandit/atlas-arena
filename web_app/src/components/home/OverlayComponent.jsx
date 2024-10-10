@@ -1,15 +1,20 @@
 import React from 'react';
-import { Container, Box } from '@chakra-ui/react';
-import InnerHeading from '../custom/InnerHeading';
-import VRTabs from './VRTabs';
+import { Container, Box, Text, Flex, Icon } from '@chakra-ui/react';
+import InnerHeading from '@/components/custom/InnerHeading';
+// import VRTabs from '@/components/home/VRTabs';
+import InfoCards from '@/components/home/InfoCards';
 
 const OverlayComponent = ({
   kicker = '',
   title = '',
   subTitle = '',
   contentHtml = '',
-  virus = [],
-  species = [],
+  title_climate = '',
+  text_climate = '',
+  title_patient = '',
+  text_patient = '',
+  title_virus = '',
+  text_virus = '',
 }) => {
   return (
     <Box
@@ -46,7 +51,14 @@ const OverlayComponent = ({
         py={4}
         maxW={{ base: '90%', md: '80%', lg: '960px' }}
       >
-        <VRTabs virus={virus} species={species} />
+        <InfoCards
+          title_climate={title_climate}
+          text_climate={text_climate}
+          title_patient={title_patient}
+          text_patient={text_patient}
+          title_virus={title_virus}
+          text_virus={text_virus}
+        />
       </Container>
     </Box>
   );

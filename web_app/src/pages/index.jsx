@@ -10,7 +10,18 @@ const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 
 const Home = ({ mddata = [], pageData = {} }) => {
-  const { kicker, title, sub_title, contentHtml } = pageData;
+  const {
+    kicker,
+    title,
+    sub_title,
+    contentHtml,
+    title_climate,
+    text_climate,
+    title_patient,
+    text_patient,
+    title_virus,
+    text_virus,
+  } = pageData;
 
   const viruses = (mddata || []).filter((item) => item.layout === 'virus');
   const species = (mddata || []).filter((item) => item.layout === 'specie');
@@ -30,6 +41,12 @@ const Home = ({ mddata = [], pageData = {} }) => {
         contentHtml={contentHtml}
         virus={viruses}
         species={species}
+        title_climate={title_climate}
+        text_climate={text_climate}
+        title_patient={title_patient}
+        text_patient={text_patient}
+        title_virus={title_virus}
+        text_virus={text_virus}
       />
     </Box>
   );
