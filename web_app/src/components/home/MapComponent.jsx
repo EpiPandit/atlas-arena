@@ -3,6 +3,18 @@ import { Box } from '@chakra-ui/react';
 
 import StaticMap from 'react-map-gl';
 
+const BackdropBlur = () => (
+  <Box
+    position='absolute'
+    top={0}
+    left={0}
+    right={0}
+    height='100%'
+    backdropFilter='blur(3px)'
+    zIndex={2}
+  />
+);
+
 const MapComponent = ({ mapStyle, accessToken }) => {
   const mapRef = useRef(null);
 
@@ -25,12 +37,13 @@ const MapComponent = ({ mapStyle, accessToken }) => {
       left={0}
       w='100vw'
       h='100vh'
-      mt={{ base: '15%', md: '25%' }}
+      mt={{ base: '15%', md: '20%' }}
       zIndex={1}
       overflow='hidden'
       px={0}
     >
       <Box w='full' h='full'>
+        <BackdropBlur />
         <StaticMap
           ref={mapRef}
           latitude={-18.1543810681043}
