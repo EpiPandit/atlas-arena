@@ -1,6 +1,6 @@
 ---
 name: resources
-kicker: VIRUS INFORMATION
+kicker:
 title: RESOURCES
 layout: page
 ---

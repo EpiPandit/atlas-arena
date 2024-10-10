@@ -15,6 +15,6 @@ Junin mammarenavirus (JUNV) or commonly known as Junin virus is the etiological 
 
 ## map
 
-<iframe id="test"  style=" height:400px; width:100%;" scrolling="no"  frameborder="0" src="https://leafletjs.com/examples/mobile/example.html"></iframe>
+<iframe id="test"  style=" height:400px; width:100%;" scrolling="no"  frameborder="0" src="https://leafletjs.com/examples/quick-start/example.html"></iframe>
 
 <h3> text html</h3>

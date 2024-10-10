@@ -1,6 +1,6 @@
 ---
 name: about
-kicker: WHO WE ARE
+kicker:
 title: ABOUT
 layout: page
 ---
