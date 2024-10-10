@@ -11,7 +11,7 @@ const InnerHeading = ({
   contentHtml = null,
 }) => {
   const renderContent = contentHtml && (
-    <Box py={2} px={2}>
+    <Box py={0} px={0}>
       <ReactMarkdown
         components={ChakraUIRenderer(MarkdownThemeHome)}
         children={contentHtml}
@@ -22,7 +22,7 @@ const InnerHeading = ({
   const renderKicker = kicker && kicker !== '' && (
     <Flex py={3} justifyContent='center'>
       <Text
-        fontSize='xs'
+        fontSize={{ base: 'xs', md: 'sm' }}
         fontWeight='bold'
         color='blue.900'
         textTransform='uppercase'
@@ -38,7 +38,7 @@ const InnerHeading = ({
   );
   const renderSubTitle = sub_title && sub_title !== '' && (
     <Text
-      fontSize='sm'
+      fontSize={{ base: 'sm', md: 'md' }}
       fontWeight={600}
       color='blue.900'
       lineHeight='shorter'
@@ -51,11 +51,11 @@ const InnerHeading = ({
   );
 
   return (
-    <Box p={0} mx='auto' maxW='700px'>
+    <Box p={1} mx='auto' maxW={{ base: '95%', md: '700px' }}>
       {renderKicker}
-      <Box py={1} px={2}>
+      <Box py={{ base: 2, md: 4 }}>
         <Text
-          fontSize={['3xl', '5xl', '6xl']}
+          fontSize={['3xl', '4xl', '5xl', '6xl']}
           fontWeight={600}
           color='blue.900'
           lineHeight='shorter'

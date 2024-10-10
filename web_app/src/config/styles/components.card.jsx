@@ -16,7 +16,7 @@ const baseStyle = definePartsStyle({
     padding: 2,
     bgSize: 'cover',
     bgPos: 'center',
-    height: '160px',
+    height: { base: '140px', md: '160px' },
     position: 'relative',
   },
 });
@@ -24,8 +24,8 @@ const baseStyle = definePartsStyle({
 const sizes = {
   md: definePartsStyle({
     container: {
-      width: { base: 'full', md: '304px' },
-      height: '160px',
+      width: { base: '100%', sm: '90%', md: '304px' },
+      height: { base: 'auto', md: '160px' },
     },
   }),
 };
@@ -35,9 +35,12 @@ const variants = {
     header: {
       bgSize: 'cover',
       bgPos: 'center',
+      height: { base: '140px', md: '160px' },
     },
     container: {
       backgroundColor: 'secondary.200',
+      width: { base: '100%', sm: '90%', md: '304px' },
+      height: { base: 'auto', md: '160px' },
     },
   }),
 };

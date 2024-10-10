@@ -35,7 +35,7 @@ const MapComponent = ({ mapStyle, accessToken }) => {
           ref={mapRef}
           latitude={-18.1543810681043}
           longitude={-60.59673635723772}
-          zoom={2.4}
+          zoom={2.2}
           onLoad={handleLoad}
           mapStyle={mapStyle}
           mapboxAccessToken={accessToken}
