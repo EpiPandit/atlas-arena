@@ -10,7 +10,12 @@ import pako from 'pako';
 import ColorLegend from '@/components/explore/ColorLegend';
 import { getMetadataMd } from '@/libs/markdown';
 import CustomModal from '@/components/explore/CustomModal';
-import { H_HEADER } from '@/config/constants/general';
+import {
+  H_HEADER,
+  DEFAULT_LEGEND_VALUE,
+  LEGEND_DELTA_VALUE,
+} from '@/config/constants/general';
+
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
 const BASENAME = (process.env.PUBLIC_URL || '').replace('//', '/');
@@ -30,6 +35,7 @@ const Explore = ({ mddata }) => {
   const [boundariesAdm, setBoundariesAdm] = useState(null);
   const [opacityFilter, setLayerStyle] = useState({});
   const [dataVirus, setDataVirus] = useState({});
+  const [hasDeltaValue, setHasDeltaValue] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +61,14 @@ const Explore = ({ mddata }) => {
 
   const handleFilterTilesId = (data_filter) => {
     const raw_data_filter = dynamicFilter([...raw_data], { ...data_filter });
-
+    const hasDelta =
+      data_filter &&
+      data_filter.time_frame &&
+      data_filter.time_frame.length &&
+      data_filter.time_frame.filter((i) =>
+        `${i}`.toLowerCase().includes('delta')
+      ).length > 0;
+    setHasDeltaValue(hasDelta);
     setFilterTilesId(raw_data_filter);
     // show virus draw
     const { virus } = data_filter;
@@ -93,6 +106,7 @@ const Explore = ({ mddata }) => {
       key={item.species}
       title={item.species}
       color={item.color}
+      labels={hasDeltaValue ? LEGEND_DELTA_VALUE : DEFAULT_LEGEND_VALUE}
       value={opacityFilter}
       has_many={filterTilesId.length > 0}
       handleChange={handleChangeLayerStyle}

@@ -19,13 +19,14 @@ import {
   MAP_COLORS,
   DEFAULT_OPACITY_SINGLE,
   DEFAULT_OPACITY_MULTIPLE,
+  DEFAULT_LEGEND_VALUE,
 } from '@/config/constants/general';
 import { LEGEND_OPACITY } from '@/config/constants/constants.explore';
 
 const ColorLegend = ({
   color = '',
   title = '',
-  labels = ['0.0', '0.5', '1'],
+  labels = DEFAULT_LEGEND_VALUE,
   handleChange = null,
   value = {},
   has_many = false,
@@ -126,7 +127,13 @@ const ColorLegend = ({
         bgGradient={`linear(to-r, ${colors[0]}, ${colors[colors.length - 1]})`}
       />
 
-      <Box display='flex' mt={0} justifyContent='space-between' width='full'>
+      <Box
+        display='flex'
+        mt={0}
+        px={1}
+        justifyContent='space-between'
+        width='full'
+      >
         {labels.map((i) => (
           <Text key={i} fontSize='10px' color='gray.600'>
             {i}

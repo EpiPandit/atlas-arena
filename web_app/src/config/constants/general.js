@@ -16,6 +16,7 @@ export const LINK_HEADER = [
     isExternal: true,
   },
 ];
+// FOOTER
 
 // ==============
 // DATA VALUES
@@ -155,6 +156,10 @@ export const DEFAULT_MODEL = 'Combined';
 // DEFAULT LEGEND OPACITY
 export const DEFAULT_OPACITY_SINGLE = 100;
 export const DEFAULT_OPACITY_MULTIPLE = 50;
+
+// LEGEND LABEL
+export const DEFAULT_LEGEND_VALUE = ['0', '0.5', '1'];
+export const LEGEND_DELTA_VALUE = ['-1', '0', '1'];
 
 // HEIGHT HEADER
 export const H_HEADER = 56;
