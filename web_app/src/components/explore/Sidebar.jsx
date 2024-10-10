@@ -5,7 +5,9 @@ import FormControlSelect from '@/components/custom/FormControlSelect';
 import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
 import FormControlSwitch from '@/components/custom/FormControlSwitch';
 import FormControlText from '@/components/custom/FormControlText';
-import { Box } from '@chakra-ui/react';
+import { Box, Icon, IconButton, Flex } from '@chakra-ui/react';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+
 import {
   ALL_VIRUS,
   DEFAULT_MODEL,
@@ -28,6 +30,12 @@ import {
 
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
+
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   const [selectedVirus, setSelectedVirus] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState([]);
@@ -148,79 +156,108 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   };
 
   return (
-    <Box
-      w='330px'
-      maxW='330px'
-      h={`calc(100vh - ${H_HEADER}px)`}
-      p='32px'
-      bg='yellow.10'
-      overflowY='auto'
+    <Flex
+      direction='column'
+      position='relative'
+      maxH={`calc(100vh - ${H_HEADER}px)`}
     >
-      <FormControlText label={SIDEBAR_TITLE} text={SIDEBAR_SUBTITLE} />
-      <FormControlSelect
-        label={VIRUS_LABEL}
-        options={allVirus}
-        info={VIRUS_INFO}
-        value={selectedVirus}
-        handleAction={handleVirusChange}
-      />
+      <Box
+        w={
+          isCollapsed
+            ? { base: '0px', md: '330px' }
+            : { base: '100%', md: '330px' }
+        }
+        maxW={{ base: '100%', md: '330px' }}
+        bg={isCollapsed ? 'transparent' : 'yellow.10'}
+        h='100%'
+        p={isCollapsed ? 0 : { base: '16px', md: '32px' }}
+        overflowY='auto'
+        transition='all 0.3s ease'
+      >
+        {!isCollapsed && (
+          <>
+            <FormControlText label={SIDEBAR_TITLE} text={SIDEBAR_SUBTITLE} />
+            <FormControlSelect
+              label={VIRUS_LABEL}
+              options={allVirus}
+              info={VIRUS_INFO}
+              value={selectedVirus}
+              handleAction={handleVirusChange}
+            />
 
-      <FormControlRadioTime
-        label={TIMEFRAME_LABEL}
-        options={allTimeFrame}
-        info={TIMEFRAME_INFO}
-        handleAction={handleTimeFrameChange}
-      />
-      <FormControlSwitch
-        label={RODENT_DISTRIBUTION_LABEL}
-        value={selectedDistribution}
-        handleAction={handleDistributionChange}
-      />
-      <FormControlCheckBoxSpecies
-        label={SPECIES_LABEL}
-        options={allSpecies}
-        info={SPECIES_INFO}
-        values={selectedSpecies}
-        handleAction={handleSpeciesChange}
-        filterValue={selectedVirus}
-      />
-      <FormControlSelect
-        label={MODEL_LABEL}
-        options={allModels}
-        info={MODEL_INFO}
-        value={selectedModel}
-        handleAction={handleModelChange}
-      />
+            <FormControlRadioTime
+              label={TIMEFRAME_LABEL}
+              options={allTimeFrame}
+              info={TIMEFRAME_INFO}
+              handleAction={handleTimeFrameChange}
+            />
+            <FormControlSwitch
+              label={RODENT_DISTRIBUTION_LABEL}
+              value={selectedDistribution}
+              handleAction={handleDistributionChange}
+            />
+            <FormControlCheckBoxSpecies
+              label={SPECIES_LABEL}
+              options={allSpecies}
+              info={SPECIES_INFO}
+              values={selectedSpecies}
+              handleAction={handleSpeciesChange}
+              filterValue={selectedVirus}
+            />
+            <FormControlSelect
+              label={MODEL_LABEL}
+              options={allModels}
+              info={MODEL_INFO}
+              value={selectedModel}
+              handleAction={handleModelChange}
+            />
 
-      <Box pt={4}>
-        <p>
-          <b>virus : </b>
-          <small>{selectedVirus}</small>
-        </p>
-        <p>
-          <b>species ({selectedSpecies.length}) : </b>
-          <small>{selectedSpecies.join(' , ')}</small>
-        </p>
-        <p>
-          <b> time frame ({selectedTimeFrame.length}): </b>
-          <small>{selectedTimeFrame.join(' , ')}</small>
-        </p>
-        <p>
-          <b>model : </b>
-          <small>{selectedModel}</small>
-        </p>
-        <hr />
-        <p>
-          <b>filter tif count : </b>
-          {filterTilesId.length}
-        </p>
-        <p>
-          <small>
-            {filterTilesId.map((i) => i.new_raster_name).join(' , ')}
-          </small>
-        </p>
+            <Box pt={4}>
+              <p>
+                <b>virus : </b>
+                <small>{selectedVirus}</small>
+              </p>
+              <p>
+                <b>species ({selectedSpecies.length}) : </b>
+                <small>{selectedSpecies.join(' , ')}</small>
+              </p>
+              <p>
+                <b> time frame ({selectedTimeFrame.length}): </b>
+                <small>{selectedTimeFrame.join(' , ')}</small>
+              </p>
+              <p>
+                <b>model : </b>
+                <small>{selectedModel}</small>
+              </p>
+              <hr />
+              <p>
+                <b>filter tif count : </b>
+                {filterTilesId.length}
+              </p>
+              <p>
+                <small>
+                  {filterTilesId.map((i) => i.new_raster_name).join(' , ')}
+                </small>
+              </p>
+            </Box>
+          </>
+        )}
       </Box>
-    </Box>
+
+      <IconButton
+        aria-label='Toggle Sidebar'
+        backgroundColor='white'
+        sx={{ border: '1px solid gray' }}
+        icon={<Icon as={isCollapsed ? FiChevronRight : FiChevronLeft} />}
+        position='absolute'
+        top='10px'
+        left={isCollapsed ? '-5px' : '345px'}
+        size='md'
+        onClick={toggleSidebar}
+        zIndex={1000}
+        display={{ base: 'block', md: 'none' }}
+      />
+    </Flex>
   );
 };
 export default Sidebar;
