@@ -52,7 +52,14 @@ const UserCard = ({
       <Text fontSize='sm' color='gray.600' textAlign='start'>
         {text}
       </Text>
-      <Flex flexDirection='row' alignItems='start' gap={2} w='full' mt={2}>
+      <Flex
+        flexDirection='row'
+        alignItems='start'
+        gap={2}
+        w='100%'
+        flexWrap='wrap'
+        mt={2}
+      >
         {renderLinks}
       </Flex>
     </Flex>
