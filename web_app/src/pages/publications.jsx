@@ -4,7 +4,7 @@ import { Container } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
-export default function Publications({ content }) {
+const Publications = ({ content }) => {
   const { title, description, sections } = content;
   return (
     <Container
@@ -18,7 +18,7 @@ export default function Publications({ content }) {
       p={[2, 4]}
     ></Container>
   );
-}
+};
 
 export async function getStaticProps() {
   const content = {};
@@ -29,3 +29,5 @@ export async function getStaticProps() {
     },
   };
 }
+
+export default Publications;

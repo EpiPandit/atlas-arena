@@ -3,16 +3,20 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Container, Box, Heading, Text } from '@chakra-ui/react';
 import InnerHeading from '@/components/custom/InnerHeading';
 import { getMdContent } from '@/libs/markdown';
+import UserCards from '@/components/about/UserCards';
 
-export default function Home({ pageData }) {
+const About = ({ pageData }) => {
   return (
     <Container maxW='container.lg' p={2}>
       <Box my={4}>
         <InnerHeading {...pageData} />
       </Box>
+      <Box>
+        <UserCards />
+      </Box>
     </Container>
   );
-}
+};
 
 export async function getStaticProps() {
   const resourcesData = await getMdContent('about.md', true);
@@ -23,3 +27,5 @@ export async function getStaticProps() {
     },
   };
 }
+
+export default About;

@@ -19,7 +19,7 @@ const NavLink = ({ href, text, isExternal = false }) => {
         textDecoration: 'none',
         color: 'blue.800',
       }}
-      className='uppercase'
+      textTransform='uppercase'
     >
       {text}
     </NextLink>
