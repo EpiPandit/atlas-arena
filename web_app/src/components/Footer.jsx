@@ -1,69 +1,55 @@
-import {
-  Box,
-  chakra,
-  Container,
-  Stack,
-  Text,
-  useColorModeValue,
-  VisuallyHidden,
-} from '@chakra-ui/react';
-import { Icon } from '@chakra-ui/react';
-import { IoLogoTwitter } from 'react-icons/io5';
-
-const SocialButton = ({ children, label, href }) => {
-  return (
-    <chakra.button
-      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
-      rounded={'full'}
-      w={8}
-      h={8}
-      cursor={'pointer'}
-      as={'a'}
-      href={href}
-      display={'inline-flex'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      transition={'background 0.3s ease'}
-      _hover={{
-        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
-      }}
-    >
-      <VisuallyHidden>{label}</VisuallyHidden>
-      {children}
-    </chakra.button>
-  );
-};
+import { Box, Flex, Text, Image } from '@chakra-ui/react';
+import wellcomeLogo from '@/assets/images/wellcome.png';
+import ucdavisLogo from '@/assets/images/ucdavis.jpg';
+import devseedLogo from '@/assets/images/devseed.png';
 
 const Footer = () => {
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}
+      py={3}
+      my={6}
+      textAlign='center'
+      minH='150px'
+      w='100%'
+      position='relative'
     >
-      <Container
-        as={Stack}
-        maxW={'10xl'}
-        py={4}
-        direction={{ base: 'column', md: 'row' }}
-        spacing={4}
-        justify={{ base: 'center', md: 'space-between' }}
-        align={{ base: 'center', md: 'center' }}
+      <Text
+        fontSize='lg'
+        fontWeight={600}
+        color='blue.900'
+        mb={4}
+        textTransform='uppercase'
       >
-        <Text>
-          © {new Date().getFullYear()} Arena atlas. All rights reserved
-        </Text>
-        <Stack direction={'row'} spacing={6}>
-          <SocialButton label={'Twitter'} href={'#'}>
-            <Icon as={IoLogoTwitter} />
-          </SocialButton>
-          <SocialButton label={'Twitter'} href={'#'}>
-            <Icon as={IoLogoTwitter} />
-          </SocialButton>
-          <SocialButton label={'Twitter'} href={'#'}>
-            <Icon as={IoLogoTwitter} />
-          </SocialButton>
-        </Stack>
-      </Container>
+        Presented by:
+      </Text>
+
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        gap={{ base: 4, md: 10 }}
+        wrap='wrap'
+        px={4}
+        w='100%'
+      >
+        <Image
+          src={wellcomeLogo.src}
+          alt='Wellcome logo'
+          boxSize={{ base: '50px', md: '80px' }}
+          objectFit='contain'
+        />
+        <Image
+          src={ucdavisLogo.src}
+          alt='UC Davis logo'
+          w={{ base: '130px', md: '186px' }}
+          objectFit='contain'
+        />
+        <Image
+          src={devseedLogo.src}
+          alt='Development Seed logo'
+          w={{ base: '130px', md: '186px' }}
+          objectFit='contain'
+        />
+      </Flex>
     </Box>
   );
 };

@@ -1,10 +1,16 @@
 import React from 'react';
 import { Text, Flex, Icon } from '@chakra-ui/react';
-import { FiCloud, FiAlertCircle, FiActivity } from 'react-icons/fi';
 import VirusIcon from '@/assets/images/virus';
 import ClimateIcon from '@/assets/images/climate';
 import PatientIcon from '@/assets/images/patient';
-
+import {
+  CLIMATE_TITLE,
+  CLIMATE_TEXT,
+  PATIENT_TITLE,
+  PATIENT_TEXT,
+  VIRUS_TITLE,
+  VIRUS_TEXT,
+} from '@/config/constants/constants.home';
 const InfoCard = ({ icon, title, text }) => {
   return (
     <Flex
@@ -27,19 +33,12 @@ const InfoCard = ({ icon, title, text }) => {
   );
 };
 
-const InfoCards = ({
-  title_climate = '',
-  text_climate = '',
-  title_patient = '',
-  text_patient = '',
-  title_virus = '',
-  text_virus = '',
-}) => {
+const InfoCards = ({}) => {
   return (
     <Flex justifyContent='space-between' wrap='wrap' p={4} w='100%'>
-      <InfoCard icon={ClimateIcon} title={title_climate} text={text_climate} />
-      <InfoCard icon={VirusIcon} title={title_virus} text={text_virus} />
-      <InfoCard icon={PatientIcon} title={title_patient} text={text_patient} />
+      <InfoCard icon={ClimateIcon} title={CLIMATE_TITLE} text={CLIMATE_TEXT} />
+      <InfoCard icon={VirusIcon} title={VIRUS_TITLE} text={VIRUS_TEXT} />
+      <InfoCard icon={PatientIcon} title={PATIENT_TITLE} text={PATIENT_TEXT} />
     </Flex>
   );
 };

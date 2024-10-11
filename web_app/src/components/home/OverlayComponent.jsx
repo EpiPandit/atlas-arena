@@ -3,18 +3,13 @@ import { Container, Box, Text, Flex, Icon } from '@chakra-ui/react';
 import InnerHeading from '@/components/custom/InnerHeading';
 // import VRTabs from '@/components/home/VRTabs';
 import InfoCards from '@/components/home/InfoCards';
+import Footer from '@/components/Footer';
 
 const OverlayComponent = ({
   kicker = '',
   title = '',
   subTitle = '',
   contentHtml = '',
-  title_climate = '',
-  text_climate = '',
-  title_patient = '',
-  text_patient = '',
-  title_virus = '',
-  text_virus = '',
 }) => {
   return (
     <Box
@@ -28,10 +23,10 @@ const OverlayComponent = ({
       zIndex={2}
       display='flex'
       flexDirection='column'
-      justifyContent='start'
+      justifyContent='space-between'
       overflowY='auto'
-      pt={{ base: 4, md: 8, lg: 12 }}
-      pb={{ base: 4, md: 8, lg: 12 }}
+      pt={{ base: 4, md: 8, lg: 8 }}
+      pb={{ base: 4, md: 8, lg: 8 }}
     >
       <Container
         px={{ base: 2, md: 4 }}
@@ -51,15 +46,9 @@ const OverlayComponent = ({
         py={4}
         maxW={{ base: '90%', md: '80%', lg: '960px' }}
       >
-        <InfoCards
-          title_climate={title_climate}
-          text_climate={text_climate}
-          title_patient={title_patient}
-          text_patient={text_patient}
-          title_virus={title_virus}
-          text_virus={text_virus}
-        />
+        <InfoCards />
       </Container>
+      <Footer />
     </Box>
   );
 };
