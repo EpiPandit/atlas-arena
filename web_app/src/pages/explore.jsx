@@ -56,7 +56,7 @@ const Explore = ({ mddata }) => {
       }
     };
 
-    fetchData();
+    // fetchData();
   }, []);
 
   const handleFilterTilesId = (data_filter) => {
@@ -131,19 +131,6 @@ const Explore = ({ mddata }) => {
               mapStyle={MAPBOX_STYLE}
               mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
             >
-              {boundariesAdm && (
-                <Source id='adm_boundaries' type='geojson' data={boundariesAdm}>
-                  <Layer
-                    id='adm_boundaries_layer'
-                    type='line'
-                    source='adm_boundaries'
-                    paint={{
-                      'line-width': filterTilesId.length !== 0 ? 0.7 : 0,
-                      'line-color': 'rgba(1, 1, 1, 0.5)',
-                    }}
-                  />
-                </Source>
-              )}
               {buildRender}
             </StaticMap>
           </Box>

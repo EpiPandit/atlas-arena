@@ -32,7 +32,7 @@ const RasterLayer = ({ item, opacity_filter = {}, has_many = true }) => {
             [...rasterColor],
           ],
         }}
-        beforeId='adm_boundaries_layer'
+        beforeId='admin-1-boundary'
       />
     </Source>
   );
