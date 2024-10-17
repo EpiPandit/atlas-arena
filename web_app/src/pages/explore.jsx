@@ -17,7 +17,7 @@ import {
 } from '@/config/constants/general';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
-const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
+const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE;
 const BASENAME = (process.env.PUBLIC_URL || '').replace('//', '/');
 
 const initialViewState = {
@@ -131,6 +131,7 @@ const Explore = ({ mddata }) => {
               dragRotate={false}
               mapStyle={MAPBOX_STYLE}
               mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
+              projection='mercator'
             >
               {buildRender}
             </StaticMap>
