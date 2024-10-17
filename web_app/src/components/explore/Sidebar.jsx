@@ -41,7 +41,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
-  const [selectedDistribution, setSelectedDistribution] = useState(true);
+  const [selectedDistribution, setSelectedDistribution] = useState(false);
 
   useEffect(() => {
     const tmpSpecies = allSpecies.map((i) => i.name);
@@ -50,7 +50,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       tmpSpecies,
       [DEFAULT_TIME],
       DEFAULT_MODEL,
-      true
+      false
     );
   }, [allVirus]);
   // actions
@@ -144,15 +144,37 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   };
 
   const handleDistributionChange = () => {
-    setSelectedDistribution(!selectedDistribution);
+    const newDistribution = !selectedDistribution;
+    setSelectedDistribution(newDistribution);
+
+    if (newDistribution) {
+      setSelectedSpecies([]);
+      setSelectedModel('');
+      handleFilterTilesId({
+        virus: selectedVirus,
+        species: [],
+        time_frame: selectedTimeFrame,
+        model: '',
+        distribution: selectedDistribution,
+      });
+    } else {
+      let species = allSpecies
+        .filter((i) => i.virus == selectedVirus)
+        .map((i) => i.name);
+      if (selectedVirus === ALL_VIRUS) {
+        species = allSpecies.map((i) => i.name);
+      }
+      setSelectedModel(DEFAULT_MODEL);
+      setSelectedSpecies([...species]);
+      handleFilterTilesId({
+        virus: selectedVirus,
+        species: [...species],
+        time_frame: selectedTimeFrame,
+        model: DEFAULT_MODEL,
+        distribution: newDistribution,
+      });
+    }
     // update stats
-    handleFilterTilesId({
-      virus: selectedVirus,
-      species: selectedSpecies,
-      time_frame: selectedTimeFrame,
-      model: event.target.value,
-      distribution: !selectedDistribution,
-    });
   };
 
   return (
@@ -203,6 +225,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               values={selectedSpecies}
               handleAction={handleSpeciesChange}
               filterValue={selectedVirus}
+              isDisabled={selectedDistribution}
             />
             <FormControlSelect
               label={MODEL_LABEL}
@@ -210,6 +233,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               info={MODEL_INFO}
               value={selectedModel}
               handleAction={handleModelChange}
+              isDisabled={selectedDistribution}
             />
 
             <Box pt={4}>
@@ -233,11 +257,6 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               <p>
                 <b>filter tif count : </b>
                 {filterTilesId.length}
-              </p>
-              <p>
-                <small>
-                  {filterTilesId.map((i) => i.new_raster_name).join(' , ')}
-                </small>
               </p>
             </Box>
           </>
