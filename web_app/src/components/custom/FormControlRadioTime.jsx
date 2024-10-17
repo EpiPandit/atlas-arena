@@ -64,12 +64,20 @@ const FormControlRadioTime = ({
   };
 
   const handleChangeRadio = (val) => {
-    setSelectRadio(val);
-    sendAction(val, selectCheck);
+    if (val == DEFAULT_TIME) {
+      setSelectRadio(val);
+      setSelectCheck(false);
+      sendAction(val, false);
+    } else {
+      setSelectRadio(val);
+      sendAction(val, selectCheck);
+    }
   };
   const handleChangeCheck = () => {
-    setSelectCheck(!selectCheck);
-    sendAction(selectRadio, !selectCheck);
+    let newValue = !selectCheck;
+
+    setSelectCheck(newValue);
+    sendAction(selectRadio, newValue);
   };
 
   return (
@@ -88,7 +96,7 @@ const FormControlRadioTime = ({
         <Checkbox
           onChange={handleChangeCheck}
           isChecked={selectCheck}
-          isDisabled={isDisabled || deltaOptions.length === 0}
+          isDisabled={selectRadio == DEFAULT_TIME}
         >
           Show Delta
         </Checkbox>
