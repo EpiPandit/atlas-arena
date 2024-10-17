@@ -235,30 +235,6 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               handleAction={handleModelChange}
               isDisabled={selectedDistribution}
             />
-
-            <Box pt={4}>
-              <p>
-                <b>virus : </b>
-                <small>{selectedVirus}</small>
-              </p>
-              <p>
-                <b>species ({selectedSpecies.length}) : </b>
-                <small>{selectedSpecies.join(' , ')}</small>
-              </p>
-              <p>
-                <b> time frame ({selectedTimeFrame.length}): </b>
-                <small>{selectedTimeFrame.join(' , ')}</small>
-              </p>
-              <p>
-                <b>model : </b>
-                <small>{selectedModel}</small>
-              </p>
-              <hr />
-              <p>
-                <b>filter tif count : </b>
-                {filterTilesId.length}
-              </p>
-            </Box>
           </>
         )}
       </Box>

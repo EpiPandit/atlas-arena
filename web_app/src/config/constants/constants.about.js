@@ -1,3 +1,4 @@
+// image are in public folder
 export const TEAM = [
   {
     title: 'pranav pandit',

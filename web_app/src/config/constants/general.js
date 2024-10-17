@@ -9,7 +9,7 @@ export const LINK_HEADER = [
   { text: 'Explore', href: 'explore' },
   { text: 'About', href: 'about' },
   { text: 'Resources', href: 'resources' },
-  { text: 'Publications', href: 'publications' },
+  // { text: 'Publications', href: 'publications' },
   {
     text: 'Github',
     href: 'https://github.com/developmentseed/atlasarena',
