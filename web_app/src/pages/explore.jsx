@@ -126,8 +126,9 @@ const Explore = ({ mddata }) => {
               ref={mapRef}
               initialViewState={viewState}
               // onLoad={handleLoad}
-              minZoom={3.5}
-              maxZoom={8}
+              minZoom={0}
+              maxZoom={10}
+              dragRotate={false}
               mapStyle={MAPBOX_STYLE}
               mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
             >
