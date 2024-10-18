@@ -130,7 +130,7 @@ const Explore = ({ mddata }) => {
               ref={mapRef}
               initialViewState={viewState}
               // onLoad={handleLoad}
-              minZoom={0}
+              minZoom={2}
               maxZoom={10}
               dragRotate={false}
               mapStyle={MAPBOX_STYLE}
@@ -139,7 +139,7 @@ const Explore = ({ mddata }) => {
             >
               <FoiVectorLayer
                 jsonData={foiHotspot}
-                flag={dataFilter.distribution}
+                distribution={dataFilter.distribution}
                 time_frame={dataFilter.time_frame}
                 virus={dataFilter.virus}
               />

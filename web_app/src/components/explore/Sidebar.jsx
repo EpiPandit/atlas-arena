@@ -28,6 +28,7 @@ import {
   MODEL_INFO,
 } from '@/config/constants/constants.explore';
 
+const DEFAULT_SELECT_DISTRIBUTION = true;
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
 
@@ -41,7 +42,9 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
-  const [selectedDistribution, setSelectedDistribution] = useState(false);
+  const [selectedDistribution, setSelectedDistribution] = useState(
+    DEFAULT_SELECT_DISTRIBUTION
+  );
 
   useEffect(() => {
     const tmpSpecies = allSpecies.map((i) => i.name);
@@ -50,7 +53,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       tmpSpecies,
       [DEFAULT_TIME],
       DEFAULT_MODEL,
-      false
+      DEFAULT_SELECT_DISTRIBUTION
     );
   }, [allVirus]);
   // actions
@@ -86,7 +89,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     }
     setSelectedVirus(value);
 
-    if (selectedDistribution) {
+    if (!selectedDistribution) {
       species = [];
     }
 
@@ -152,16 +155,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     setSelectedDistribution(newDistribution);
 
     if (newDistribution) {
-      setSelectedSpecies([]);
-      setSelectedModel('');
-      handleFilterTilesId({
-        virus: selectedVirus,
-        species: [],
-        time_frame: selectedTimeFrame,
-        model: '',
-        distribution: newDistribution,
-      });
-    } else {
+      // show default values
       let species = allSpecies
         .filter((i) => i.virus == selectedVirus)
         .map((i) => i.name);
@@ -175,6 +169,17 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         species: [...species],
         time_frame: selectedTimeFrame,
         model: DEFAULT_MODEL,
+        distribution: newDistribution,
+      });
+    } else {
+      // remove selection
+      setSelectedSpecies([]);
+      setSelectedModel('');
+      handleFilterTilesId({
+        virus: selectedVirus,
+        species: [],
+        time_frame: selectedTimeFrame,
+        model: '',
         distribution: newDistribution,
       });
     }
@@ -229,7 +234,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               values={selectedSpecies}
               handleAction={handleSpeciesChange}
               filterValue={selectedVirus}
-              isDisabled={selectedDistribution}
+              isDisabled={!selectedDistribution}
             />
             <FormControlSelect
               label={MODEL_LABEL}
@@ -237,7 +242,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               info={MODEL_INFO}
               value={selectedModel}
               handleAction={handleModelChange}
-              isDisabled={selectedDistribution}
+              isDisabled={!selectedDistribution}
             />
           </>
         )}

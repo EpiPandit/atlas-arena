@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Source, Layer } from 'react-map-gl';
 import { MAP_COLORS, ALL_VIRUS } from '@/config/constants/general';
 
-const FoiVectorLayer = ({ jsonData, flag, time_frame, virus }) => {
+const FoiVectorLayer = ({ jsonData, distribution, time_frame, virus }) => {
   if (!jsonData) return null;
 
   const defaultColors = Object.keys(MAP_COLORS)
@@ -11,11 +11,11 @@ const FoiVectorLayer = ({ jsonData, flag, time_frame, virus }) => {
     .flat();
 
   const createFilter = () => {
-    let new_time = (time_frame || []).join('').toLowerCase();
-    if (new_time.includes('delta')) {
-      new_time = new_time.replace('current');
-    }
-    if (flag) {
+    if (!distribution) {
+      let new_time = (time_frame || []).join('').toLowerCase();
+      if (new_time.includes('delta')) {
+        new_time = new_time.replace('current');
+      }
       if (virus === ALL_VIRUS) {
         return ['in', ['get', 'time_frame'], new_time];
       } else {
@@ -26,7 +26,7 @@ const FoiVectorLayer = ({ jsonData, flag, time_frame, virus }) => {
         ];
       }
     }
-    return ['all', flag];
+    return ['all', false];
   };
 
   return (
