@@ -6,6 +6,9 @@ import os
 import csv
 import subprocess
 import time
+import rasterio as rio
+import numpy as np
+
 MAPBOX_USER = os.getenv("MAPBOX_USER")
 
 
@@ -19,17 +22,35 @@ def save_csv(csv_file, csv_data):
         w.writerows(csv_data)
 
 
-def get_nodata_value(item):
-    try:
-        cmd_info = ["gdalinfo", "-json", item]
-        result_info = subprocess.run(cmd_info, capture_output=True, text=True)
-        info = json.loads(result_info.stdout)
-        for band in info["bands"]:
-            if "noDataValue" in band:
-                return band["noDataValue"]
-    except Exception as ex:
-        print(ex)
-    return "-3.4e+38"
+def custom_rescale(input_tif, output_tif, scale_min, scale_max):
+    with rio.open(input_tif) as src:
+        data = src.read(1)
+        nodata_value = src.nodata
+        nodata_mask = (
+            (data == nodata_value)
+            if nodata_value is not None
+            else np.zeros(data.shape, dtype=bool)
+        )
+        CONSTANT = 10
+        new_data_ = np.where(nodata_mask, data, data + CONSTANT)
+        data_rescaled = np.interp(
+            new_data_, (scale_min + CONSTANT, scale_max + CONSTANT), (1, 255)
+        )
+        data_rescaled = data_rescaled.astype(np.uint8)
+        data_rescaled[nodata_mask] = 0
+        profile = src.profile
+        profile.update(
+            dtype=rio.uint8,
+            count=1,
+            compress="LZW",
+            predictor=2,
+            tiled=True,
+            blockxsize=256,
+            blockysize=256,
+            nodata=0,
+        )
+        with rio.open(output_tif, "w", **profile) as dst:
+            dst.write(data_rescaled, 1)
 
 
 @click.command(short_help="Review and clean data")
@@ -87,48 +108,24 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
                 "new_raster_name": fake_name,
                 "color": ged_(species, "color"),
             }
-            scale_min = "0"
-            scale_max = "1"
+            scale_min = 0
+            scale_max = 1
             # default probability_presence
             if filename == "force_of_infection.tif":
-                scale_max = "0.05"
+                scale_min = 0
+                scale_max = 0.05
             if filename == "diff_in_probabilities":
-                scale_min = "-1"
+                scale_min = -1
+                scale_max = 1
 
-            # nodata_value = get_nodata_value(item)
             # rescale
-            rescale_ = f"{to_upload_folder_path}/{fake_name}"
-            cmd_translate = [
-                "gdal_translate",
-                "-ot",
-                "Byte",
-                "-scale",
-                scale_min,
-                scale_max,
-                "1",
-                "254",
-                "-co",
-                "TILED=YES",
-                "-co",
-                "BLOCKXSIZE=256",
-                "-co",
-                "BLOCKYSIZE=256",
-                "-co",
-                "COMPRESS=LZW",
-                "-co",
-                "PREDICTOR=2",
-                "-a_nodata",
-                "255",
-                item,
-                rescale_,
-            ]
-            result_translate = subprocess.run(
-                cmd_translate,
-                stdout=subprocess.DEVNULL,
-            )
+            rescale_name = f"{to_upload_folder_path}/{fake_name}"
+
+            custom_rescale(item, rescale_name, scale_min, scale_max)
+
             # upload mapbox
             tileset_id = f"{MAPBOX_USER}.{fake_name}".replace(".tif", "")
-            cmd_mapbox = ["mapbox", "upload", tileset_id, rescale_]
+            cmd_mapbox = ["mapbox", "upload", tileset_id, rescale_name]
 
             try:
                 result = subprocess.run(
@@ -140,13 +137,13 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
                 row_data["tileset_id"] = tileset_id
                 csv_data_tiff.append(row_data)
                 # reduce errors
-                time.sleep(3)
+                time.sleep(1)
             except subprocess.CalledProcessError as e:
                 row_data["tileset_id"] = "N/A"
                 print(f"Error: {e}")
 
         except Exception as ex:
-            print(ex)
+            print("Error: ",ex, item)
 
     save_csv(f"{to_upload_folder_path}/data_output_tiff.csv", csv_data_tiff)
 
