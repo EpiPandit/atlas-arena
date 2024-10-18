@@ -38,8 +38,8 @@ export const buildRawDataGoodleSheet = (raw_data_) => {
 
     return rowDict;
   });
-
-  return dataDicts;
+  // filter by flag
+  return dataDicts.filter((i) => i.flag && i.flag === 'TRUE');
 };
 
 const filterInvalidData = (data_format_group) => {
