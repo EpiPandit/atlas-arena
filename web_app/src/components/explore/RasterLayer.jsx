@@ -27,7 +27,7 @@ const RasterLayer = ({ item, opacity_filter = {}, has_many = true }) => {
           'raster-opacity': opacity / 100,
           'raster-color': [
             'case',
-            ['<=', ['raster-value'], 0.009],
+            ['<=', ['raster-value'], 0.000001],
             'rgba(0, 0, 0, 0)',
             [...rasterColor],
           ],
