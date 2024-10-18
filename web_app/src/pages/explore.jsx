@@ -15,6 +15,7 @@ import {
   DEFAULT_LEGEND_VALUE,
   LEGEND_DELTA_VALUE,
 } from '@/config/constants/general';
+import FoiVectorLayer from '@/components/explore/FoiVectorLayer';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE;
@@ -32,16 +33,17 @@ const Explore = ({ mddata }) => {
   const mapRef = useRef(null);
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [filterTilesId, setFilterTilesId] = useState([]);
-  const [boundariesAdm, setBoundariesAdm] = useState(null);
+  const [foiHotspot, setFoiHotspot] = useState(null);
   const [opacityFilter, setLayerStyle] = useState({});
   const [dataVirus, setDataVirus] = useState({});
   const [hasDeltaValue, setHasDeltaValue] = useState(false);
+  const [dataFilter, setDataFilter] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASENAME}/assets/data/filter_sa.geojson.gz`,
+          `${BASENAME}/assets/data/hotspots.geojson.gz`,
           {
             responseType: 'arraybuffer',
           }
@@ -49,14 +51,14 @@ const Explore = ({ mddata }) => {
         const decompressed = pako.inflate(response.data, { to: 'string' });
         const jsonDataMapp = JSON.parse(decompressed);
         if (jsonDataMapp && jsonDataMapp.features) {
-          setBoundariesAdm(jsonDataMapp);
+          setFoiHotspot(jsonDataMapp);
         }
       } catch (err) {
         console.error(err);
       }
     };
 
-    // fetchData();
+    fetchData();
   }, []);
 
   const handleFilterTilesId = (data_filter) => {
@@ -70,6 +72,8 @@ const Explore = ({ mddata }) => {
       ).length > 0;
     setHasDeltaValue(hasDelta);
     setFilterTilesId(raw_data_filter);
+    setDataFilter(data_filter);
+
     // show virus draw
     const { virus } = data_filter;
 
@@ -133,6 +137,12 @@ const Explore = ({ mddata }) => {
               mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
               projection='mercator'
             >
+              <FoiVectorLayer
+                jsonData={foiHotspot}
+                flag={dataFilter.distribution}
+                time_frame={dataFilter.time_frame}
+                virus={dataFilter.virus}
+              />
               {buildRender}
             </StaticMap>
           </Box>

@@ -86,6 +86,10 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     }
     setSelectedVirus(value);
 
+    if (selectedDistribution) {
+      species = [];
+    }
+
     setSelectedSpecies(species);
 
     // update
@@ -155,7 +159,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         species: [],
         time_frame: selectedTimeFrame,
         model: '',
-        distribution: selectedDistribution,
+        distribution: newDistribution,
       });
     } else {
       let species = allSpecies
