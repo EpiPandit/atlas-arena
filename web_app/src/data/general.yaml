@@ -1,5 +1,5 @@
 sub_header: 'WELCOME TO THE'
-header: 'Arena Atlas'
+header: 'AtlasArena'
 intros:
   - id: 1
     content: |
