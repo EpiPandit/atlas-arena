@@ -30,6 +30,7 @@ const ColorLegend = ({
   handleChange = null,
   value = {},
   has_many = false,
+  is_virus = false,
 }) => {
   let colors = MAP_COLORS[color];
   if (!color) {
@@ -41,7 +42,7 @@ const ColorLegend = ({
 
   let customTitle = `${title}`;
   const titleList = title.split(' ');
-  if (titleList.length > 1) {
+  if (titleList.length > 1 && !is_virus) {
     customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')}`;
   }
   const opacity =
@@ -51,6 +52,19 @@ const ColorLegend = ({
         ? DEFAULT_OPACITY_MULTIPLE
         : DEFAULT_OPACITY_SINGLE;
 
+  const renderBoxColor = (
+    <Box
+      h='12px'
+      mb={0}
+      display='flex'
+      width='full'
+      bgGradient={
+        is_virus
+          ? `linear(to-r, ${colors[2]}, ${colors[2]})`
+          : `linear(to-r, ${colors[0]}, ${colors[colors.length - 1]})`
+      }
+    />
+  );
   return (
     <Box
       w='303px'
@@ -118,15 +132,7 @@ const ColorLegend = ({
           </PopoverContent>
         </Popover>
       </Flex>
-
-      <Box
-        h='12px'
-        mb={0}
-        display='flex'
-        width='full'
-        bgGradient={`linear(to-r, ${colors[0]}, ${colors[colors.length - 1]})`}
-      />
-
+      {renderBoxColor}
       <Box
         display='flex'
         mt={0}
@@ -134,11 +140,12 @@ const ColorLegend = ({
         justifyContent='space-between'
         width='full'
       >
-        {labels.map((i) => (
-          <Text key={i} fontSize='10px' color='gray.600'>
-            {i}
-          </Text>
-        ))}
+        {labels &&
+          labels.map((i) => (
+            <Text key={i} fontSize='10px' color='gray.600'>
+              {i}
+            </Text>
+          ))}
       </Box>
     </Box>
   );

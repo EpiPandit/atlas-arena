@@ -2,7 +2,13 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Source, Layer } from 'react-map-gl';
 import { MAP_COLORS, ALL_VIRUS } from '@/config/constants/general';
 
-const FoiVectorLayer = ({ jsonData, distribution, time_frame, virus }) => {
+const FoiVectorLayer = ({
+  jsonData,
+  hotspot,
+  time_frame,
+  virus,
+  opacity_filter = {},
+}) => {
   if (!jsonData) return null;
 
   const defaultColors = Object.keys(MAP_COLORS)
@@ -11,7 +17,7 @@ const FoiVectorLayer = ({ jsonData, distribution, time_frame, virus }) => {
     .flat();
 
   const createFilter = () => {
-    if (!distribution) {
+    if (hotspot) {
       let new_time = (time_frame || []).join('').toLowerCase();
       if (new_time.includes('delta')) {
         new_time = new_time.replace('current');
@@ -29,6 +35,17 @@ const FoiVectorLayer = ({ jsonData, distribution, time_frame, virus }) => {
     return ['all', false];
   };
 
+  const customOpacity = [
+    'match',
+    ['get', 'virus'],
+    'Guanarito virus',
+    (opacity_filter['Guanarito virus'] ?? 100) / 100,
+    'Junin virus',
+    (opacity_filter['Junin virus'] ?? 100) / 100,
+    'Machupo virus',
+    (opacity_filter['Machupo virus'] ?? 100) / 100,
+    0,
+  ];
   return (
     <Source id='source-foi' type='geojson' data={jsonData}>
       <Layer
@@ -36,7 +53,7 @@ const FoiVectorLayer = ({ jsonData, distribution, time_frame, virus }) => {
         type='circle'
         paint={{
           'circle-radius': 3,
-          'circle-opacity': 0.5,
+          'circle-opacity': [...customOpacity],
           'circle-color': [
             'match',
             ['get', 'color'],

@@ -35,6 +35,7 @@ const Explore = ({ mddata }) => {
   const [filterTilesId, setFilterTilesId] = useState([]);
   const [foiHotspot, setFoiHotspot] = useState(null);
   const [opacityFilter, setLayerStyle] = useState({});
+
   const [dataVirus, setDataVirus] = useState({});
   const [hasDeltaValue, setHasDeltaValue] = useState(false);
   const [dataFilter, setDataFilter] = useState({});
@@ -117,6 +118,22 @@ const Explore = ({ mddata }) => {
     />
   ));
 
+  const renderVirusSelectHotspot = getUniqueCombinations(
+    filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
+    'virus',
+    'color_virus'
+  ).map((item) => (
+    <ColorLegend
+      key={item.virus}
+      title={item.virus}
+      color={item.color_virus}
+      labels={[]}
+      value={opacityFilter}
+      is_virus={true}
+      handleChange={handleChangeLayerStyle}
+    />
+  ));
+
   return (
     <Flex position='relative' flexDirection={{ base: 'column', md: 'row' }}>
       <Sidebar
@@ -139,9 +156,10 @@ const Explore = ({ mddata }) => {
             >
               <FoiVectorLayer
                 jsonData={foiHotspot}
-                distribution={dataFilter.distribution}
+                hotspot={dataFilter.hotspot}
                 time_frame={dataFilter.time_frame}
                 virus={dataFilter.virus}
+                opacity_filter={opacityFilter}
               />
               {buildRender}
             </StaticMap>
@@ -160,6 +178,7 @@ const Explore = ({ mddata }) => {
           width={{ base: '90%', md: 'auto' }}
         >
           {renderVirusSelect}
+          {renderVirusSelectHotspot}
         </Box>
         <CustomModal dataVirus={dataVirus} />
       </Box>
