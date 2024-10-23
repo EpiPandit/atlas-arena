@@ -33,7 +33,7 @@ def main(current_shapefile, ssp2_shapefile, ssp5_shapefile, filter_value, equiva
         return f"--- {val} --"
 
     # fix names
-    filter_df["color"] = filter_df["spp"].apply(lambda x: get_correct_value(x, "color"))
+    filter_df["color"] = filter_df["virus"].apply(lambda x: get_correct_value(x, "color"))
     filter_df["virus"] = filter_df["virus"].apply(lambda x: get_correct_value(x, "spreadsheet"))
     filter_df["species"] = filter_df["spp"].apply(lambda x: get_correct_value(x, "spreadsheet"))
     filter_df.drop(columns=["spp"], inplace=True)

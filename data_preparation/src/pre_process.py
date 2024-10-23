@@ -107,6 +107,7 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
                 "tileset_id": "N/A",
                 "new_raster_name": fake_name,
                 "color": ged_(species, "color"),
+                "color_virus": ged_(virus, "color"),
             }
             scale_min = 0
             scale_max = 1
