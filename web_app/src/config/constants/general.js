@@ -1,7 +1,7 @@
 // PAGE METADATA
-export const PAGE_TITLE = 'Arenavirus';
-export const PAGE_KEYWORDS = 'Arenavirus';
-export const PAGE_DESCRIPTION = 'Arenavirus';
+export const PAGE_TITLE = 'AtlasArena';
+export const PAGE_KEYWORDS = 'AtlasArena';
+export const PAGE_DESCRIPTION = 'AtlasArena';
 export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
 
 // HEADER LINKS
