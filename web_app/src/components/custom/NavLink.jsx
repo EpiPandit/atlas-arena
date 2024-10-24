@@ -10,7 +10,6 @@ const NavLink = ({ href, text, isExternal = false }) => {
       py={1}
       href={href || '/'}
       target={isExternal ? '_blank' : '_self'}
-      fontFamily='sans-serif'
       fontWeight={700}
       fontSize='xs'
       color={isActive ? 'blue.800' : 'gray.500'}

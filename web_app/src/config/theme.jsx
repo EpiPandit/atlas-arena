@@ -1,5 +1,4 @@
 import { extendTheme } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
 import Tabs from '@/config/styles/components.tabs';
 import Card from '@/config/styles/components.card';
 
@@ -51,17 +50,16 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    body: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
-    heading: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
-    mono: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
+    body: 'sans-serif',
+    heading: 'sans-serif',
+    mono: 'sans-serif',
   },
   styles: {
     global: (props) => ({
       body: {
         overflowX: 'hidden',
-        bg: mode('secondary.50', 'gray.900')(props),
-        fontFamily:
-          "'sans-serif','Montserrat Variable', 'EB Garamond Variable' ",
+        bg: 'secondary.50',
+        fontFamily: 'sans-serif',
       },
     }),
   },

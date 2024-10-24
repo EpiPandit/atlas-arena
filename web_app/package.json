@@ -16,8 +16,6 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@fontsource-variable/eb-garamond": "^5.1.0",
-    "@fontsource-variable/montserrat": "^5.1.0",
     "add": "^2.0.6",
     "axios": "^1.7.7",
     "chakra-ui-markdown-renderer": "^4.1.0",
