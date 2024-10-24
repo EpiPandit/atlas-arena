@@ -21,10 +21,9 @@ const Header = () => {
     <Box
       bg='secondary.50'
       py={3}
-      px={4}
+      px={6}
       borderBottom={'1px'}
-      borderBottomColor='gray.300'
-      h={`${H_HEADER}px`}
+      borderBottomColor='gray.200'
     >
       <Flex alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
@@ -36,8 +35,7 @@ const Header = () => {
         />
         <Box>
           <Text
-            fontSize='md'
-            fontFamily='sans-serif'
+            fontSize='sm'
             color='blue.800'
             fontWeight={600}
             lineHeight='21px'

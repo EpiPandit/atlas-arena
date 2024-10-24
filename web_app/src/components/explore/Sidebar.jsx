@@ -165,10 +165,13 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
             : { base: '100%', md: '330px' }
         }
         maxW={{ base: '100%', md: '330px' }}
-        bg={isCollapsed ? 'transparent' : 'yellow.10'}
+        bg={isCollapsed ? 'transparent' : 'secondary.50'}
         h='100%'
-        p={isCollapsed ? 0 : { base: '16px', md: '32px' }}
+        p={isCollapsed ? 0 : { base: '16px', md: '24px' }}
         overflowY='auto'
+        boxShadow="sm"
+        borderRight="1px solid"
+        borderColor="blackAlpha.400"
         transition='all 0.3s ease'
       >
         {!isCollapsed && (
