@@ -6,7 +6,6 @@ const { definePartsStyle, defineMultiStyleConfig } =
 
 const baseStyle = definePartsStyle({
   tab: {
-    fontFamily: 'Montserrat Variable',
     fontWeight: '500',
     fontSize: '14px',
     lineHeight: '20px',
@@ -17,7 +16,6 @@ const baseStyle = definePartsStyle({
     },
   },
   tabpanel: {
-    fontFamily: 'Montserrat Variable',
     paddingLeft: '0px',
     paddingRight: '0px',
   },
