@@ -14,10 +14,12 @@ import {
   PAGE_KEYWORDS,
   PAGE_AUTHOR,
 } from '@/config/constants/general';
+import { FontCss } from '@/config/fonts';
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
+      <FontCss />
       <Head>
         <title>{PAGE_TITLE}</title>
         <meta charSet='UTF-8' />

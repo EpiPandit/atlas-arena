@@ -1,5 +1,4 @@
 import { extendTheme } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
 import Tabs from '@/config/styles/components.tabs';
 import Card from '@/config/styles/components.card';
 
@@ -14,19 +13,19 @@ const theme = extendTheme({
   },
   colors: {
     blue: {
-      50: '#edf5ff',
-      100: '#d7e7ff',
-      200: '#b9d7ff',
-      300: '#88beff',
-      400: '#509bff',
-      500: '#2873ff',
-      600: '#0f4fff',
-      700: '#0a3beb',
-      800: '#0f30be',
-      900: '#132f95',
+      50: '#DAE7F7',
+      100: '#B3CDF5',
+      200: '#98C0F5',
+      300: '#77A9E5',
+      400: '#5096F2',
+      500: '#3776ED',
+      600: '#3564E5',
+      700: '#365AD9',
+      800: '#334BB5',
+      900: '#2C3F85',
     },
     secondary: {
-      50: '#fbf8ef',
+      50: '#FCFBF7',
       100: '#f3eace',
       200: '#e8d69f',
       300: '#dcbd6d',
@@ -51,17 +50,16 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    body: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
-    heading: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
-    mono: "'sans-serif','Montserrat Variable', 'EB Garamond Variable'",
+    body: `'Montserrat Variable', sans-serif`,
+    heading: `'Montserrat Variable', sans-serif`,
   },
   styles: {
-    global: (props) => ({
+    global: () => ({
       body: {
         overflowX: 'hidden',
-        bg: mode('secondary.50', 'gray.900')(props),
+        bg: 'secondary.50',
         fontFamily:
-          "'sans-serif','Montserrat Variable', 'EB Garamond Variable' ",
+          `'Montserrat Variable', sans-serif`,
       },
     }),
   },
