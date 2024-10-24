@@ -162,4 +162,4 @@ export const DEFAULT_LEGEND_VALUE = ['0', '0.5', '1'];
 export const LEGEND_DELTA_VALUE = ['-1', '0', '1'];
 
 // HEIGHT HEADER
-export const H_HEADER = 56;
+export const H_HEADER = 54;
