@@ -37,7 +37,6 @@ const Header = () => {
         <Box>
           <Text
             fontSize='md'
-            fontFamily='sans-serif'
             color='blue.800'
             fontWeight={600}
             lineHeight='21px'
