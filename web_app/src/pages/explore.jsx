@@ -22,9 +22,9 @@ const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE;
 const BASENAME = (process.env.PUBLIC_URL || '').replace('//', '/');
 
 const initialViewState = {
-  latitude: 6,
-  longitude: -70,
-  zoom: 4.5,
+  latitude: -19,
+  longitude: -45,
+  zoom: 3.1,
 };
 
 const Explore = ({ mddata }) => {
