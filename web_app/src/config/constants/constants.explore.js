@@ -3,7 +3,7 @@
 // ======
 
 export const SIDEBAR_TITLE = 'EXPLORE';
-export const SIDEBAR_SUBTITLE = 'Explore the risk of Arena Viruses';
+export const SIDEBAR_SUBTITLE = 'Explore the risk of Arenaviruses';
 
 // VIRUS FILTER
 export const VIRUS_LABEL = 'virus';
