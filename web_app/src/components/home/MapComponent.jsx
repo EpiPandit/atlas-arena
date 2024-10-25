@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
-import { Box } from '@chakra-ui/react';
-
-import StaticMap from 'react-map-gl';
+import React from 'react';
+import { Box, Image } from '@chakra-ui/react';
+import indexImage from '@/assets/images/index_image.webp';
 
 const BackdropBlur = () => (
   <Box
@@ -10,26 +9,12 @@ const BackdropBlur = () => (
     left={0}
     right={0}
     height='100%'
-    backdropFilter='blur(3px)'
+    backdropFilter='blur(2px)'
     zIndex={2}
   />
 );
 
-const MapComponent = ({ mapStyle, accessToken }) => {
-  const mapRef = useRef(null);
-
-  const handleLoad = () => {
-    const map = mapRef.current.getMap();
-    map.resize();
-    map.setFog({
-      color: 'rgba(0, 0, 0, 0.01)',
-      'high-color': 'rgba(0, 0, 0, 0.001)',
-      'horizon-blend': 0.01,
-      'space-color': 'rgba(0, 0, 0, 0.001)',
-      'star-intensity': 0.015,
-    });
-  };
-
+const MapComponent = () => {
   return (
     <Box
       position='absolute'
@@ -42,17 +27,14 @@ const MapComponent = ({ mapStyle, accessToken }) => {
       overflow='hidden'
       px={0}
     >
-      <Box w='full' h='full'>
+      <Box w='full' h='full' bgColor='secondary.50'>
         <BackdropBlur />
-        <StaticMap
-          ref={mapRef}
-          latitude={-18.1543810681043}
-          longitude={-60.59673635723772}
-          zoom={2.2}
-          onLoad={handleLoad}
-          mapStyle={mapStyle}
-          mapboxAccessToken={accessToken}
-          projection='globe'
+        <Image
+          src={indexImage.src}
+          objectFit='cover'
+          mixBlendMode='multiply'
+          w='full'
+          h='full'
         />
       </Box>
     </Box>
