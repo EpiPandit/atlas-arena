@@ -146,7 +146,7 @@ const MarkdownTheme = {
   },
   blockquote: (props) => {
     const { children } = props;
-    const bgColor = useColorModeValue('gray.100', 'gray.700');
+    const bgColor = 'gray.100';
     return (
       <Blockquote
         bg={bgColor}

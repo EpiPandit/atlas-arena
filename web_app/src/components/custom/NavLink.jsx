@@ -7,13 +7,13 @@ const NavLink = ({ href, text, isExternal = false }) => {
 
   return (
     <NextLink
-      py={1}
       href={href || '/'}
       target={isExternal ? '_blank' : '_self'}
       fontWeight={700}
       fontSize='xs'
       color={isActive ? 'blue.800' : 'gray.500'}
-      borderBottom={isActive ? '2px solid' : 'none'}
+      letterSpacing={0.8}
+      boxShadow={isActive ? '0 2px 0 0 var(--chakra-colors-blue-800)' : 'none'}
       _hover={{
         textDecoration: 'none',
         color: 'blue.800',

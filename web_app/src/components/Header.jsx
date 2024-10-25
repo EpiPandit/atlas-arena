@@ -13,18 +13,17 @@ import { Icon } from '@chakra-ui/react';
 import { Link as NextLink } from '@chakra-ui/next-js';
 
 import NavLink from '@/components/custom/NavLink';
-import { LINK_HEADER, PAGE_TITLE, H_HEADER } from '@/config/constants/general';
+import { LINK_HEADER, PAGE_TITLE } from '@/config/constants/general';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box
       bg='secondary.50'
-      py={3}
-      px={4}
+      py={4}
+      px={6}
       borderBottom={'1px'}
-      borderBottomColor='gray.300'
-      h={`${H_HEADER}px`}
+      borderBottomColor='gray.200'
     >
       <Flex alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
@@ -36,7 +35,7 @@ const Header = () => {
         />
         <Box>
           <Text
-            fontSize='md'
+            fontSize='sm'
             color='blue.800'
             fontWeight={600}
             lineHeight='21px'

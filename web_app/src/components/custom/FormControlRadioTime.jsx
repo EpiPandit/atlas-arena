@@ -97,6 +97,7 @@ const FormControlRadioTime = ({
           onChange={handleChangeCheck}
           isChecked={selectCheck}
           isDisabled={selectRadio == DEFAULT_TIME}
+          fontSize="xs"
         >
           Show Delta
         </Checkbox>

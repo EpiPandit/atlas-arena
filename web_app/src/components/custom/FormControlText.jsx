@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Flex, Text } from '@chakra-ui/react';
+import { FormControl, FormLabel, Flex, Text, Heading } from '@chakra-ui/react';
 
 const FormControlText = ({ label, text = '' }) => {
   return (
@@ -13,10 +13,10 @@ const FormControlText = ({ label, text = '' }) => {
         mx={0}
       >
         <Flex justifyContent='space-between' alignItems='center'>
-          {label}
+          <Heading size="sm" as="h4">{label}</Heading>
         </Flex>
       </FormLabel>
-      <Text fontSize='sm' textAlign='start' borderBottom={2} fontWeight={400}>
+      <Text fontSize='sm' textAlign='start' borderBottom={2} fontWeight={400} color="initial">
         {text}
       </Text>
     </FormControl>
