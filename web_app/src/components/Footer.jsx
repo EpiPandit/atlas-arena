@@ -1,6 +1,6 @@
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import wellcomeLogo from '@/assets/images/wellcome.png';
-import ucdavisLogo from '@/assets/images/ucdavis.jpg';
+import ucdavisLogo from '@/assets/images/expanded_logo_blue.png';
 import devseedLogo from '@/assets/images/devseed.png';
 import geocompasLogo from '@/assets/images/geocompas.webp';
 
@@ -37,25 +37,25 @@ const Footer = () => {
         <Image
           src={wellcomeLogo.src}
           alt='Wellcome logo'
-          boxSize={{ base: '50px', md: '80px' }}
+          boxSize={{ base: '35px', md: '55px' }}
           objectFit='contain'
         />
         <Image
           src={ucdavisLogo.src}
           alt='UC Davis logo'
-          w={{ base: '130px', md: '186px' }}
+          w={{ base: '130px', md: '175px' }}
           objectFit='contain'
         />
         <Image
           src={devseedLogo.src}
           alt='Development Seed logo'
-          w={{ base: '130px', md: '186px' }}
+          w={{ base: '150px', md: '235px' }}
           objectFit='contain'
         />
         <Image
           src={geocompasLogo.src}
           alt='Geocompas'
-          w={{ base: '150px', md: '186px' }}
+          w={{ base: '150px', md: '230px' }}
           objectFit='contain'
         />
       </Flex>
