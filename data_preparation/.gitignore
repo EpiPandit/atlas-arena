@@ -1,0 +1,8 @@
+data/**/*.tif
+*.zip
+.idea/
+data_clean/
+data/**/*.txt
+data/**/*.csv
+data/**/*.xml
+data/

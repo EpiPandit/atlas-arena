@@ -1,0 +1,7 @@
+services:
+  etl:
+    image: geocompas/atlasarena:etl
+    build: .
+    volumes:
+      - ${PWD}:/mnt
+

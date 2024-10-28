@@ -1,0 +1,49 @@
+{
+  "name": "atlasarena",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "stage": "next build && surge ./out atlasarena.surge.sh"
+  },
+  "dependencies": {
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "add": "^2.0.6",
+    "axios": "^1.7.7",
+    "chakra-ui-markdown-renderer": "^4.1.0",
+    "framer-motion": "^11.5.4",
+    "fs": "^0.0.1-security",
+    "gray-matter": "^4.0.3",
+    "mapbox-gl": "^3.6.0",
+    "next": "14.2.5",
+    "pako": "^2.1.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-map-gl": "^7.1.7",
+    "react-markdown": "^9.0.1",
+    "rehype-raw": "^7.0.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
+    "yaml": "^2.5.0",
+    "yarn": "^1.22.22"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8",
+    "eslint-config-next": "^14.2.13",
+    "eslint-config-prettier": "^9.1.0",
+    "postcss": "^8",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "react-icons": "^5.3.0",
+    "tailwindcss": "^3.4.1"
+  }
+}
