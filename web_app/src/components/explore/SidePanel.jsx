@@ -54,26 +54,26 @@ const SidePanel = ({ dataVirus = {} }) => {
     >
       <Button
         onClick={togglePanel}
-        height='130px'
-        bg='secondary.50'
+        minH='fit-content'
+        colorScheme='blue'
         fontSize='xs'
         fontWeight={700}
-        color={hasData ? 'blue.800' : 'gray.500'}
         right={isExpanded ? 'auto' : '0'}
         display='flex'
         alignItems='center'
         justifyContent='center'
         rounded='sm'
         isDisabled={!hasData}
-        p={0}
+        px={4}
         gap={2}
+        textTransform='uppercase'
         sx={{
           writingMode: 'vertical-rl',
           transform: 'rotate(180deg)',
         }}
         zIndex={11}
       >
-        {isExpanded ? <FaArrowLeftLong /> : <FaArrowRightLong />} ABOUT VIRUS
+        {isExpanded ? <FaArrowLeftLong /> : <FaArrowRightLong />} About the virus
       </Button>
 
       <Drawer
@@ -86,6 +86,7 @@ const SidePanel = ({ dataVirus = {} }) => {
         <DrawerContent
           maxH={`calc(100vh - ${H_HEADER}px)`}
           mt={`${H_HEADER}px`}
+          bg='secondary.50'
         >
           <DrawerCloseButton
             top='4'
