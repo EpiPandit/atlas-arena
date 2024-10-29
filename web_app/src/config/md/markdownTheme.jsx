@@ -107,14 +107,16 @@ const MarkdownTheme = {
   },
   a: (props) => {
     const { href, children } = props;
+    const isExternal = href.startsWith('http');
+
     return (
       <Link
-        href={href}
+        href={isExternal ? href : `/${href}`}
         color='blue.500'
         textDecoration='underline'
         fontWeight='bold'
         lineHeight='tall'
-        target='_blank'
+        target={isExternal ? '_blank' : '_self'}
         rel='noopener noreferrer'
         _hover={{ color: 'blue.700' }}
       >

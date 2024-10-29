@@ -19,7 +19,7 @@ export const getMetadataMd = (customPath, mdContent = false) => {
 
           // const processedContent = await remark().use(html).process(content);
           const imageRegex = /(!\[.*?\]\()(images\/.*?\))/g;
-          const mdFix = content.replace(imageRegex, '$1./markdown/$2');
+          const mdFix = content.replace(imageRegex, '$1/markdown/$2');
           // const contentHtml = processedContent.toString();
           // const contentHtmlFix = contentHtml.replace(
           //   regex,
@@ -63,7 +63,7 @@ export const getMdContent = async (filename = '', mdContent = false) => {
       const { data, content } = matter(fileContents);
 
       const imageRegex = /(!\[.*?\]\()(images\/.*?\))/g;
-      const mdFix = content.replace(imageRegex, '$1./markdown/$2');
+      const mdFix = content.replace(imageRegex, '$1/markdown/$2');
 
       return {
         filename,
