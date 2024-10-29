@@ -3,11 +3,13 @@ import { useRouter } from 'next/router';
 
 const NavLink = ({ href, text, isExternal = false }) => {
   const router = useRouter();
-  const isActive = router.pathname === `/${href}`;
+  const isActive =
+    router.pathname === `/${href}` ||
+    (router.pathname.includes('resources') && href.includes('resources'));
 
   return (
     <NextLink
-      href={href || '/'}
+      href={isExternal ? href : `/${href}`}
       target={isExternal ? '_blank' : '_self'}
       fontWeight={700}
       fontSize='xs'
