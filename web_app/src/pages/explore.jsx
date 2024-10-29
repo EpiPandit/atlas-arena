@@ -9,7 +9,7 @@ import axios from 'axios';
 import pako from 'pako';
 import ColorLegend from '@/components/explore/ColorLegend';
 import { getMetadataMd } from '@/libs/markdown';
-import CustomModal from '@/components/explore/CustomModal';
+import SidePanel from '@/components/explore/SidePanel';
 import {
   H_HEADER,
   DEFAULT_LEGEND_VALUE,
@@ -23,7 +23,7 @@ const BASENAME = (process.env.PUBLIC_URL || '').replace('//', '/');
 
 const initialViewState = {
   latitude: -19,
-  longitude: -45,
+  longitude: -55,
   zoom: 3.1,
 };
 
@@ -168,8 +168,8 @@ const Explore = ({ mddata }) => {
         <Box
           position='absolute'
           maxH={`calc(100vh - ${H_HEADER}px)`}
-          top={4}
-          right={4}
+          bottom={4}
+          left={4}
           display='flex'
           flexDirection='column'
           alignItems='flex-end'
@@ -180,7 +180,7 @@ const Explore = ({ mddata }) => {
           {renderVirusSelect}
           {renderVirusSelectHotspot}
         </Box>
-        <CustomModal dataVirus={dataVirus} />
+        <SidePanel dataVirus={dataVirus} />
       </Box>
     </Flex>
   );
