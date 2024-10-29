@@ -1,6 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 import Tabs from '@/config/styles/components.tabs';
 import Card from '@/config/styles/components.card';
+import Drawer from '@/config/styles/components.drawer';
 
 const theme = extendTheme({
   breakpoints: {
@@ -58,14 +59,14 @@ const theme = extendTheme({
       body: {
         overflowX: 'hidden',
         bg: 'secondary.50',
-        fontFamily:
-          `'Montserrat Variable', sans-serif`,
+        fontFamily: `'Montserrat Variable', sans-serif`,
       },
     }),
   },
   components: {
     Tabs,
     Card,
+    Drawer,
   },
 });
 export default theme;

@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Flex,
-  Heading,
-  Text,
-  IconButton,
   Drawer,
   DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
   Button,
-  Icon,
 } from '@chakra-ui/react';
 
 import ReactMarkdown from 'react-markdown';
@@ -22,41 +14,10 @@ import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import markdownTheme from '@/config/md/markdownTheme';
 import rehypeRaw from 'rehype-raw';
 import { H_HEADER } from '@/config/constants/general';
-import { FiChevronsLeft, FiX } from 'react-icons/fi';
-import { FIRST_LINE_MODAL } from '@/config/constants/constants.explore';
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
-// import { ArrowForwardIcon, ArrowBackIcon } from '@chakra-ui/icons';
 
-const VerticalTextButton = ({ onOpen, isExpanded, btnRef }) => (
-  <Button
-    ref={btnRef}
-    position='absolute'
-    top='50%'
-    right={isExpanded ? 'auto' : '0'}
-    left={isExpanded ? '0' : 'auto'}
-    transform='translateY(-50%)'
-    height='120px'
-    width='40px'
-    display='flex'
-    alignItems='center'
-    justifyContent='center'
-    fontSize='sm'
-    fontWeight='bold'
-    color='white'
-    bg='blue.500'
-    _hover={{ bg: 'blue.600' }}
-    onClick={onOpen}
-    sx={{
-      writingMode: 'vertical-rl',
-    }}
-  >
-    About
-  </Button>
-);
-
-const CustomModal = ({ dataVirus = {} }) => {
+const SidePanel = ({ dataVirus = {} }) => {
   const { contentHtml } = dataVirus || {};
-  const [isCentered, setisCentered] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -115,8 +76,13 @@ const CustomModal = ({ dataVirus = {} }) => {
         {isExpanded ? <FaArrowLeftLong /> : <FaArrowRightLong />} ABOUT VIRUS
       </Button>
 
-      <Drawer isOpen={isOpen} placement='right' onClose={togglePanel} size='md'>
-        <DrawerOverlay />
+      <Drawer
+        variant='alwaysOpen'
+        isOpen={isOpen}
+        placement='right'
+        onClose={togglePanel}
+        size='md'
+      >
         <DrawerContent
           maxH={`calc(100vh - ${H_HEADER}px)`}
           mt={`${H_HEADER}px`}
@@ -135,4 +101,4 @@ const CustomModal = ({ dataVirus = {} }) => {
   );
 };
 
-export default CustomModal;
+export default SidePanel;
