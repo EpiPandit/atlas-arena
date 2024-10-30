@@ -16,6 +16,7 @@ import {
   LEGEND_DELTA_VALUE,
 } from '@/config/constants/general';
 import FoiVectorLayer from '@/components/explore/FoiVectorLayer';
+import HotSpotLegend from '@/components/explore/HotSpotLegend';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE;
@@ -134,6 +135,15 @@ const Explore = ({ mddata }) => {
     />
   ));
 
+  const labelsHotSpot = getUniqueCombinations(
+    filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
+    'virus',
+    'color_virus'
+  ).map((i) => ({
+    title: i.virus,
+    color: i.color,
+  }));
+
   return (
     <Flex position='relative' flexDirection={{ base: 'column', md: 'row' }}>
       <Sidebar
@@ -178,7 +188,11 @@ const Explore = ({ mddata }) => {
           width={{ base: '90%', md: 'auto' }}
         >
           {renderVirusSelect}
-          {renderVirusSelectHotspot}
+          <HotSpotLegend
+            labels={labelsHotSpot}
+            value={opacityFilter}
+            handleChange={handleChangeLayerStyle}
+          />
         </Box>
         <SidePanel dataVirus={dataVirus} />
       </Box>
