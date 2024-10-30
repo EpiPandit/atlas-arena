@@ -26,11 +26,13 @@ export const MODEL_INFO = 'model';
 
 // LEGEND
 export const LEGEND_OPACITY = 'Opacity';
-// LEGEND HOTSPOT
+export const LEGEND_SDM_TITLE = 'Species distribution probability';
 export const LEGEND_HOTSPOT_TITLE = 'Viral hotspot probability';
 export const LEGEND_HOTSPOT_DESC =
   '90th percentile of contacts between humans and rodents';
 
+export const UNIT_SDM = 'probability';
+export const UNIT_DELTA = 'change';
 // MODAL
 
 export const FIRST_LINE_MODAL = 'About the virus';

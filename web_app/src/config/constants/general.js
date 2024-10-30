@@ -163,3 +163,6 @@ export const LEGEND_DELTA_VALUE = ['-1', '0', '1'];
 
 // HEIGHT HEADER
 export const H_HEADER = 54;
+
+// LEGEND
+export const W_LEGEND = 303;

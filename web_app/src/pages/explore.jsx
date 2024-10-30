@@ -1,20 +1,16 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
-import StaticMap, { Source, Layer } from 'react-map-gl';
+import StaticMap from 'react-map-gl';
 import { useAppContext } from '@/store/context';
 import { dynamicFilter, getUniqueCombinations } from '@/utils/utils';
 import Sidebar from '@/components/explore/Sidebar';
 import RasterLayer from '@/components/explore/RasterLayer';
 import axios from 'axios';
 import pako from 'pako';
-import ColorLegend from '@/components/explore/ColorLegend';
+import SDMLegend from '@/components/explore/SDMLegend';
 import { getMetadataMd } from '@/libs/markdown';
 import SidePanel from '@/components/explore/SidePanel';
-import {
-  H_HEADER,
-  DEFAULT_LEGEND_VALUE,
-  LEGEND_DELTA_VALUE,
-} from '@/config/constants/general';
+import { H_HEADER } from '@/config/constants/general';
 import FoiVectorLayer from '@/components/explore/FoiVectorLayer';
 import HotSpotLegend from '@/components/explore/HotSpotLegend';
 
@@ -103,37 +99,14 @@ const Explore = ({ mddata }) => {
       />
     ));
 
-  const renderVirusSelect = getUniqueCombinations(
-    filterTilesId.filter((i) => i.species),
+  const labelSDM = getUniqueCombinations(
+    filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
     'species',
     'color'
-  ).map((item) => (
-    <ColorLegend
-      key={item.species}
-      title={item.species}
-      color={item.color}
-      labels={hasDeltaValue ? LEGEND_DELTA_VALUE : DEFAULT_LEGEND_VALUE}
-      value={opacityFilter}
-      has_many={filterTilesId.length > 0}
-      handleChange={handleChangeLayerStyle}
-    />
-  ));
-
-  const renderVirusSelectHotspot = getUniqueCombinations(
-    filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
-    'virus',
-    'color_virus'
-  ).map((item) => (
-    <ColorLegend
-      key={item.virus}
-      title={item.virus}
-      color={item.color_virus}
-      labels={[]}
-      value={opacityFilter}
-      is_virus={true}
-      handleChange={handleChangeLayerStyle}
-    />
-  ));
+  ).map((i) => ({
+    title: i.species,
+    color: i.color,
+  }));
 
   const labelsHotSpot = getUniqueCombinations(
     filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
@@ -141,7 +114,7 @@ const Explore = ({ mddata }) => {
     'color_virus'
   ).map((i) => ({
     title: i.virus,
-    color: i.color,
+    color: i.color_virus,
   }));
 
   return (
@@ -187,7 +160,12 @@ const Explore = ({ mddata }) => {
           zIndex={10}
           width={{ base: '90%', md: 'auto' }}
         >
-          {renderVirusSelect}
+          <SDMLegend
+            labels={labelSDM}
+            value={opacityFilter}
+            isDelta={hasDeltaValue}
+            handleChange={handleChangeLayerStyle}
+          />
           <HotSpotLegend
             labels={labelsHotSpot}
             value={opacityFilter}

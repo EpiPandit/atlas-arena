@@ -20,17 +20,23 @@ import {
   DEFAULT_OPACITY_SINGLE,
   DEFAULT_OPACITY_MULTIPLE,
   DEFAULT_LEGEND_VALUE,
+  LEGEND_DELTA_VALUE,
+  W_LEGEND,
 } from '@/config/constants/general';
-import { LEGEND_OPACITY } from '@/config/constants/constants.explore';
+import {
+  LEGEND_OPACITY,
+  UNIT_SDM,
+  UNIT_DELTA,
+  LEGEND_SDM_TITLE,
+} from '@/config/constants/constants.explore';
 
 const ColorLegend = ({
   color = '',
   title = '',
-  labels = DEFAULT_LEGEND_VALUE,
+  labels = [],
   handleChange = null,
   value = {},
   has_many = false,
-  is_virus = false,
 }) => {
   let colors = MAP_COLORS[color];
   if (!color) {
@@ -42,7 +48,7 @@ const ColorLegend = ({
 
   let customTitle = `${title}`;
   const titleList = title.split(' ');
-  if (titleList.length > 1 && !is_virus) {
+  if (titleList.length > 1) {
     customTitle = `${titleList[0][0]}. ${titleList.slice(1, titleList.length).join(' ')}`;
   }
   const opacity =
@@ -52,33 +58,8 @@ const ColorLegend = ({
         ? DEFAULT_OPACITY_MULTIPLE
         : DEFAULT_OPACITY_SINGLE;
 
-  const renderBoxColor = (
-    <Box
-      h='12px'
-      mb={0}
-      display='flex'
-      width='full'
-      bgGradient={
-        is_virus
-          ? `linear(to-r, ${colors[2]}, ${colors[2]})`
-          : `linear(to-r, ${colors[0]}, ${colors[colors.length - 1]})`
-      }
-    />
-  );
   return (
-    <Box
-      w='303px'
-      h='64px'
-      p={2}
-      borderRadius='md'
-      bg='white'
-      rounded='3px'
-      display='flex'
-      flexDirection='column'
-      alignItems='start'
-      position='relative'
-      justifyContent='space-between'
-    >
+    <Box my={1} display='flex' flexDirection='column' w='full'>
       <Flex
         display='flex'
         justifyContent='space-between'
@@ -132,7 +113,13 @@ const ColorLegend = ({
           </PopoverContent>
         </Popover>
       </Flex>
-      {renderBoxColor}
+      <Box
+        h='12px'
+        mb={0}
+        display='flex'
+        width='full'
+        bgGradient={`linear(to-r, ${colors[0]}, ${colors[colors.length - 1]})`}
+      />
       <Box
         display='flex'
         mt={0}
@@ -151,4 +138,61 @@ const ColorLegend = ({
   );
 };
 
-export default ColorLegend;
+const SDMLegend = ({
+  labels = [],
+  value = {},
+  isDelta = false,
+  handleChange = null,
+}) => {
+  const labelsUnits = isDelta ? LEGEND_DELTA_VALUE : DEFAULT_LEGEND_VALUE;
+  const unit = isDelta ? UNIT_DELTA : UNIT_SDM;
+  if (!labels || labels.length == 0) return null;
+
+  const renderBoxLegend = labels.map((i) => (
+    <ColorLegend
+      {...i}
+      has_many={labels.length > 1}
+      labels={labelsUnits}
+      value={value}
+      handleChange={handleChange}
+    />
+  ));
+
+  return (
+    <Box
+      w={`${W_LEGEND}px`}
+      h='auto'
+      p={2}
+      borderRadius='md'
+      bg='white'
+      rounded='3px'
+      display='flex'
+      flexDirection='column'
+      alignItems='start'
+      position='relative'
+      justifyContent='space-between'
+    >
+      <Text
+        fontSize='14px'
+        fontWeight={600}
+        color='base.700'
+        textTransform='uppercase'
+      >
+        {LEGEND_SDM_TITLE}
+      </Text>
+      <Text fontSize='xs' color='base.700' textTransform='lowercase'>
+        {unit}
+      </Text>
+      <Box
+        display='flex'
+        flexDirection='column'
+        mt={4}
+        alignItems='start'
+        width='full'
+      >
+        {renderBoxLegend}
+      </Box>
+    </Box>
+  );
+};
+export default SDMLegend;

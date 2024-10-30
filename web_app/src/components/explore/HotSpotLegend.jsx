@@ -17,9 +17,8 @@ import {
 import { PiDrop } from 'react-icons/pi';
 import {
   MAP_COLORS,
-  DEFAULT_OPACITY_SINGLE,
   DEFAULT_OPACITY_MULTIPLE,
-  DEFAULT_LEGEND_VALUE,
+  W_LEGEND,
 } from '@/config/constants/general';
 import {
   LEGEND_OPACITY,
@@ -32,12 +31,13 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
   const handleChangeOpacity = (ev) => {
     handleChange(title, ev);
   };
-  const customTitle = `${title}`
+  const customTitle = `${title} hotspots`
     .toLocaleLowerCase()
     .replace('virus', '')
     .trim();
 
-  const opacity = title in value ? value[title] : DEFAULT_OPACITY_MULTIPLE;
+  const opacity =
+    title in value ? value[title] : DEFAULT_OPACITY_MULTIPLE * 0.6;
   let colors = MAP_COLORS[color];
   if (!color) {
     colors = [...MAP_COLORS.default];
@@ -45,21 +45,22 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
   return (
     <Flex
       display='flex'
-      justifyContent='flex-start'
+      justifyContent='space-between'
       width='full'
-      mb={0}
+      my={1}
       bg='transparent'
     >
-      <Icon as={FaCircle} mr={2} color={colors[2]} />
-      <Text
-        fontSize='14px'
-        color='base.700'
-        fontWeight={600}
-        flex={1}
-        textTransform='capitalize'
-      >
-        {customTitle}
-      </Text>
+      <Flex>
+        <Icon as={FaCircle} mr={2} color={colors[2]} />
+        <Text
+          fontSize='14px'
+          color='base.700'
+          fontWeight={600}
+          textTransform='capitalize'
+        >
+          {customTitle}
+        </Text>
+      </Flex>
       <Popover placement='bottom-end'>
         <PopoverTrigger>
           <Flex>
@@ -102,13 +103,12 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
 
 const HotSpotLegend = ({ labels = [], value = {}, handleChange = null }) => {
   if (!labels || labels.length == 0) return null;
-  console.log(labels);
   const renderBoxLegend = labels.map((i) => (
     <VirusLegend {...i} value={value} handleChange={handleChange} />
   ));
   return (
     <Box
-      w='303px'
+      w={`${W_LEGEND}px`}
       h='auto'
       p={2}
       borderRadius='md'
@@ -131,7 +131,13 @@ const HotSpotLegend = ({ labels = [], value = {}, handleChange = null }) => {
       <Text fontSize='xs' color='base.700' textTransform='lowercase'>
         {LEGEND_HOTSPOT_DESC}
       </Text>
-      <Box display='flex' flexDirection='column' mt={2} alignItems='start'>
+      <Box
+        display='flex'
+        flexDirection='column'
+        mt={2}
+        alignItems='start'
+        width='full'
+      >
         {renderBoxLegend}
       </Box>
     </Box>
