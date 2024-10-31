@@ -128,7 +128,7 @@ const Explore = ({ mddata }) => {
 
   const labelSDM = sortList(
     getUniqueCombinations(
-      filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
+      filterTilesId.filter((i) => i.species),
       'species',
       'color'
     ).map((i) => ({
