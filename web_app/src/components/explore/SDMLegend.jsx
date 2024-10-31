@@ -178,10 +178,7 @@ const SDMLegend = ({
         color='base.700'
         textTransform='uppercase'
       >
-        {LEGEND_SDM_TITLE}
-      </Text>
-      <Text fontSize='xs' color='base.700' textTransform='lowercase'>
-        {unit}
+        {LEGEND_SDM_TITLE} {unit}
       </Text>
       <Box
         display='flex'

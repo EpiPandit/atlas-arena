@@ -26,7 +26,7 @@ export const MODEL_INFO = 'model';
 
 // LEGEND
 export const LEGEND_OPACITY = 'Opacity';
-export const LEGEND_SDM_TITLE = 'Species distribution probability';
+export const LEGEND_SDM_TITLE = 'Species distribution';
 export const LEGEND_HOTSPOT_TITLE = 'Viral hotspot probability';
 export const LEGEND_HOTSPOT_DESC =
   '90th percentile of contacts between humans and rodents';
