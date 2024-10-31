@@ -36,8 +36,7 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
     .replace('virus', '')
     .trim();
 
-  const opacity =
-    title in value ? value[title] : DEFAULT_OPACITY_MULTIPLE * 0.6;
+  const opacity = title in value ? value[title] : DEFAULT_OPACITY_MULTIPLE;
   let colors = MAP_COLORS[color];
   if (!color) {
     colors = [...MAP_COLORS.default];
@@ -104,7 +103,12 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
 const HotSpotLegend = ({ labels = [], value = {}, handleChange = null }) => {
   if (!labels || labels.length == 0) return null;
   const renderBoxLegend = labels.map((i) => (
-    <VirusLegend {...i} value={value} handleChange={handleChange} />
+    <VirusLegend
+      key={i.title}
+      {...i}
+      value={value}
+      handleChange={handleChange}
+    />
   ));
   return (
     <Box

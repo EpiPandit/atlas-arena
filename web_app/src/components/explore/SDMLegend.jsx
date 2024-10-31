@@ -150,6 +150,7 @@ const SDMLegend = ({
 
   const renderBoxLegend = labels.map((i) => (
     <ColorLegend
+      key={i.title}
       {...i}
       has_many={labels.length > 1}
       labels={labelsUnits}
