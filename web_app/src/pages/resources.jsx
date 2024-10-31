@@ -61,6 +61,7 @@ const SideNavBar = ({ navigationItems, handleNavigation, selectedItem }) => {
     </Box>
   );
 };
+
 const Resources = ({ mdData, pageData }) => {
   const router = useRouter();
   const { item: queryItem } = router.query;
@@ -68,9 +69,9 @@ const Resources = ({ mdData, pageData }) => {
 
   useEffect(() => {
     if (queryItem) {
-      setSelectedItem(queryItem);
+      setSelectedItem(queryItem.toLowerCase().replace(' ', '_'));
     }
-  }, [queryItem]);
+  }, [queryItem, mdData]);
 
   const navigationItems = [
     {
@@ -97,7 +98,10 @@ const Resources = ({ mdData, pageData }) => {
   ];
 
   if (!selectedItem) {
-    setSelectedItem(navigationItems[0].items[0]);
+    const newSelect = (navigationItems[0].items[0] || '')
+      .toLowerCase()
+      .replace(' ', '_');
+    setSelectedItem(newSelect);
   }
 
   const handleNavigation = (item) => {
