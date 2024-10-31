@@ -6,4 +6,4 @@ sub_title: some text
 layout: methodology
 ---
 
-# metodology
+# methodology
