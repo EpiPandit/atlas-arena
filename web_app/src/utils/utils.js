@@ -53,6 +53,12 @@ export const getUniqueCombinations = (data, key1, key2) => {
   });
 };
 
+export const sortList = (data, field = 'title') => {
+  if (!data || !data.length) return [];
+
+  data.sort((a, b) => a[field].localeCompare(b[field]));
+  return data;
+};
 export const buildColorLayer = (color) => {
   let colors = MAP_COLORS[color];
   if (!color) {

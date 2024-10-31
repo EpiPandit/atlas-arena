@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
 import StaticMap from 'react-map-gl';
 import { useAppContext } from '@/store/context';
-import { dynamicFilter, getUniqueCombinations } from '@/utils/utils';
+import { dynamicFilter, getUniqueCombinations, sortList } from '@/utils/utils';
 import Sidebar from '@/components/explore/Sidebar';
 import RasterLayer from '@/components/explore/RasterLayer';
 import axios from 'axios';
@@ -99,23 +99,29 @@ const Explore = ({ mddata }) => {
       />
     ));
 
-  const labelSDM = getUniqueCombinations(
-    filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
-    'species',
-    'color'
-  ).map((i) => ({
-    title: i.species,
-    color: i.color,
-  }));
+  const labelSDM = sortList(
+    getUniqueCombinations(
+      filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
+      'species',
+      'color'
+    ).map((i) => ({
+      title: i.species,
+      color: i.color,
+    })),
+    'title'
+  );
 
-  const labelsHotSpot = getUniqueCombinations(
-    filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
-    'virus',
-    'color_virus'
-  ).map((i) => ({
-    title: i.virus,
-    color: i.color_virus,
-  }));
+  const labelsHotSpot = sortList(
+    getUniqueCombinations(
+      filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
+      'virus',
+      'color_virus'
+    ).map((i) => ({
+      title: i.virus,
+      color: i.color_virus,
+    })),
+    'title'
+  );
 
   return (
     <Flex position='relative' flexDirection={{ base: 'column', md: 'row' }}>
