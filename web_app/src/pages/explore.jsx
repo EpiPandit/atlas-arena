@@ -65,9 +65,8 @@ const Explore = ({ mddata }) => {
         }));
         if (jsonDataMapp && jsonDataMapp.features) {
           setFoiHotspot(jsonDataMapp);
-          let newFeatures = [];
-          await combinations.forEach((item) => {
-            newFeatures.push({
+          const newFeatures = await Promise.all(
+            combinations.map(async (item) => ({
               ...item,
               data: {
                 type: 'FeatureCollection',
@@ -75,8 +74,8 @@ const Explore = ({ mddata }) => {
                   (i) => i.properties.virus === item.virus
                 ),
               },
-            });
-          });
+            }))
+          );
           setDataVirusSplit(newFeatures);
         }
       } catch (err) {
