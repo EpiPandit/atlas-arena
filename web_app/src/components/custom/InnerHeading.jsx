@@ -11,7 +11,7 @@ const InnerHeading = ({
   contentHtml = null,
 }) => {
   const renderContent = contentHtml && (
-    <Box py={0} px={0}>
+    <Box py={0} px={0} maxW={{xs: null, md:"70ch"}}>
       <ReactMarkdown
         components={ChakraUIRenderer(MarkdownThemeHome)}
         children={contentHtml}

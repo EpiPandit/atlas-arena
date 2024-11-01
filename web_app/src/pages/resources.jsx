@@ -1,18 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
-  Tabs,
-  Tab,
-  TabList,
-  TabPanels,
-  TabPanel,
   Text,
-  Heading,
   Flex,
   VStack,
   Link,
-  layout,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
@@ -28,11 +21,11 @@ const SideNavBar = ({ navigationItems, handleNavigation, selectedItem }) => {
   if (!navigationItems) return null;
   return (
     <Box
-      w='20%'
-      p={4}
-      pt={10}
-      borderRight='1px solid'
-      borderColor='gray.200'
+      w={{xs: '100%', md: '20%'}}
+      pt={{xs: 0, md:10 }}
+      pr={{xs: 0, md:4 }}
+      borderRight={{xs:'none', md:'1px solid'}}
+      borderColor={{xs: null, md:'gray.200'}}
       overflowY='auto'
     >
       <VStack align='start' spacing={4}>
@@ -127,13 +120,13 @@ const Resources = ({ mdData, pageData }) => {
       <Box my={4}>
         <InnerHeading {...pageData} />
       </Box>
-      <Flex>
+      <Flex flexDir={{xs: "column", md:"row" }} gap={{xs: 0, md:4}}>
         <SideNavBar
           navigationItems={navigationItems}
           handleNavigation={handleNavigation}
           selectedItem={selectedItem}
         />
-        <Box flex='1' p={4}>
+        <Box flex='1' p={{xs: 0, md:4}}>
           <ReactMarkdown
             components={ChakraUIRenderer(MarkdownTheme)}
             rehypePlugins={[rehypeRaw]}
