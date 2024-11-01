@@ -45,11 +45,11 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
     <Flex
       display='flex'
       justifyContent='space-between'
+      alignItems="center"
       width='full'
-      my={1}
       bg='transparent'
     >
-      <Flex>
+      <Flex alignItems="center">
         <Icon as={FaCircle} mr={2} color={colors[2]} />
         <Text
           fontSize='14px'
@@ -68,8 +68,8 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
         </PopoverTrigger>
         <PopoverContent
           w='163px'
-          h='42px'
-          p={0}
+          px={2}
+          pt={0}
           mt={0}
           ml='127px'
           _focus={{ outline: 'none' }}
@@ -78,7 +78,7 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
           <PopoverArrow />
           <PopoverCloseButton boxSize={3} />
           <PopoverBody p={1}>
-            <Text fontSize='10px' m={0}>
+            <Text fontSize='12px' m={0}>
               {LEGEND_OPACITY}
             </Text>
             <Slider
@@ -89,9 +89,7 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
               <SliderTrack>
                 <SliderFilledTrack />
               </SliderTrack>
-              <SliderThumb boxSize={4}>
-                <PiDrop />
-              </SliderThumb>
+              <SliderThumb boxSize={4} />
             </Slider>
           </PopoverBody>
         </PopoverContent>
@@ -139,7 +137,8 @@ const HotSpotLegend = ({ labels = [], value = {}, handleChange = null }) => {
         display='flex'
         flexDirection='column'
         mt={2}
-        alignItems='start'
+        gap={2}
+        alignItems="center"
         width='full'
       >
         {renderBoxLegend}

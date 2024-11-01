@@ -59,20 +59,21 @@ const ColorLegend = ({
         : DEFAULT_OPACITY_SINGLE;
 
   return (
-    <Box my={1} display='flex' flexDirection='column' w='full'>
+    <Box display='flex' flexDirection='column' w='full'>
       <Flex
         display='flex'
         justifyContent='space-between'
         width='full'
         mb={0}
         bg='transparent'
+        alignItems="center"
       >
         <Text
           fontSize='14px'
           fontWeight={600}
           fontStyle='italic'
           color='base.700'
-          textTransform='uppercase'
+          textTransform='capitalize'
         >
           {customTitle}
         </Text>
@@ -84,8 +85,8 @@ const ColorLegend = ({
           </PopoverTrigger>
           <PopoverContent
             w='163px'
-            h='42px'
-            p={0}
+            px={2}
+            pt={0}
             mt={0}
             ml='127px'
             _focus={{ outline: 'none' }}
@@ -94,7 +95,7 @@ const ColorLegend = ({
             <PopoverArrow />
             <PopoverCloseButton boxSize={3} />
             <PopoverBody p={1}>
-              <Text fontSize='10px' m={0}>
+              <Text fontSize='12px' m={0}>
                 {LEGEND_OPACITY}
               </Text>
               <Slider
@@ -105,16 +106,14 @@ const ColorLegend = ({
                 <SliderTrack>
                   <SliderFilledTrack />
                 </SliderTrack>
-                <SliderThumb boxSize={4}>
-                  <PiDrop />
-                </SliderThumb>
+                <SliderThumb boxSize={4} />
               </Slider>
             </PopoverBody>
           </PopoverContent>
         </Popover>
       </Flex>
       <Box
-        h='12px'
+        h='10px'
         mb={0}
         display='flex'
         width='full'
@@ -184,7 +183,8 @@ const SDMLegend = ({
       <Box
         display='flex'
         flexDirection='column'
-        mt={4}
+        gap={2}
+        mt={2}
         alignItems='start'
         width='full'
       >
