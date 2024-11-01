@@ -23,7 +23,7 @@ const InnerHeading = ({
     <Flex py={3} justifyContent='center'>
       <Text
         fontSize={{ base: 'xs', md: 'sm' }}
-        fontWeight='bold'
+        fontWeight='semibold'
         color='blue.900'
         textTransform='uppercase'
         letterSpacing='wider'
@@ -51,7 +51,7 @@ const InnerHeading = ({
   );
 
   return (
-    <Box p={1} mx='auto' maxW={{ base: '95%', md: '700px' }}>
+    <Box p={1} mx='auto' >
       {renderKicker}
       <Box py={{ base: 2, md: 4 }}>
         <Text

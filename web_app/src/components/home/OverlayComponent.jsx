@@ -43,11 +43,9 @@ const OverlayComponent = ({
         <Flex
           py={2}
           mx='auto'
-          maxW={{ base: '95%', md: '700px' }}
           gap={2}
-          justifyContent='flex-end'
         >
-          <ButtonLink href='/resources' text='Lear more' variant='outline' />
+          <ButtonLink href='/resources' text='Learn more' colorScheme='blue' variant='outline' />
           <ButtonLink
             href='/explore'
             text='Start Exploring'
