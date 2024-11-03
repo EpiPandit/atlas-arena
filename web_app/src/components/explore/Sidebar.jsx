@@ -28,7 +28,7 @@ import {
   MODEL_INFO,
 } from '@/config/constants/constants.explore';
 
-const DEFAULT_SELECT_HOT_SPOT = false;
+const DEFAULT_SELECT_HOT_SPOT = true;
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
 
@@ -169,9 +169,9 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         h='100%'
         p={isCollapsed ? 0 : { base: '16px', md: '24px' }}
         overflowY='auto'
-        boxShadow="sm"
-        borderRight="1px solid"
-        borderColor="blackAlpha.400"
+        boxShadow='sm'
+        borderRight='1px solid'
+        borderColor='blackAlpha.400'
         transition='all 0.3s ease'
       >
         {!isCollapsed && (

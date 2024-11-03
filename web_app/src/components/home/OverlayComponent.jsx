@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Box, Text, Flex, Icon } from '@chakra-ui/react';
+import { Container, Box, Flex } from '@chakra-ui/react';
 import InnerHeading from '@/components/custom/InnerHeading';
 // import VRTabs from '@/components/home/VRTabs';
 import InfoCards from '@/components/home/InfoCards';
 import Footer from '@/components/Footer';
+import ButtonLink from '@/components/custom/ButtonLink';
 
 const OverlayComponent = ({
   kicker = '',
@@ -39,6 +40,18 @@ const OverlayComponent = ({
           subTitle={subTitle}
           contentHtml={contentHtml}
         />
+        <Flex
+          py={2}
+          mx='auto'
+          gap={2}
+        >
+          <ButtonLink href='/resources' text='Learn more' colorScheme='blue' variant='outline' />
+          <ButtonLink
+            href='/explore'
+            text='Start Exploring'
+            colorScheme='blue'
+          />
+        </Flex>
       </Container>
       <Container
         textAlign='start'

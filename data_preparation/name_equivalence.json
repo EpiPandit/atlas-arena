@@ -2,17 +2,17 @@
   "Guanarito_virus": {
     "short": "g",
     "spreadsheet": "Guanarito virus",
-    "color": "orange"
+    "color": "blue"
   },
   "Junin_virus": {
     "short": "j",
     "spreadsheet": "Junin virus",
-    "color": "teal"
+    "color": "yellow"
   },
   "Machupo_virus": {
     "short": "m",
     "spreadsheet": "Machupo virus",
-    "color": "purple"
+    "color": "red"
   },
   "Zygodontomys_brevicauda": {
     "short": "zb",

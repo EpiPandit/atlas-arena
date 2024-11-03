@@ -6,10 +6,11 @@ export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
 
 // HEADER LINKS
 export const LINK_HEADER = [
+  { text: 'Home', href: '' },
   { text: 'Explore', href: 'explore' },
   { text: 'About', href: 'about' },
   { text: 'Resources', href: 'resources' },
-  // { text: 'Publications', href: 'publications' },
+  { text: 'Methodology', href: 'methodology' },
   {
     text: 'Github',
     href: 'https://github.com/developmentseed/atlasarena',
@@ -163,3 +164,15 @@ export const LEGEND_DELTA_VALUE = ['-1', '0', '1'];
 
 // HEIGHT HEADER
 export const H_HEADER = 54;
+
+// LEGEND
+export const W_LEGEND = 232;
+
+// ZOOM VALUES
+export const MIN_ZOOM_MAP = 2;
+export const MAX_ZOOM_MAP = 11;
+
+export const MIN_ZOOM_HOTSPOT = 8;
+export const MAX_ZOOM_HOTSPOT = MAX_ZOOM_MAP + 0.5;
+export const MIN_ZOOM_HOTSPOT_HEADMAP = MIN_ZOOM_MAP - 0.5;
+export const MAX_ZOOM_HOTSPOT_HEADMAP = MIN_ZOOM_HOTSPOT + 1;

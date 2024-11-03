@@ -1,21 +1,23 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
-import StaticMap, { Source, Layer } from 'react-map-gl';
+import StaticMap from 'react-map-gl';
 import { useAppContext } from '@/store/context';
-import { dynamicFilter, getUniqueCombinations } from '@/utils/utils';
+import { dynamicFilter, getUniqueCombinations, sortList } from '@/utils/utils';
 import Sidebar from '@/components/explore/Sidebar';
 import RasterLayer from '@/components/explore/RasterLayer';
 import axios from 'axios';
 import pako from 'pako';
-import ColorLegend from '@/components/explore/ColorLegend';
+import SDMLegend from '@/components/explore/SDMLegend';
 import { getMetadataMd } from '@/libs/markdown';
 import SidePanel from '@/components/explore/SidePanel';
 import {
   H_HEADER,
-  DEFAULT_LEGEND_VALUE,
-  LEGEND_DELTA_VALUE,
+  MAX_ZOOM_MAP,
+  MIN_ZOOM_MAP,
 } from '@/config/constants/general';
 import FoiVectorLayer from '@/components/explore/FoiVectorLayer';
+import HotSpotLegend from '@/components/explore/HotSpotLegend';
+import HeadMapLayer from '@/components/explore/HeadMapLayer';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE;
@@ -39,6 +41,7 @@ const Explore = ({ mddata }) => {
   const [dataVirus, setDataVirus] = useState({});
   const [hasDeltaValue, setHasDeltaValue] = useState(false);
   const [dataFilter, setDataFilter] = useState({});
+  const [dataVirusSplit, setDataVirusSplit] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,8 +54,29 @@ const Explore = ({ mddata }) => {
         );
         const decompressed = pako.inflate(response.data, { to: 'string' });
         const jsonDataMapp = JSON.parse(decompressed);
+
+        const combinations = getUniqueCombinations(
+          raw_data.filter((i) => i.virus && i.color_virus),
+          'virus',
+          'color_virus'
+        ).map((i) => ({
+          virus: i.virus,
+          color: i.color_virus,
+        }));
         if (jsonDataMapp && jsonDataMapp.features) {
           setFoiHotspot(jsonDataMapp);
+          const newFeatures = await Promise.all(
+            combinations.map(async (item) => ({
+              ...item,
+              data: {
+                type: 'FeatureCollection',
+                features: jsonDataMapp.features.filter(
+                  (i) => i.properties.virus === item.virus
+                ),
+              },
+            }))
+          );
+          setDataVirusSplit(newFeatures);
         }
       } catch (err) {
         console.error(err);
@@ -60,7 +84,7 @@ const Explore = ({ mddata }) => {
     };
 
     fetchData();
-  }, []);
+  }, [raw_data]);
 
   const handleFilterTilesId = (data_filter) => {
     const raw_data_filter = dynamicFilter([...raw_data], { ...data_filter });
@@ -102,37 +126,29 @@ const Explore = ({ mddata }) => {
       />
     ));
 
-  const renderVirusSelect = getUniqueCombinations(
-    filterTilesId.filter((i) => i.species),
-    'species',
-    'color'
-  ).map((item) => (
-    <ColorLegend
-      key={item.species}
-      title={item.species}
-      color={item.color}
-      labels={hasDeltaValue ? LEGEND_DELTA_VALUE : DEFAULT_LEGEND_VALUE}
-      value={opacityFilter}
-      has_many={filterTilesId.length > 0}
-      handleChange={handleChangeLayerStyle}
-    />
-  ));
+  const labelSDM = sortList(
+    getUniqueCombinations(
+      filterTilesId.filter((i) => i.species),
+      'species',
+      'color'
+    ).map((i) => ({
+      title: i.species,
+      color: i.color,
+    })),
+    'title'
+  );
 
-  const renderVirusSelectHotspot = getUniqueCombinations(
-    filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
-    'virus',
-    'color_virus'
-  ).map((item) => (
-    <ColorLegend
-      key={item.virus}
-      title={item.virus}
-      color={item.color_virus}
-      labels={[]}
-      value={opacityFilter}
-      is_virus={true}
-      handleChange={handleChangeLayerStyle}
-    />
-  ));
+  const labelsHotSpot = sortList(
+    getUniqueCombinations(
+      filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
+      'virus',
+      'color_virus'
+    ).map((i) => ({
+      title: i.virus,
+      color: i.color_virus,
+    })),
+    'title'
+  );
 
   return (
     <Flex position='relative' flexDirection={{ base: 'column', md: 'row' }}>
@@ -147,8 +163,8 @@ const Explore = ({ mddata }) => {
               ref={mapRef}
               initialViewState={viewState}
               // onLoad={handleLoad}
-              minZoom={2}
-              maxZoom={10}
+              minZoom={MIN_ZOOM_MAP}
+              maxZoom={MAX_ZOOM_MAP}
               dragRotate={false}
               mapStyle={MAPBOX_STYLE}
               mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
@@ -156,6 +172,14 @@ const Explore = ({ mddata }) => {
             >
               <FoiVectorLayer
                 jsonData={foiHotspot}
+                raw_data={raw_data}
+                hotspot={dataFilter.hotspot}
+                time_frame={dataFilter.time_frame}
+                virus={dataFilter.virus}
+                opacity_filter={opacityFilter}
+              />
+              <HeadMapLayer
+                dataVirusSplit={dataVirusSplit}
                 hotspot={dataFilter.hotspot}
                 time_frame={dataFilter.time_frame}
                 virus={dataFilter.virus}
@@ -177,8 +201,17 @@ const Explore = ({ mddata }) => {
           zIndex={10}
           width={{ base: '90%', md: 'auto' }}
         >
-          {renderVirusSelect}
-          {renderVirusSelectHotspot}
+          <SDMLegend
+            labels={labelSDM}
+            value={opacityFilter}
+            isDelta={hasDeltaValue}
+            handleChange={handleChangeLayerStyle}
+          />
+          <HotSpotLegend
+            labels={labelsHotSpot}
+            value={opacityFilter}
+            handleChange={handleChangeLayerStyle}
+          />
         </Box>
         <SidePanel dataVirus={dataVirus} />
       </Box>
