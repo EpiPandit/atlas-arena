@@ -3,20 +3,19 @@ name: Build and Publish Arena Site
 on:
   push:
     branches:
-      - 'main'
-      - 'deploy'
+      - "main"
+      - "deploy"
 
 jobs:
   rapid:
     runs-on: ubuntu-latest
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.8.0
-        with:
-          access_token: ${{ github.token }}
-      
+      # - name: Cancel Previous Runs
+      #   uses: styfle/cancel-workflow-action@0.8.0
+      #   with:
+      #     access_token: ${{ github.token }}
+
       - name: Set environment variables
-        # if: github.ref == 'refs/heads/deploy'
         uses: allenevans/set-env@v2.0.0
         with:
           ARENA_S3_BUCKET: ${{ secrets.ARENA_S3_BUCKET }}
@@ -27,41 +26,35 @@ jobs:
 
       - name: Checkout current repository
         uses: actions/checkout@v2
-        with:
-          path: web_app
 
       - name: Use Node.js 18
         uses: actions/setup-node@v1
         with:
           node-version: 18
 
-      - name: Cache node modules
-        id: cache-node-modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: web_app/node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('web_app/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Install modules
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+      - name: Install Yarn
         run: |
-          cd web_app
-          npm install
+          npm install -g yarn
+
+      - name: Install dependencies
+        run: |
+          cd web_app && yarn install
+
+      - name: Configure path alias
+        run: |
+          echo '{ "compilerOptions": { "baseUrl": ".", "paths": { "@/*": ["src/*"] } } }' > web_app/jsconfig.json
 
       - name: Build rapid frontend
         run: |
-          cd web_app
-          npm run build
+          cd web_app && yarn build
+
+      # - name: Install sharp (optional for image optimization)
+      #   run: |
+      #     cd web_app && yarn add sharp
 
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: "3.8"
 
       - name: Install aws cli
         run: |
