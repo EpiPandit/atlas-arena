@@ -1,4 +1,4 @@
-name: Build and Publish Rapid Site
+name: Build and Publish Arena Site
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         uses: allenevans/set-env@v2.0.0
         with:
           S3_BUCKET: atlas-arena.org
-          CLOUDFRONT_DISTRIBUTION_ID: E72FPAVFSGQDL
+          CLOUDFRONT_DISTRIBUTION_ID: E1SHCVL4PPF00M
           NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: none
           NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE: none
           NEXT_PUBLIC_DATA_API: none
