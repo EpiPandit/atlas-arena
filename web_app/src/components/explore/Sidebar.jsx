@@ -21,14 +21,14 @@ import {
   VIRUS_INFO,
   TIMEFRAME_LABEL,
   TIMEFRAME_INFO,
-  RODENT_DISTRIBUTION_LABEL,
+  SDM_TOGGLE_LABEL,
   SPECIES_LABEL,
   SPECIES_INFO,
   MODEL_LABEL,
   MODEL_INFO,
 } from '@/config/constants/constants.explore';
 
-const DEFAULT_SELECT_HOT_SPOT = true;
+const DEFAULT_SDM_TOGGLE = true;
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
 
@@ -42,9 +42,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const [selectedSpecies, setSelectedSpecies] = useState([]);
   const [selectedTimeFrame, setSelectedTimeFrame] = useState([]);
   const [selectedModel, setSelectedModel] = useState('');
-  const [selectedHotSpot, setSelectedHotSpot] = useState(
-    DEFAULT_SELECT_HOT_SPOT
-  );
+  const [selectedHotSpot, setSelectedHotSpot] = useState(DEFAULT_SDM_TOGGLE);
 
   useEffect(() => {
     const tmpSpecies = allSpecies.map((i) => i.name);
@@ -53,7 +51,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       tmpSpecies,
       [DEFAULT_TIME],
       DEFAULT_MODEL,
-      DEFAULT_SELECT_HOT_SPOT
+      DEFAULT_SDM_TOGGLE
     );
   }, [allVirus]);
   // actions
@@ -76,22 +74,34 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const handleVirusChange = (event) => {
     const value = event.target.value;
     let species = [];
-    if (value === ALL_VIRUS) {
-      species = allSpecies.map((i) => i.name);
-    } else {
-      species = allSpecies.filter((i) => i.virus == value).map((i) => i.name);
-    }
-    setSelectedVirus(value);
-    setSelectedSpecies(species);
+    if (selectedHotSpot) {
+      if (value === ALL_VIRUS) {
+        species = allSpecies.map((i) => i.name);
+      } else {
+        species = allSpecies.filter((i) => i.virus == value).map((i) => i.name);
+      }
+      setSelectedVirus(value);
+      setSelectedSpecies(species);
 
-    // update
-    handleFilterTilesId({
-      virus: value,
-      species: species,
-      time_frame: selectedTimeFrame,
-      model: selectedModel,
-      hotspot: selectedHotSpot,
-    });
+      // update
+      handleFilterTilesId({
+        virus: value,
+        species: species,
+        time_frame: selectedTimeFrame,
+        model: selectedModel,
+        hotspot: true,
+      });
+    } else {
+      setSelectedVirus(value);
+      setSelectedSpecies([]);
+      handleFilterTilesId({
+        virus: value,
+        species: [],
+        time_frame: selectedTimeFrame,
+        model: '',
+        hotspot: true,
+      });
+    }
   };
 
   const handleSpeciesChange = (event) => {
@@ -111,7 +121,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: [...species],
       time_frame: selectedTimeFrame,
       model: selectedModel,
-      hotspot: selectedHotSpot,
+      hotspot: true,
     });
   };
 
@@ -123,7 +133,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: selectedSpecies,
       time_frame: value,
       model: selectedModel,
-      hotspot: selectedHotSpot,
+      hotspot: true,
     });
   };
 
@@ -135,7 +145,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       species: selectedSpecies,
       time_frame: selectedTimeFrame,
       model: event.target.value,
-      hotspot: selectedHotSpot,
+      hotspot: true,
     });
   };
 
@@ -143,13 +153,37 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     const newHotSpot = !selectedHotSpot;
     setSelectedHotSpot(newHotSpot);
 
-    handleFilterTilesId({
-      virus: selectedVirus,
-      species: selectedSpecies,
-      time_frame: selectedTimeFrame,
-      model: selectedModel,
-      hotspot: newHotSpot,
-    });
+    if (newHotSpot) {
+      let species = [];
+      if (selectedVirus === ALL_VIRUS) {
+        species = allSpecies.map((i) => i.name);
+      } else {
+        species = allSpecies
+          .filter((i) => i.virus == selectedVirus)
+          .map((i) => i.name);
+      }
+      setSelectedSpecies(species);
+      setSelectedModel(DEFAULT_MODEL);
+
+      handleFilterTilesId({
+        virus: selectedVirus,
+        species: species,
+        time_frame: selectedTimeFrame,
+        model: DEFAULT_MODEL,
+        hotspot: true,
+      });
+    } else {
+      setSelectedSpecies([]);
+      setSelectedModel('');
+
+      handleFilterTilesId({
+        virus: selectedVirus,
+        species: [],
+        time_frame: selectedTimeFrame,
+        model: '',
+        hotspot: true,
+      });
+    }
   };
 
   return (
@@ -192,7 +226,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               handleAction={handleTimeFrameChange}
             />
             <FormControlSwitch
-              label={RODENT_DISTRIBUTION_LABEL}
+              label={SDM_TOGGLE_LABEL}
               value={selectedHotSpot}
               handleAction={handleHotSpotChange}
             />
@@ -203,6 +237,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               values={selectedSpecies}
               handleAction={handleSpeciesChange}
               filterValue={selectedVirus}
+              isDisabled={!selectedHotSpot}
             />
             <FormControlSelect
               label={MODEL_LABEL}
@@ -210,6 +245,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               info={MODEL_INFO}
               value={selectedModel}
               handleAction={handleModelChange}
+              isDisabled={!selectedHotSpot}
             />
           </>
         )}

@@ -14,7 +14,7 @@ export const TIMEFRAME_LABEL = 'Timeframe';
 export const TIMEFRAME_INFO = 'timeframe';
 
 // RODENT DISTRIBUTION
-export const RODENT_DISTRIBUTION_LABEL = 'Show viral hotspot';
+export const SDM_TOGGLE_LABEL = 'Show Species Distribution Maps';
 
 // SPECIES
 export const SPECIES_LABEL = 'Reservoir Species';
