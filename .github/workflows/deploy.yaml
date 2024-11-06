@@ -1,0 +1,67 @@
+name: Build and Publish Arena Site
+
+on:
+  push:
+    branches:
+      - "main"
+      - "deploy"
+
+jobs:
+  rapid:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Set environment variables
+        uses: allenevans/set-env@v2.0.0
+        with:
+          ARENA_S3_BUCKET: ${{ secrets.ARENA_S3_BUCKET }}
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+          NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE: ${{ secrets.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE }}
+          NEXT_PUBLIC_DATA_API: ${{ secrets.NEXT_PUBLIC_DATA_API }}
+
+      - name: Checkout current repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install Yarn
+        run: |
+          npm install -g yarn
+
+      - name: Install dependencies
+        run: |
+          cd web_app && yarn install && yarn add sharp
+
+      - name: Configure path alias
+        run: |
+          echo '{ "compilerOptions": { "baseUrl": ".", "paths": { "@/*": ["src/*"] } } }' > web_app/jsconfig.json
+
+      - name: Build rapid frontend
+        run: |
+          cd web_app && yarn build
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install aws cli
+        run: |
+          python -m pip install --upgrade pip
+          pip install awscli
+
+      - name: Push data to S3 and clean CloudFront cache
+        if: ${{ success() }}
+        run: |
+          aws s3 sync web_app/out/ s3://${{ env.ARENA_S3_BUCKET }}/ --acl public-read --delete
+          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths=/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

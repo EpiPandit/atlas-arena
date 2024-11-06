@@ -3,7 +3,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '@/config/theme';
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { AppWrapper } from '@/store/context';
 import Head from 'next/head';
 import {
