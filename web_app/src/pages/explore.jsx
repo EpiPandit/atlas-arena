@@ -11,6 +11,7 @@ import SDMLegend from '@/components/explore/SDMLegend';
 import { getMetadataMd } from '@/libs/markdown';
 import SidePanel from '@/components/explore/SidePanel';
 import {
+  ALL_VIRUS,
   H_HEADER,
   MAX_ZOOM_MAP,
   MIN_ZOOM_MAP,
@@ -140,7 +141,12 @@ const Explore = ({ mddata }) => {
 
   const labelsHotSpot = sortList(
     getUniqueCombinations(
-      filterTilesId.filter((i) => i.virus && dataFilter.hotspot),
+      raw_data
+        .filter((i) => i.virus && dataFilter.hotspot)
+        .filter((j) => {
+          if (dataFilter.virus === ALL_VIRUS) return true;
+          return dataFilter.virus === j.virus;
+        }),
       'virus',
       'color_virus'
     ).map((i) => ({
@@ -149,7 +155,6 @@ const Explore = ({ mddata }) => {
     })),
     'title'
   );
-
   return (
     <Flex position='relative' flexDirection={{ base: 'column', md: 'row' }}>
       <Sidebar
