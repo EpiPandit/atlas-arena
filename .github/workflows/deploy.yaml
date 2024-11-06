@@ -10,10 +10,10 @@ jobs:
   rapid:
     runs-on: ubuntu-latest
     steps:
-      # - name: Cancel Previous Runs
-      #   uses: styfle/cancel-workflow-action@0.8.0
-      #   with:
-      #     access_token: ${{ github.token }}
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
 
       - name: Set environment variables
         uses: allenevans/set-env@v2.0.0
@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd web_app && yarn install
+          cd web_app && yarn install && yarn add sharp
 
       - name: Configure path alias
         run: |
@@ -47,10 +47,6 @@ jobs:
       - name: Build rapid frontend
         run: |
           cd web_app && yarn build
-
-      # - name: Install sharp (optional for image optimization)
-      #   run: |
-      #     cd web_app && yarn add sharp
 
       - uses: actions/setup-python@v2
         with:
