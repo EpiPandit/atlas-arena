@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'deploy'
 
 jobs:
   rapid:
@@ -14,15 +15,15 @@ jobs:
         with:
           access_token: ${{ github.token }}
       
-      - name: Set environment variables - deploy
-        if: github.ref == 'refs/heads/deploy'
+      - name: Set environment variables
+        # if: github.ref == 'refs/heads/deploy'
         uses: allenevans/set-env@v2.0.0
         with:
-          S3_BUCKET: atlas-arena.org
-          CLOUDFRONT_DISTRIBUTION_ID: E1SHCVL4PPF00M
-          NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: none
-          NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE: none
-          NEXT_PUBLIC_DATA_API: none
+          ARENA_S3_BUCKET: ${{ secrets.ARENA_S3_BUCKET }}
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+          NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE: ${{ secrets.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE }}
+          NEXT_PUBLIC_DATA_API: ${{ secrets.NEXT_PUBLIC_DATA_API }}
 
       - name: Checkout current repository
         uses: actions/checkout@v2
@@ -70,7 +71,7 @@ jobs:
       - name: Push data to S3 and clean CloudFront cache
         if: ${{ success() }}
         run: |
-          aws s3 sync web_app/out/ s3://${{ env.S3_BUCKET }}/ --acl public-read --delete
+          aws s3 sync web_app/out/ s3://${{ env.ARENA_S3_BUCKET }}/ --acl public-read --delete
           aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths=/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
