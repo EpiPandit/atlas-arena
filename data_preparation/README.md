@@ -71,7 +71,7 @@ bash process_tif.sh
 
 The output of this script generates an `to_upload` folder inside `data`, where the processed and renamed `.tif` files are stored. Additionally, a `CSV` file named `data_output_tiff.csv` is created.
 
-This CSV serves as raw data to update the spreadsheet and contains the structure and combination of files and folders, along with the `.tif` ID in Mapbox.
+This CSV serves as raw data to update the spreadsheet and contains the structure and combination of files and folders, along with the `tileset_id` from Mapbox.
 
 ```csv
 virus,species,time_frame,model,filename,tileset_id,new_raster_name,color,color_virus
@@ -91,6 +91,8 @@ To process hotspots, the shapefiles must first be downloaded into the `data/Vect
 This script will generate a `hotspots.geojson.gz` file inside the `data/Vector_Force_of_infection_hotspots/` folder. This file is a filtered version containing only points with equivalence values compatible with the application.
 
 Finally, the `data/Vector_Force_of_infection_hotspots/hotspots.geojson.gz` file must be copied into the `web_app/public/assets/data/hotspots.geojson.gz` folder within the web application.
+
+Run script:
 
 ```shell
 bash process_hotspots.sh
