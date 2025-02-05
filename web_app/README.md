@@ -20,8 +20,8 @@ yarn
 
 - Create `.env` file and put enviroment values
   - `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN` : token from [mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/)
-  - `NEXT_PUBLIC_MAPBOX_STYLE`: mapbox style
-  - `NEXT_PUBLIC_DATA_API`: spreadsheet api
+  - `NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE`: mapbox style
+  - `NEXT_PUBLIC_DATA_API`: spreadsheet url
 
 ```shell
 # template
