@@ -1,10 +1,19 @@
 import { Box, Flex, Text, Image, Link } from '@chakra-ui/react';
-import wellcomeLogo from '@/assets/images/wellcome.png';
-import ucdavisLogo from '@/assets/images/expanded_logo_blue.png';
-import devseedLogo from '@/assets/images/devseed.png';
-import geocompasLogo from '@/assets/images/geocompas.webp';
+
+import { PRESENTED_BY, LOGOS } from '@/config/constants/constants.home';
 
 const Footer = () => {
+  const renderLogos = (LOGOS || []).map((item) => (
+    <Link key={item.id} href={item.href} isExternal>
+      <Image
+        src={item.image}
+        alt={item.alt}
+        boxSize={{ ...item.boxSize }}
+        w={{ ...item.w }}
+        objectFit='contain'
+      />
+    </Link>
+  ));
   return (
     <Box
       py={3}
@@ -22,7 +31,7 @@ const Footer = () => {
         mb={4}
         textTransform='uppercase'
       >
-        Presented by:
+        {PRESENTED_BY}
       </Text>
 
       <Flex
@@ -34,38 +43,7 @@ const Footer = () => {
         px={4}
         w='100%'
       >
-        <Link href='https://wellcome.org/' isExternal>
-          <Image
-            src={wellcomeLogo.src}
-            alt='Wellcome logo'
-            boxSize={{ base: '35px', md: '55px' }}
-            objectFit='contain'
-          />
-        </Link>
-        <Link href='https://www.ucdavis.edu/' isExternal>
-          <Image
-            src={ucdavisLogo.src}
-            alt='UC Davis logo'
-            w={{ base: '130px', md: '175px' }}
-            objectFit='contain'
-          />
-        </Link>
-        <Link href='https://developmentseed.org/' isExternal>
-          <Image
-            src={devseedLogo.src}
-            alt='Development Seed logo'
-            w={{ base: '150px', md: '235px' }}
-            objectFit='contain'
-          />
-        </Link>
-        <Link href='https://geocompas.ai/' isExternal>
-          <Image
-            src={geocompasLogo.src}
-            alt='Geocompas'
-            w={{ base: '150px', md: '230px' }}
-            objectFit='contain'
-          />
-        </Link>
+        {renderLogos}
       </Flex>
     </Box>
   );

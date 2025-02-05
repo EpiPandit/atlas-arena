@@ -24,6 +24,7 @@ export const LINK_HEADER = [
 // ==============
 
 // API EQUIVALENCE
+// similar from https://github.com/developmentseed/atlasarena/blob/main/data_preparation/name_equivalence.json
 export const DATA_EQUIVALENCE = {
   'Guanarito virus': {
     short: 'g',
