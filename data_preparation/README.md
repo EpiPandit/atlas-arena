@@ -66,7 +66,7 @@ export MAPBOX_USER=
 3. run script
 
 ```shell
-bash data_process.sh
+bash process_tif.sh
 ```
 
 The output of this script generates an `to_upload` folder inside `data`, where the processed and renamed `.tif` files are stored. Additionally, a `CSV` file named `data_output_tiff.csv` is created.
@@ -83,3 +83,15 @@ Junin virus,Calomys musculinus,SSP 5 (years 2041-2060),Extra Trees,Probability_p
 ```
 
 ![img](./image/spreadsheet.png)
+
+## generate hotsports
+
+To process hotspots, the shapefiles must first be downloaded into the `data/Vector_Force_of_infection_hotspots` folder, and then the `process_hotspots.sh` script should be executed.
+
+This script will generate a `hotspots.geojson.gz` file inside the `data/Vector_Force_of_infection_hotspots/` folder. This file is a filtered version containing only points with equivalence values compatible with the application.
+
+Finally, the `data/Vector_Force_of_infection_hotspots/hotspots.geojson.gz` file must be copied into the `web_app/public/assets/data/hotspots.geojson.gz` folder within the web application.
+
+```shell
+bash process_hotspots.sh
+```

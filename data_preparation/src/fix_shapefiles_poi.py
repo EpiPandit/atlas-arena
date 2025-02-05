@@ -12,6 +12,17 @@ import json
 @click.option("--equivalente_path", help="Input rename folder path  ", required=True, type=str, )
 @click.option("--output_geojson", help="Output file path ", required=True, type=str, )
 def main(current_shapefile, ssp2_shapefile, ssp5_shapefile, filter_value, equivalente_path, output_geojson):
+    """Prepare and filter shapefiles for Mapbox visualization.
+
+    Args:
+        current_shapefile (str): Input shapefile path for the current time frame.
+        ssp2_shapefile (str): Input shapefile path for SSP2 scenario.
+        ssp5_shapefile (str): Input shapefile path for SSP5 scenario.
+        filter_value (int): Value to filter the 'foi_0.02' field.
+        equivalente_path (str): Path to the JSON file for renaming fields.
+        output_geojson (str): Output file path for the resulting GeoJSON.
+ 
+    """
     current_df = gpd.read_file(current_shapefile)
     current_df['time_frame'] = "current"
 
