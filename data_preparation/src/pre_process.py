@@ -9,10 +9,17 @@ import time
 import rasterio as rio
 import numpy as np
 
-MAPBOX_USER = os.getenv("MAPBOX_USER")
+MAPBOX_USER = os.getenv("MAPBOX_USER", "")
 
 
 def save_csv(csv_file, csv_data):
+    """Save data to a CSV file.
+
+    Args:
+        csv_file (str): Path to the input csv file.
+        csv_data (str): Data for csv
+    """
+
     if not csv_data:
         print("No csv data")
         return
@@ -23,6 +30,15 @@ def save_csv(csv_file, csv_data):
 
 
 def custom_rescale(input_tif, output_tif, scale_min, scale_max):
+    """_summary_
+
+    Args:
+        input_tif (str): Path to the input TIFF file.
+        output_tif (str): Path to the output TIFF file.
+        scale_min (float): Minimum value for rescaling.
+        scale_max (float): Maximum value for rescaling.
+
+    """
     with rio.open(input_tif) as src:
         data = src.read(1)
         nodata_value = src.nodata
@@ -53,7 +69,7 @@ def custom_rescale(input_tif, output_tif, scale_min, scale_max):
             dst.write(data_rescaled, 1)
 
 
-@click.command(short_help="Review and clean data")
+@click.command(short_help="Review, clean and upload tif")
 @click.option(
     "--raw_folder_path",
     help="Input raw folder path ",
@@ -129,28 +145,28 @@ def main(raw_folder_path, to_upload_folder_path, name_equivalence_path):
             cmd_mapbox = ["mapbox", "upload", tileset_id, rescale_name]
 
             try:
-                result = subprocess.run(
-                    cmd_mapbox,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    check=True,
-                )
+                if MAPBOX_USER:
+                    # upload to mapbox
+                    result = subprocess.run(
+                        cmd_mapbox,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        check=True,
+                    )
+                    # reduce errors
+                    time.sleep(1)
+
                 row_data["tileset_id"] = tileset_id
-                csv_data_tiff.append(row_data)
-                # reduce errors
-                time.sleep(1)
             except subprocess.CalledProcessError as e:
                 row_data["tileset_id"] = "N/A"
                 print(f"Error: {e}")
 
+            csv_data_tiff.append(row_data)
+
         except Exception as ex:
-            print("Error: ",ex, item)
+            print("Error: ", ex, item)
 
     save_csv(f"{to_upload_folder_path}/data_output_tiff.csv", csv_data_tiff)
-
-    # ===========
-    # manage txt
-    # ===========
 
 
 if __name__ == "__main__":
