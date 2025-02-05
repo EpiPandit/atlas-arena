@@ -30,7 +30,7 @@ def save_csv(csv_file, csv_data):
 
 
 def custom_rescale(input_tif, output_tif, scale_min, scale_max):
-    """_summary_
+    """Rescaling tif files
 
     Args:
         input_tif (str): Path to the input TIFF file.
