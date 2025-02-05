@@ -49,7 +49,10 @@ def main(current_shapefile, ssp2_shapefile, ssp5_shapefile, filter_value, equiva
     filter_df["species"] = filter_df["spp"].apply(lambda x: get_correct_value(x, "spreadsheet"))
     filter_df.drop(columns=["spp"], inplace=True)
     # save file
-    filter_df.to_file(output_geojson, driver="GeoJSON")
+    if not filter_df.empty:
+        filter_df.to_file(output_geojson, driver="GeoJSON")
+    else:
+        print("There is no data in the result")
 
 
 if __name__ == "__main__":

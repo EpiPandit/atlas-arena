@@ -1,4 +1,4 @@
-## Development
+# Development
 
 Requirements:
 
@@ -74,13 +74,13 @@ layout: page
 AtlasArena is a **Wellcome Trust**-funded
 ```
 
-#### Considerations:
+#### Considerations for Markdown documents:
 
-- you can add images and store them in the `images` folder:
+- You can add images and store them in the `images` folder:
 
 ```text
 ![image](images/image.webp)
 ```
 
-- there are 4 types of documents (`virus, specie, page, publications`) these types are specified in the layout attribute.
+- There are 4 types of documents (`virus, specie, page, publications`) these types are specified in the layout attribute.
 - All files must have a `name` and `layout` field.

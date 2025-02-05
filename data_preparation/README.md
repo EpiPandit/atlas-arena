@@ -1,4 +1,4 @@
-# data process
+# Data process
 
 These scripts are responsible for preparing the data for mapbox. Download the `data` folder and pasting it into `data/raw`
 
@@ -48,22 +48,22 @@ Each key in this file represents a folder name, and its value is a dictionary co
 }
 ```
 
-## upload files to mapbox
+## Upload files to Mapbox
 
-1. create [docker](https://docs.docker.com/engine/install/) image
+1. Create [docker](https://docs.docker.com/engine/install/) image
 
 ```shell
 docker compose build
 ```
 
-2. export credentials from [mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/)
+2. Export credentials from [mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/)
 
 ```shell
 export ACCESS_TOKEN=
 export MAPBOX_USER=
 ```
 
-3. run script
+3. Run script
 
 ```shell
 bash process_tif.sh
@@ -84,7 +84,7 @@ Junin virus,Calomys musculinus,SSP 5 (years 2041-2060),Extra Trees,Probability_p
 
 ![img](./image/spreadsheet.png)
 
-## generate hotsports
+## Generate Hot-sports file
 
 To process hotspots, the shapefiles must first be downloaded into the `data/Vector_Force_of_infection_hotspots` folder, and then the `process_hotspots.sh` script should be executed.
 
