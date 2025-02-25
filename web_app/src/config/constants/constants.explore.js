@@ -10,8 +10,8 @@ export const VIRUS_LABEL = 'virus';
 export const VIRUS_INFO = 'virus';
 
 // SCENARIOS
-export const TIMEFRAME_LABEL = 'Timeframe';
-export const TIMEFRAME_INFO = 'timeframe';
+export const TIMEFRAME_LABEL = 'Climate Scenarios';
+export const TIMEFRAME_INFO = 'Shared Socioeconomic Pathways (SSP)';
 
 // RODENT DISTRIBUTION
 export const SDM_TOGGLE_LABEL = 'Show Species Distribution Maps';
