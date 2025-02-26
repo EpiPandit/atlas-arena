@@ -11,7 +11,7 @@ export const VIRUS_INFO = 'virus';
 
 // SCENARIOS
 export const TIMEFRAME_LABEL = 'Climate Scenarios';
-export const TIMEFRAME_INFO = 'Shared Socioeconomic Pathways (SSP)';
+export const TIMEFRAME_INFO = 'Shared Socio-economic Pathways (SSPs)';
 
 // RODENT DISTRIBUTION
 export const SDM_TOGGLE_LABEL = 'Show Species Distribution Maps';
