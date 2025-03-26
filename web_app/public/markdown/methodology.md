@@ -2,11 +2,9 @@
 name: name methodology
 kicker:
 title: METHODOLOGY
-sub_title: some text
 layout: methodology
 ---
 
-# methodology
 
 1) The geographic range of the rodent hosts was determined from presence data, gathered from the Global Biodiversity Information Facility.
    
