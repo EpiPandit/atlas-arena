@@ -12,15 +12,15 @@ Drylands Vesper mouse
 
 ## Host for Diseases:
 
-Chagas, Junin
+Chagas, Junin.
 
 ## Family Structure:
 
-Polygamous, litters of 5.4-7.6 individuals
+Polygamous, litters of 5.4-7.6 individuals.
 
 ## Habitat
 
-Lives in Argentina, Paraguay, and Bolivia. Can be found in argicultural fields
+Lives in Argentina, Paraguay, and Bolivia. Can be found in argicultural fields.
 
 ## Epidemiology
 
