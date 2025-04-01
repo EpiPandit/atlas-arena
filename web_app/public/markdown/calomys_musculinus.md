@@ -4,7 +4,7 @@ virus: Junin virus
 layout: specie
 ---
 
-# Calomys musculinus
+# _Calomys musculinus_
 
 ## Common Name
 
