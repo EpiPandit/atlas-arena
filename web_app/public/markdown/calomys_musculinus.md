@@ -12,7 +12,7 @@ Drylands Vesper mouse
 
 ## Host for Diseases:
 
-Chagas, Junin.
+Chagas, Junin virus (Argentine Hemorrhagic Fever).
 
 ## Family Structure:
 
