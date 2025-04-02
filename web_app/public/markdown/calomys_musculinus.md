@@ -16,11 +16,11 @@ Argentine Hemorrhagic Fever (Junin Virus), Chagas
 
 ## Family Structure:
 
-Polygamous, litters of 6.1-7.5 individuals.
+The rodent is polygamous and has litters of 6.1-7.5 offspring.
 
 ## Habitat
 
-Lives in Argentina, Paraguay, and Bolivia. [Can be found in argicultural fields](https://www.sciencedirect.com/science/article/pii/B9780702051012000170).
+The rodent lives in Argentina, Paraguay, and Bolivia. [It can be found in argicultural fields](https://www.sciencedirect.com/science/article/pii/B9780702051012000170).
 
 ## Epidemiology
 
