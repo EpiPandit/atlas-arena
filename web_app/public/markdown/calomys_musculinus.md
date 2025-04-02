@@ -8,20 +8,20 @@ layout: specie
 
 ## Common Name
 
-Drylands Vesper mouse
+[Drylands Vesper mouse] (https://www.gbif.org/species/2437951)
 
 ## Host for Diseases:
 
-Chagas, Junin virus (Argentine Hemorrhagic Fever).
+Argentine Hemorrhagic Fever (Junin Virus), Chagas
 
 ## Family Structure:
 
-Polygamous, litters of 5.4-7.6 individuals.
+Polygamous, litters of 6.1-7.5 individuals.
 
 ## Habitat
 
-Lives in Argentina, Paraguay, and Bolivia. Can be found in argicultural fields.
+Lives in Argentina, Paraguay, and Bolivia. [Can be found in argicultural fields] (https://www.sciencedirect.com/science/article/pii/B9780702051012000170).
 
 ## Epidemiology
 
-This rodent spreads Junin virus primarily to agricultural workers, who are exposed to aerosols by the rodents living within their fields. Cases peak from March to June and every 3-5 years, with increased argicultural activity during harvests and peaks in the rodent population.
+This rodent spreads the Junin virus primarily to agricultural workers, who are exposed to aerosols by the rodents living within their fields. Cases peak from March to June and [every 3-5 years] (https://www.sciencedirect.com/science/article/pii/B9780123751560000308?ref=pdf_download&fr=RR-2&rr=929db02cadd83403), with increased argicultural activity during harvests and peaks in the rodent population.
