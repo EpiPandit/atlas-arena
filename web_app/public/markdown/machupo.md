@@ -8,7 +8,7 @@ layout: virus
 # Machupo virus
 
 ## Causal Agent of:
-Bolivian Hemorrhagic fever
+Bolivian Hemorrhagic fever (BHF)
 
 ## History
 Endemic to Bolivia, Machupo virus, like its close relatives [Junin virus](resources?item=junin_virus), [Guanarito virus](resources?item=guanarito_virus) and Chapare virus, is one of the main New World Arenaviruses that cause hemorrhagic fever. The disease is severe and can lead to a case-mortality rate of 25-35% with acute symptoms but may also lead to debilitating chronic viraemia. The [first reported outbreak was in early 1960s and the latest was reported in early 1990s](https://doi.org/10.1016/j.vetmic.2009.08.027). Recently, sporadic and isolated cases have been reported across Bolivia due to changes in human-rodent interactions.
