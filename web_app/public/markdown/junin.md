@@ -9,7 +9,14 @@ layout: virus
 
 # Junin Virus
 
-Junin mammarenavirus (JUNV) or commonly known as Junin virus is the etiological agent of Argentine Hemorrhagic Fever (AHF) in humans. This disease is endemic to the humid pampas in Argentina, a densely populated area at the core of the largest agro-industrial complex in the country. In severe cases of AHF, patients develop hemorrhagic and neurological complications, with a fatality rate of 20%. In the last 10 years, [the virus spread has expanded to northeastern Argentina](https://www.biorxiv.org/content/10.1101/2024.06.24.600371v1), with recent reemergence in areas that had not had cases for 15-20 years. JUNV is a RNA virus that spreads in humans through rodent reservoirs such as _Calomys musculinus_ ([Dryland Vesper Mouse](resources?item=calomys_musculinus)), _Calomys laucha_ ([Small Vesper mouse](resources?item=calomys_laucha)) and _Oligoryzomys flavescens_ ([Yellow Pygmy Rice Rat](resources?item=oligoryzomys_flavescens)).
+## Causal Agent of:
+Argentine Hemorrhagic Fever (AHF)
+
+## History
+Junin mammarenavirus (JUNV) or commonly known as Junin virus, is an RNA virus endemic to the humid pampas in Argentina, a densely populated area at the core of the largest agro-industrial complex in the country. In severe cases of AHF, patients develop hemorrhagic and neurological complications, with a fatality rate of 20%. In the last 10 years, [the virus spread has expanded to northeastern Argentina](https://www.biorxiv.org/content/10.1101/2024.06.24.600371v1), with recent reemergence in areas that had not had cases for 15-20 years. 
+
+## Reservoir
+_Calomys musculinus_ ([Dryland Vesper Mouse](resources?item=calomys_musculinus)), _Calomys laucha_ ([Small Vesper mouse](resources?item=calomys_laucha)) and _Oligoryzomys flavescens_ ([Yellow Pygmy Rice Rat](resources?item=oligoryzomys_flavescens))
 
 ## Species distribution models for reservoirs of Guanarito virus
 
