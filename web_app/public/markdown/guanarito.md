@@ -8,7 +8,15 @@ layout: virus
 
 # Guanarito virus
 
-Guanarito virus is the causal agent of Venezuelan Hemorrhagic Fever (VHF), a zoonotic viral disease, in humans. Found first in rural Venezuela, Guanarito virus was named after the city of Guanarito where it was found in Portuguese province of Venezuela in 1988-1990. Being a zoonotic arenavirus, it is primarily rodent-borne and has confirmed reservoir of [Short-tailed cane mouse](resources?item=zygodontomys_brevicauda) (_Zygodontomys brevicauda_). Another potential reservoir [Alston's Cotton rat](resources?item=sigmodon_alstoni) (_Sigmodon alstoni_) has been implicated in spreading Guanarito virus and its close-relative, [Pirital virus](https://doi.org/10.4269/ajtmh.1997.56.548). VHF is can be severe in some cases with an estimate of 25% mortality just like Argentine Hemorrhagic fever (AHF) and Lassa Fever (LF) which are also caused by arenaviruses. The most risk-prone groups include migrant agricultural workers (mostly male) and their families. The [last reported outbreak](<https://doi.org/10.1016/0140-6736(91)91899-6>) was seen in early 1990s.
+## Causal Agent of:
+Venezuelan Hemorrhagic Fever (VHF)
+
+## History
+Found first in rural Venezuela, Guanarito virus was named after the city of Guanarito where it was found in Portuguese province of Venezuela in 1988-1990. VHF is can be severe in some cases with an estimate of 25% mortality just like Argentine Hemorrhagic fever (AHF) and Lassa Fever (LF) which are also caused by arenaviruses. The most risk-prone groups include migrant agricultural workers (mostly male) and their families. The [last reported outbreak](<https://doi.org/10.1016/0140-6736(91)91899-6>) was seen in early 1990s.
+
+## Reservoirs
+[Short-tailed cane mouse](resources?item=zygodontomys_brevicauda) (_Zygodontomys brevicauda_) (confirmed) and [Alston's Cotton rat](resources?item=sigmodon_alstoni) (_Sigmodon alstoni_) (suspected)
+
 
 ## Species distribution models for reservoirs of Guanarito virus
 
