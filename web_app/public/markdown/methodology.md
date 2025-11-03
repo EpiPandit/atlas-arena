@@ -4,7 +4,7 @@ kicker:
 title: MLSDM
 layout: methodology
 ---
-# `mlsdm`: Machine Learning based Species Distribution Modeling Library for Python > 3.6
+# mlsdm: Machine Learning based Species Distribution Modeling Library for Python > 3.6
 [![PyPI version](https://badge.fury.io/py/mlsdm.svg)](https://pypi.org/project/mlsdm/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16990131.svg)](https://doi.org/10.5281/zenodo.16990131)
 
 
