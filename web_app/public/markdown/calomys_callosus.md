@@ -19,11 +19,11 @@ Least Concern
 Stable
 
 ## Reproduction
-Litter sizes: average 4.5 pups
+Litter size: average 4.5 pups\
 Gestation: 21.8 days
 
 ## Habitat
-Range: Primarily Argentina; also Bolivia, Brazil, Paraguay
+Range: Primarily Argentina; also Bolivia, Brazil, Paraguay\
 Habitat: Shrubland, grassland, agricultural fields and homes
 
 ## Epidemiology
