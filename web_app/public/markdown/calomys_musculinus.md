@@ -25,10 +25,11 @@ Litter size: 6.1-7.5 pups\
 Gestation: 21.8 days\
 The rodent is polygamous.
 
-## Habitat
+## Range
+Argentina, Paraguay, and Bolivia\ 
 
-Range: Argentina, Paraguay, and Bolivia\ 
-Habitat: Shrublands and [agricultural fields](https://www.sciencedirect.com/science/article/pii/B9780702051012000170).
+## Habitat: 
+Shrublands and [agricultural fields](https://www.sciencedirect.com/science/article/pii/B9780702051012000170).
 
 ## Epidemiology
 
