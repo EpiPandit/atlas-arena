@@ -15,12 +15,12 @@ Large Vesper Mouse
 ## Family Structure
 Litter sizes: 3-5 pups 
 
-## Other Information
-A nocturnal species. Adults weigh between 30-50 grams and do not show sexual dimorphism.
-
 ## Habitat
 Range: Argentina, Bolivia, Brazil, Paraguay
 Habitat: Generalist habitation patterns: shrubland, grassland, artificial (agricultural fields and homes)
 
 ## Epidemiology
 The rodent spreads the Machupo virus primarily to agricultural workers, but it can also cause infections in urban areas. Infections peak from [June to August](https://www.sciencedirect.com/science/article/pii/B9780702051012000170) with the drier climate. Historical outbreaks have been tied to [pesticide use](https://www.sciencedirect.com/science/article/pii/S1879625714000558?ref=pdf_download&fr=RR-2&rr=929db80edbef3403).
+
+## Other Information
+A nocturnal species. Adults weigh between 30-50 grams and do not show sexual dimorphism.
