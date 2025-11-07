@@ -22,9 +22,11 @@ Unknown
 Litter size: unconfirmed reports of 3-7 pups\
 Gestation: 27 days
 
-## Habitat
-Range: Brazil, Colombia, Guyana, Suriname, Venezuela
-Habitat: Shrublands, grasslands, open crop fields on low elevation lands
+## Range: 
+Brazil, Colombia, Guyana, Suriname, Venezuela
+
+## Habitat: 
+Shrublands, grasslands, open crop fields on low elevation lands
 
 ## Epidemiology
 This rodent spreads the Guanarito Virus primarily to agircultural workers, with cases peaking from November to January.
