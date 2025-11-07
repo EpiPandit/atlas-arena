@@ -23,7 +23,7 @@ Litter size: average 4.5 pups\
 Gestation: 21.8 days
 
 ## Range:
-Primarily Argentina; also Bolivia, Brazil, Paraguay\
+Primarily Argentina; also Bolivia, Brazil, Paraguay
 
 ## Habitat: 
 Shrubland, grassland, agricultural fields and homes
