@@ -27,7 +27,8 @@ The rodent is polygamous.
 
 ## Habitat
 
-The rodent lives in Argentina, Paraguay, and Bolivia. It can be found in shrublands and [agricultural fields](https://www.sciencedirect.com/science/article/pii/B9780702051012000170).
+Range: Argentina, Paraguay, and Bolivia\ 
+Habitat: Shrublands and [agricultural fields](https://www.sciencedirect.com/science/article/pii/B9780702051012000170).
 
 ## Epidemiology
 
