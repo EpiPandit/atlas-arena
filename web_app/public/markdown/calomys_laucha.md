@@ -19,8 +19,8 @@ Least Concern
 Unknown
 
 ## Reproduction
-Litter size: average 6 pups 
-Gestation: 25 days
+Litter size: average 6 pups\ 
+Gestation: 25 days\
 Follows a monogamous mating and nesting system.
 
 ## Habitat
