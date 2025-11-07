@@ -22,9 +22,11 @@ Stable
 Litter  size: average of 5 pups\
 Gestation: 21 days
 
-## Habitat
-Range: Southern Brazil, Uruguay, Northern Argentina
-Habitat: Shrubland, grassland\
+## Range: 
+Southern Brazil, Uruguay, Northern Argentina
+
+## Habitat:
+Shrubland, grassland\
 These rats can inhabit arboreal, terrestrial, or semi-aquatic areas, and are typically spotted in pasture or croplands.
 
 ## Epidemiology
