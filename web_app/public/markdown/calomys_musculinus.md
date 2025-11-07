@@ -22,6 +22,7 @@ Stable
 
 ## Family Structure:
 Litter size: 6.1-7.5 pups\
+Gestation: 21.8 days\
 The rodent is polygamous.
 
 ## Habitat
