@@ -12,11 +12,24 @@ Short-tailed cane mouse
 ## Host for Diseases: 
 Venezuelan Hemorrhagic fever (Gunarito Virus)
 
-## Family Structure
-Adults weigh upto 60-80 grams with no sexual dimorphism and a littersize of 5-11 pups. These mice can survive from 1-5 years although detailed information on this is unavailable.
+## IUCN Status
+Least Concern
 
-## Habitat 
-This mice species has a natural habitat in North-eastern part of the continent of South America (countries of Venezuela, Columbia, Guyana, Suriname, Northern part of Brazil and French Guiana). It can inhabit a varied set of environments ranging from forested and dense grass areas to open agricultural lands but prefers sites close to water bodies. 
+## Population Trend
+Stable
+
+## Reproduction
+Litter size: 4.1 pups\
+Gestation: 25 days
+
+## Range: 
+Brazil, Colombia, Costa Rica, French Guiana, Guyana, Panama, Suriname, Trinidad and Tobago, Venezuela
+
+## Habitat:
+Forest, savanna, grasslands, wetlands, open argicultural lands 
 
 ## Epidemiology
 This rodent spreads the Guanarito Virus primarily to agircultural workers, with cases peaking from November to January.
+
+## Other Information
+Adults weigh up to 60-80 grams and exhibit no sexual dimorphism. These mice can survive from 1-5 years although detailed information on this is unavailable.
