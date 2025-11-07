@@ -24,7 +24,7 @@ Gestation: 25 days\
 Follows a monogamous mating and nesting system.
 
 ## Habitat
-Range: Chaco plains of Argentina, Bolivia, Paraguay, southeastern Brazil, small parts of Uruguay and Chile\ 
+Range: Chaco plains of Argentina, Bolivia, Paraguay, southeastern Brazil, small parts of Uruguay and Chile\
 Habitat: Forests, shrubland, grassland, artificial
 
 ## Epidemiology
