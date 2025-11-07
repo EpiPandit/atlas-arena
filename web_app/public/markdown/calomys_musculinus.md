@@ -20,7 +20,7 @@ Least Concern
 ## Population trend
 Stable
 
-## Family Structure:
+## Reproduction:
 Litter size: 6.1-7.5 pups\
 Gestation: 21.8 days\
 The rodent is polygamous.
