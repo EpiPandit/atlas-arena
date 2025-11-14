@@ -12,4 +12,5 @@ Drylands vesper mouse (Calomys musculinus), the main reservoir of Junin mammaren
 Flores-Pérez, N., Kulkarni, P., Uhart, M. et al. Climate Change Impact on Human-Rodent Interfaces: Modeling Junin Virus Reservoir Shifts. EcoHealth 22, 332–345 (2025). [Visit DOI](https://doi.org/10.1007/s10393-025-01723-z)
 
 <br><br>
-<img src="https://github.com/EpiPandit/atlas-arena/blob/383fc7c808dee7ec513f58d1acae90fa4677ec49/web_app/public/markdown/images/Atlas-arena_Flores_graphical.png">
+
+<img width="2716" height="2704" alt="image" src="https://github.com/user-attachments/assets/9dfec992-4b2b-4df4-9089-2010fed35dc3" />
