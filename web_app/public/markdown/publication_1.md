@@ -13,4 +13,4 @@ Flores-Pérez, N., Kulkarni, P., Uhart, M. et al. Climate Change Impact on Human
 
 <br><br>
 
-<img width="2716" height="2704" alt="image" src="https://github.com/user-attachments/assets/9dfec992-4b2b-4df4-9089-2010fed35dc3" />
+<img width="1358" height="1352" alt="image" src="https://github.com/user-attachments/assets/9dfec992-4b2b-4df4-9089-2010fed35dc3" />
