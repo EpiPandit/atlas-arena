@@ -5,7 +5,8 @@ import FormControlSelect from '@/components/custom/FormControlSelect';
 import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
 import FormControlSwitch from '@/components/custom/FormControlSwitch';
 import FormControlText from '@/components/custom/FormControlText';
-import { Box, Icon, IconButton, Flex } from '@chakra-ui/react';
+import UploadModal from '@/components/explore/UploadModal';
+import { Box, Icon, IconButton, Flex, Button } from '@chakra-ui/react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import {
@@ -26,7 +27,9 @@ import {
   SPECIES_INFO,
   MODEL_LABEL,
   MODEL_INFO,
+  UPLOAD_BUTTON,
 } from '@/config/constants/constants.explore';
+import { LuUpload } from 'react-icons/lu';
 
 const DEFAULT_SDM_TOGGLE = true;
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
@@ -37,6 +40,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
 
   const [selectedVirus, setSelectedVirus] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState([]);
@@ -210,7 +214,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         transition='all 0.3s ease'
       >
         {!isCollapsed && (
-          <>
+          <Box display='flex' flexDirection='column' mb={4} h='full'>
             <FormControlText label={SIDEBAR_TITLE} text={SIDEBAR_SUBTITLE} />
             <FormControlSelect
               label={VIRUS_LABEL}
@@ -248,7 +252,17 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               handleAction={handleModelChange}
               isDisabled={!selectedHotSpot}
             />
-          </>
+            <Button
+              variant='solid'
+              colorScheme='blue'
+              mt='auto'
+              gap={2}
+              onClick={() => setUploadModalOpen(true)}
+            >
+              <LuUpload size={16} aria-hidden='true' />
+              {UPLOAD_BUTTON}
+            </Button>
+          </Box>
         )}
       </Box>
 
@@ -266,6 +280,10 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         onClick={toggleSidebar}
         zIndex={1000}
         display={{ base: 'block', md: 'none' }}
+      />
+      <UploadModal
+        isOpen={uploadModalOpen}
+        onClose={() => setUploadModalOpen(false)}
       />
     </Flex>
   );

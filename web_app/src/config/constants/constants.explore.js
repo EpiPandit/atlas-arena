@@ -36,6 +36,17 @@ export const UNIT_DELTA = 'change';
 
 // MAP
 export const MAP_REGION_LABEL = 'Arenavirus risk map';
+// UPLOAD MODAL
+export const UPLOAD_BUTTON = 'Upload custom data';
+export const UPLOAD_TITLE = 'Upload species presence data';
+export const UPLOAD_DESCRIPTION =
+  'Upload custom data to run AtlasArena models for your data. Custom data replaces GBIF presence data.';
+export const UPLOAD_SCENARIO_LABEL = 'Scenario';
+export const UPLOAD_SPECIES_LABEL = 'Species';
+export const UPLOAD_DROPZONE_TEXT = 'Drop a file here, or click to upload';
+export const UPLOAD_CANCEL = 'Cancel';
+export const UPLOAD_SUBMIT = 'Upload';
+
 // MODAL
 
 export const FIRST_LINE_MODAL = 'About the virus';
