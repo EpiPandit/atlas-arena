@@ -8,8 +8,7 @@ import {
   Text,
   Stack,
 } from '@chakra-ui/react';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { RiCloseFill } from 'react-icons/ri';
+import { LuMenu, LuX } from 'react-icons/lu';
 import { Icon } from '@chakra-ui/react';
 import { Link as NextLink } from '@chakra-ui/next-js';
 import AALogo from '/public/assets/img/AALogo.svg';
@@ -29,7 +28,7 @@ const Header = () => {
       <Flex alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}
-          icon={<Icon as={isOpen ? RiCloseFill : RxHamburgerMenu} />}
+          icon={<Icon as={isOpen ? LuX : LuMenu} />}
           aria-label={'Open Menu'}
           color="blue.800"
           display={{ md: 'none' }}

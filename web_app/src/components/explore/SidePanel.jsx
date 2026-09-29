@@ -14,7 +14,7 @@ import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import markdownTheme from '@/config/md/markdownTheme';
 import rehypeRaw from 'rehype-raw';
 import { H_HEADER } from '@/config/constants/general';
-import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
+import { LuMoveLeft, LuMoveRight } from 'react-icons/lu';
 
 const SidePanel = ({ dataVirus = {} }) => {
   const { contentHtml } = dataVirus || {};
@@ -73,7 +73,7 @@ const SidePanel = ({ dataVirus = {} }) => {
         }}
         zIndex={11}
       >
-        {isExpanded ? <FaArrowLeftLong /> : <FaArrowRightLong />} About the virus
+        {isExpanded ? <LuMoveLeft /> : <LuMoveRight />} About the virus
       </Button>
 
       <Drawer

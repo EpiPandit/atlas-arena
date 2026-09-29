@@ -1,5 +1,5 @@
 import { Flex, Box, Text, Icon, Button } from '@chakra-ui/react';
-import { IoWarningOutline } from 'react-icons/io5';
+import { LuAlertTriangle } from 'react-icons/lu';
 
 const ErrorPage = ({ statusCode }) => {
   return (
@@ -12,7 +12,7 @@ const ErrorPage = ({ statusCode }) => {
       p={4}
       my='auto'
     >
-      <Icon as={IoWarningOutline} boxSize={64} color='red.500' mb={4} />
+      <Icon as={LuAlertTriangle} boxSize={64} color='red.500' mb={4} />
       <Box textAlign='center'>
         <Text fontSize='4xl' fontWeight='bold' color='gray.700' mb={2}>
           {statusCode ? `Error ${statusCode}` : 'Application error'}

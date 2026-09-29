@@ -14,7 +14,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from '@chakra-ui/react';
-import { PiDrop } from 'react-icons/pi';
+import { LuDroplet } from 'react-icons/lu';
 import {
   MAP_COLORS,
   DEFAULT_OPACITY_SINGLE,
@@ -80,7 +80,7 @@ const ColorLegend = ({
         <Popover placement='bottom-end'>
           <PopoverTrigger>
             <Flex>
-              <Icon as={PiDrop} boxSize={4} color='gray.500' cursor='pointer' />
+              <Icon as={LuDroplet} boxSize={4} color='gray.500' cursor='pointer' />
             </Flex>
           </PopoverTrigger>
           <PopoverContent

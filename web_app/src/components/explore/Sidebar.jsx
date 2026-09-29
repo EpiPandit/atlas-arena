@@ -6,7 +6,7 @@ import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
 import FormControlSwitch from '@/components/custom/FormControlSwitch';
 import FormControlText from '@/components/custom/FormControlText';
 import { Box, Icon, IconButton, Flex } from '@chakra-ui/react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 
 import {
   ALL_VIRUS,
@@ -255,7 +255,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
         aria-label='Toggle Sidebar'
         backgroundColor='white'
         sx={{ border: '1px solid gray' }}
-        icon={<Icon as={isCollapsed ? FiChevronRight : FiChevronLeft} />}
+        icon={<Icon as={isCollapsed ? LuChevronRight : LuChevronLeft} />}
         position='absolute'
         top='10px'
         left={isCollapsed ? '-5px' : '345px'}

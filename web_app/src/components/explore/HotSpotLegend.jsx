@@ -14,7 +14,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from '@chakra-ui/react';
-import { PiDrop } from 'react-icons/pi';
+import { LuDroplet } from 'react-icons/lu';
 import {
   MAP_COLORS,
   DEFAULT_OPACITY_MULTIPLE,
@@ -25,7 +25,7 @@ import {
   LEGEND_HOTSPOT_TITLE,
   LEGEND_HOTSPOT_DESC,
 } from '@/config/constants/constants.explore';
-import { FaCircle } from 'react-icons/fa';
+import { LuCircle } from 'react-icons/lu';
 
 const VirusLegend = ({ title, color, value, handleChange }) => {
   const handleChangeOpacity = (ev) => {
@@ -50,7 +50,7 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
       bg='transparent'
     >
       <Flex alignItems="center">
-        <Icon as={FaCircle} mr={2} color={colors[2]} />
+        <Icon as={LuCircle} mr={2} color={colors[2]} fill='currentColor' />
         <Text
           fontSize='14px'
           color='base.700'
@@ -63,7 +63,7 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
       <Popover placement='bottom-end'>
         <PopoverTrigger>
           <Flex>
-            <Icon as={PiDrop} boxSize={4} color='gray.500' cursor='pointer' />
+            <Icon as={LuDroplet} boxSize={4} color='gray.500' cursor='pointer' />
           </Flex>
         </PopoverTrigger>
         <PopoverContent
