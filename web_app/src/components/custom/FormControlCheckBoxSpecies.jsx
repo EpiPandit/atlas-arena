@@ -1,5 +1,5 @@
 import { ALL_VIRUS } from '@/config/constants/general';
-import { FormControl, Stack, Checkbox } from '@chakra-ui/react';
+import { FormControl, Stack, Checkbox, Text } from '@chakra-ui/react';
 import FormLabelFlex from '@/components/custom/FormLabelFlex';
 import { useId } from 'react';
 
@@ -11,8 +11,11 @@ const FormControlCheckBoxSpecies = ({
   filterValue = ALL_VIRUS,
   info = '',
   isDisabled = false,
+  isLocked = false,
+  notice = '',
 }) => {
   const headingId = useId();
+  const noticeId = useId();
   if (!options.length) return null;
 
   // filter
@@ -30,7 +33,7 @@ const FormControlCheckBoxSpecies = ({
         onChange={handleAction}
         key={item.key}
         id={item.key}
-        isDisabled={isDisabled || isDisabledTmp}
+        isDisabled={isDisabled || isLocked || isDisabledTmp}
       >
         {item.name}
       </Checkbox>
@@ -38,7 +41,12 @@ const FormControlCheckBoxSpecies = ({
   });
 
   return (
-    <FormControl my={4} isDisabled={isDisabled} aria-labelledby={headingId}>
+    <FormControl
+      my={4}
+      isDisabled={isDisabled}
+      aria-labelledby={headingId}
+      aria-describedby={notice ? noticeId : undefined}
+    >
       <FormLabelFlex
         id={headingId}
         label={label}
@@ -46,6 +54,11 @@ const FormControlCheckBoxSpecies = ({
         isDisabled={isDisabled}
         isGroup
       />
+      {notice && (
+        <Text id={noticeId} fontSize='sm' fontWeight={600} color='blue.600'>
+          {notice}
+        </Text>
+      )}
       <Stack pl={0} mt={1} spacing={1}>
         {renderOptions}
       </Stack>

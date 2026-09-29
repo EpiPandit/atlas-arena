@@ -72,12 +72,14 @@ const StatusMessage = ({ icon, iconBg, title, text, role }) => (
 );
 
 // onUpload({ scenario, species, file }) should return a promise that resolves
-// to { pointCount } on success and rejects on failure. `initialStatus` lets a
+// to { pointCount } on success and rejects on failure; onUploadSuccess is then
+// called with the upload details. `initialStatus` lets a
 // state be previewed before the upload is wired up.
 const UploadModal = ({
   isOpen,
   onClose,
   onUpload = null,
+  onUploadSuccess = null,
   accept,
   initialStatus = STATUS.FORM,
 }) => {
@@ -147,8 +149,17 @@ const UploadModal = ({
         species: selectedSpecies,
         file,
       });
-      setPointCount((result && result.pointCount) || 0);
+      const count = (result && result.pointCount) || 0;
+      setPointCount(count);
       setStatus(STATUS.SUCCESS);
+      if (onUploadSuccess) {
+        onUploadSuccess({
+          scenario,
+          species: selectedSpecies,
+          file,
+          pointCount: count,
+        });
+      }
     } catch (error) {
       console.error(error);
       setStatus(STATUS.ERROR);

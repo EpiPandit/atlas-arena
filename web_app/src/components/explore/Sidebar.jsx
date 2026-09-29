@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '@/store/context';
 import FormControlCheckBoxSpecies from '@/components/custom/FormControlCheckBoxSpecies';
 import FormControlSelect from '@/components/custom/FormControlSelect';
@@ -6,8 +6,8 @@ import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
 import FormControlSwitch from '@/components/custom/FormControlSwitch';
 import FormControlText from '@/components/custom/FormControlText';
 import UploadModal from '@/components/explore/UploadModal';
-import { Box, Icon, IconButton, Flex, Button } from '@chakra-ui/react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { Box, Icon, IconButton, Flex, Button, Stack } from '@chakra-ui/react';
+import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 
 import {
   ALL_VIRUS,
@@ -28,6 +28,8 @@ import {
   MODEL_LABEL,
   MODEL_INFO,
   UPLOAD_BUTTON,
+  CLEAR_CUSTOM_DATA_BUTTON,
+  CUSTOM_DATA_NOTICE,
 } from '@/config/constants/constants.explore';
 import { LuUpload } from 'react-icons/lu';
 
@@ -41,6 +43,15 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
     setIsCollapsed(!isCollapsed);
   };
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  // details of the last successful custom upload, or null
+  const [customData, setCustomData] = useState(null);
+  const uploadButtonRef = useRef(null);
+
+  // the Clear button disappears once clicked, so keep focus in the panel
+  const handleClearCustomData = () => {
+    setCustomData(null);
+    if (uploadButtonRef.current) uploadButtonRef.current.focus();
+  };
 
   const [selectedVirus, setSelectedVirus] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState([]);
@@ -243,6 +254,8 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               handleAction={handleSpeciesChange}
               filterValue={selectedVirus}
               isDisabled={!selectedHotSpot}
+              isLocked={!!customData}
+              notice={customData ? CUSTOM_DATA_NOTICE : ''}
             />
             <FormControlSelect
               label={MODEL_LABEL}
@@ -252,16 +265,28 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               handleAction={handleModelChange}
               isDisabled={!selectedHotSpot}
             />
-            <Button
-              variant='solid'
-              colorScheme='blue'
-              mt='auto'
-              gap={2}
-              onClick={() => setUploadModalOpen(true)}
-            >
-              <LuUpload size={16} aria-hidden='true' />
-              {UPLOAD_BUTTON}
-            </Button>
+            <Stack spacing={2} mt='auto' pt={4}>
+              {customData && (
+                <Button
+                  variant='outline'
+                  colorScheme='blue'
+                  bg='white'
+                  leftIcon={<Icon as={FiX} />}
+                  onClick={handleClearCustomData}
+                >
+                  {CLEAR_CUSTOM_DATA_BUTTON}
+                </Button>
+              )}
+              <Button
+                ref={uploadButtonRef}
+                variant='solid'
+                colorScheme='blue'
+                leftIcon={<Icon as={LuUpload} />}
+                onClick={() => setUploadModalOpen(true)}
+              >
+                {UPLOAD_BUTTON}
+              </Button>
+            </Stack>
           </Box>
         )}
       </Box>
@@ -284,6 +309,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       <UploadModal
         isOpen={uploadModalOpen}
         onClose={() => setUploadModalOpen(false)}
+        onUploadSuccess={setCustomData}
       />
     </Flex>
   );
