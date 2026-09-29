@@ -33,6 +33,9 @@ export const LEGEND_HOTSPOT_DESC =
 
 export const UNIT_SDM = 'probability';
 export const UNIT_DELTA = 'change';
+
+// MAP
+export const MAP_REGION_LABEL = 'Arenavirus risk map';
 // MODAL
 
 export const FIRST_LINE_MODAL = 'About the virus';

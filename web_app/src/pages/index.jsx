@@ -2,7 +2,8 @@ import React from 'react';
 import { getMetadataMd, getMdContent } from '@/libs/markdown';
 
 import { Box } from '@chakra-ui/react';
-import { H_HEADER } from '@/config/constants/general';
+import { H_HEADER, HOME_PAGE_TITLE } from '@/config/constants/general';
+import PageTitle from '@/components/custom/PageTitle';
 import MapComponent from '@/components/home/MapComponent';
 import OverlayComponent from '@/components/home/OverlayComponent';
 
@@ -19,6 +20,7 @@ const Home = ({ mddata = [], pageData = {} }) => {
       maxW='100vw'
       overflow='hidden'
     >
+      <PageTitle title={HOME_PAGE_TITLE} />
       <MapComponent />
       <OverlayComponent
         kicker={kicker}

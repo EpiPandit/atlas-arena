@@ -38,6 +38,7 @@ const UserCard = ({
     >
       <Image
         src={image}
+        alt={`${title}'s profile image`}
         boxSize='100px'
         mb={3}
         color='blue.900'

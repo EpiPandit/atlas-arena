@@ -1,7 +1,10 @@
-import { Flex, Box, Text, Icon, Button } from '@chakra-ui/react';
+import { Flex, Box, Text, Icon, Button, Heading } from '@chakra-ui/react';
 import { IoWarningOutline } from 'react-icons/io5';
+import PageTitle from '@/components/custom/PageTitle';
+import { buildPageTitle } from '@/config/constants/general';
 
 const ErrorPage = ({ statusCode }) => {
+  const heading = statusCode ? `Error ${statusCode}` : 'Application error';
   return (
     <Flex
       direction='column'
@@ -12,11 +15,24 @@ const ErrorPage = ({ statusCode }) => {
       p={4}
       my='auto'
     >
-      <Icon as={IoWarningOutline} boxSize={64} color='red.500' mb={4} />
+      <PageTitle title={buildPageTitle(heading)} />
+      <Icon
+        as={IoWarningOutline}
+        boxSize={64}
+        color='red.500'
+        mb={4}
+        aria-hidden='true'
+      />
       <Box textAlign='center'>
-        <Text fontSize='4xl' fontWeight='bold' color='gray.700' mb={2}>
-          {statusCode ? `Error ${statusCode}` : 'Application error'}
-        </Text>
+        <Heading
+          as='h1'
+          fontSize='4xl'
+          fontWeight='bold'
+          color='gray.700'
+          mb={2}
+        >
+          {heading}
+        </Heading>
         <Text fontSize='lg' color='gray.500' mb={6}>
           Ups !{' '}
           {statusCode

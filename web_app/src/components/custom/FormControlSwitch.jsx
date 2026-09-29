@@ -1,5 +1,4 @@
-import { Flex, FormControl, Switch, Text } from '@chakra-ui/react';
-import FormLabelFlex from '@/components/custom/FormLabelFlex';
+import { FormControl, Switch, Text } from '@chakra-ui/react';
 
 const FormControlSwitch = ({
   label,
@@ -9,13 +8,19 @@ const FormControlSwitch = ({
 }) => {
   return (
     <FormControl py={2} isDisabled={isDisabled}>
-      <FormLabelFlex />
-      <Flex justifyContent='start' alignItems='center'>
-        <Switch size='md' mr={2} onChange={handleAction} isChecked={value} />
-        <Text as='label' fontSize='xs' color='gray.700'>
+      {/* Label text is a child of the Switch so it lands inside the same
+          <label> as the input and becomes its accessible name. */}
+      <Switch
+        size='md'
+        onChange={handleAction}
+        isChecked={value}
+        display='flex'
+        alignItems='center'
+      >
+        <Text as='span' fontSize='xs' color='gray.700'>
           {label}
         </Text>
-      </Flex>
+      </Switch>
     </FormControl>
   );
 };

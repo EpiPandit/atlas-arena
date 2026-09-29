@@ -1,25 +1,24 @@
-import { FormControl, FormLabel, Flex, Text, Heading } from '@chakra-ui/react';
+import { Box, Text, Heading } from '@chakra-ui/react';
 
+// Page title for tool surfaces (Explore sidebar): the page's <h1>.
 const FormControlText = ({ label, text = '' }) => {
   return (
-    <FormControl py={2}>
-      <FormLabel
+    <Box py={2}>
+      <Heading
+        as='h1'
         fontSize='md'
         fontWeight={700}
         lineHeight='20px'
         textTransform='uppercase'
         color='blue.700'
-        px={0}
-        mx={0}
+        mb={2}
       >
-        <Flex justifyContent='space-between' alignItems='center'>
-          <Heading size="sm" as="h4">{label}</Heading>
-        </Flex>
-      </FormLabel>
-      <Text fontSize='sm' textAlign='start' borderBottom={2} fontWeight={400} color="initial">
+        {label}
+      </Heading>
+      <Text fontSize='sm' textAlign='start' fontWeight={400} color='initial'>
         {text}
       </Text>
-    </FormControl>
+    </Box>
   );
 };
 

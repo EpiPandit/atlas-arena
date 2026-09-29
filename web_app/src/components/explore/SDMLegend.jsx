@@ -1,20 +1,4 @@
-import {
-  Flex,
-  Box,
-  Icon,
-  Text,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverBody,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-} from '@chakra-ui/react';
-import { PiDrop } from 'react-icons/pi';
+import { Flex, Box, Heading, Text } from '@chakra-ui/react';
 import {
   MAP_COLORS,
   DEFAULT_OPACITY_SINGLE,
@@ -24,11 +8,11 @@ import {
   W_LEGEND,
 } from '@/config/constants/general';
 import {
-  LEGEND_OPACITY,
   UNIT_SDM,
   UNIT_DELTA,
   LEGEND_SDM_TITLE,
 } from '@/config/constants/constants.explore';
+import LayerOpacityControl from '@/components/explore/LayerOpacityControl';
 
 const ColorLegend = ({
   color = '',
@@ -59,14 +43,14 @@ const ColorLegend = ({
         : DEFAULT_OPACITY_SINGLE;
 
   return (
-    <Box display='flex' flexDirection='column' w='full'>
+    <Box as='li' display='flex' flexDirection='column' w='full'>
       <Flex
         display='flex'
         justifyContent='space-between'
         width='full'
         mb={0}
         bg='transparent'
-        alignItems="center"
+        alignItems='center'
       >
         <Text
           fontSize='14px'
@@ -75,42 +59,16 @@ const ColorLegend = ({
           color='base.700'
           textTransform='capitalize'
         >
-          {customTitle}
+          <span aria-hidden='true'>{customTitle}</span>
+          <Text as='span' srOnly>
+            {title}
+          </Text>
         </Text>
-        <Popover placement='bottom-end'>
-          <PopoverTrigger>
-            <Flex>
-              <Icon as={PiDrop} boxSize={4} color='gray.500' cursor='pointer' />
-            </Flex>
-          </PopoverTrigger>
-          <PopoverContent
-            w='163px'
-            px={2}
-            pt={0}
-            mt={0}
-            ml='127px'
-            _focus={{ outline: 'none' }}
-            zIndex={10}
-          >
-            <PopoverArrow />
-            <PopoverCloseButton boxSize={3} />
-            <PopoverBody p={1}>
-              <Text fontSize='12px' m={0}>
-                {LEGEND_OPACITY}
-              </Text>
-              <Slider
-                aria-label='slider-ex-1'
-                defaultValue={opacity}
-                onChange={handleChangeOpacity}
-              >
-                <SliderTrack>
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb boxSize={4} />
-              </Slider>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+        <LayerOpacityControl
+          name={title}
+          value={opacity}
+          handleChange={handleChangeOpacity}
+        />
       </Flex>
       <Box
         h='10px'
@@ -118,6 +76,7 @@ const ColorLegend = ({
         display='flex'
         width='full'
         bgGradient={`linear(to-r, ${colors[0]}, ${colors[colors.length - 1]})`}
+        aria-hidden='true'
       />
       <Box
         display='flex'
@@ -125,6 +84,7 @@ const ColorLegend = ({
         px={1}
         justifyContent='space-between'
         width='full'
+        aria-hidden='true'
       >
         {labels &&
           labels.map((i) => (
@@ -160,6 +120,8 @@ const SDMLegend = ({
 
   return (
     <Box
+      as='section'
+      aria-labelledby='legend-sdm-title'
       w={`${W_LEGEND}px`}
       h='auto'
       p={2}
@@ -172,15 +134,22 @@ const SDMLegend = ({
       position='relative'
       justifyContent='space-between'
     >
-      <Text
+      <Heading
+        as='h2'
+        id='legend-sdm-title'
         fontSize='14px'
         fontWeight={600}
         color='base.700'
         textTransform='uppercase'
       >
         {LEGEND_SDM_TITLE} {unit}
+      </Heading>
+      <Text srOnly>
+        {`Scale from ${labelsUnits[0]} to ${labelsUnits[labelsUnits.length - 1]}.`}
       </Text>
       <Box
+        as='ul'
+        listStyleType='none'
         display='flex'
         flexDirection='column'
         gap={2}

@@ -19,6 +19,9 @@ import {
 import FoiVectorLayer from '@/components/explore/FoiVectorLayer';
 import HotSpotLegend from '@/components/explore/HotSpotLegend';
 import HeadMapLayer from '@/components/explore/HeadMapLayer';
+import PageTitle from '@/components/custom/PageTitle';
+import { buildPageTitle } from '@/config/constants/general';
+import { MAP_REGION_LABEL } from '@/config/constants/constants.explore';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE;
@@ -157,12 +160,21 @@ const Explore = ({ mddata }) => {
   );
   return (
     <Flex position='relative' flexDirection={{ base: 'column', md: 'row' }}>
+      <PageTitle title={buildPageTitle('Explore')} />
       <Sidebar
         handleFilterTilesId={handleFilterTilesId}
         filterTilesId={filterTilesId}
       />
       <Box flex={1} position='relative'>
-        <Box h={`calc(100vh - ${H_HEADER}px)`} flex={1}>
+        <Box
+          id='explore-map'
+          role='region'
+          aria-label={MAP_REGION_LABEL}
+          tabIndex={-1}
+          _focus={{ outline: 'none' }}
+          h={`calc(100vh - ${H_HEADER}px)`}
+          flex={1}
+        >
           <Box h='100%' w='100%'>
             <StaticMap
               ref={mapRef}

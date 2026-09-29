@@ -1,5 +1,7 @@
 const IconoSVG = () => (
   <svg
+    aria-hidden='true'
+    focusable='false'
     width='129'
     height='128'
     viewBox='0 0 129 128'

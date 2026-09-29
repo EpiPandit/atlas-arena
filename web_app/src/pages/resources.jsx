@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Container,
-  Text,
-  Flex,
-  VStack,
-  Link,
-} from '@chakra-ui/react';
+import { Box, Container, Text, Flex, VStack, Link } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import ReactMarkdown from 'react-markdown';
@@ -16,16 +9,18 @@ import { getMetadataMd, getMdContent } from '@/libs/markdown';
 import rehypeRaw from 'rehype-raw';
 import InnerHeading from '@/components/custom/InnerHeading';
 import { sortList } from '@/utils/utils';
+import PageTitle from '@/components/custom/PageTitle';
+import { buildPageTitle } from '@/config/constants/general';
 
 const SideNavBar = ({ navigationItems, handleNavigation, selectedItem }) => {
   if (!navigationItems) return null;
   return (
     <Box
-      w={{xs: '100%', md: '20%'}}
-      pt={{xs: 0, md:10 }}
-      pr={{xs: 0, md:4 }}
-      borderRight={{xs:'none', md:'1px solid'}}
-      borderColor={{xs: null, md:'gray.200'}}
+      w={{ xs: '100%', md: '20%' }}
+      pt={{ xs: 0, md: 10 }}
+      pr={{ xs: 0, md: 4 }}
+      borderRight={{ xs: 'none', md: '1px solid' }}
+      borderColor={{ xs: null, md: 'gray.200' }}
       overflowY='auto'
     >
       <VStack align='start' spacing={4}>
@@ -117,16 +112,17 @@ const Resources = ({ mdData, pageData }) => {
 
   return (
     <Container maxW='container.lg' p={4}>
+      <PageTitle title={buildPageTitle('Resources')} />
       <Box my={4}>
         <InnerHeading {...pageData} />
       </Box>
-      <Flex flexDir={{xs: "column", md:"row" }} gap={{xs: 0, md:4}}>
+      <Flex flexDir={{ xs: 'column', md: 'row' }} gap={{ xs: 0, md: 4 }}>
         <SideNavBar
           navigationItems={navigationItems}
           handleNavigation={handleNavigation}
           selectedItem={selectedItem}
         />
-        <Box flex='1' p={{xs: 0, md:4}}>
+        <Box flex='1' p={{ xs: 0, md: 4 }}>
           <ReactMarkdown
             components={ChakraUIRenderer(MarkdownTheme)}
             rehypePlugins={[rehypeRaw]}

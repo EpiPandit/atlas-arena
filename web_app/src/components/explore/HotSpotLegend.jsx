@@ -1,31 +1,15 @@
-import {
-  Flex,
-  Box,
-  Icon,
-  Text,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverBody,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-} from '@chakra-ui/react';
-import { PiDrop } from 'react-icons/pi';
+import { Flex, Box, Heading, Icon, Text } from '@chakra-ui/react';
 import {
   MAP_COLORS,
   DEFAULT_OPACITY_MULTIPLE,
   W_LEGEND,
 } from '@/config/constants/general';
 import {
-  LEGEND_OPACITY,
   LEGEND_HOTSPOT_TITLE,
   LEGEND_HOTSPOT_DESC,
 } from '@/config/constants/constants.explore';
 import { FaCircle } from 'react-icons/fa';
+import LayerOpacityControl from '@/components/explore/LayerOpacityControl';
 
 const VirusLegend = ({ title, color, value, handleChange }) => {
   const handleChangeOpacity = (ev) => {
@@ -43,14 +27,15 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
   }
   return (
     <Flex
+      as='li'
       display='flex'
       justifyContent='space-between'
-      alignItems="center"
+      alignItems='center'
       width='full'
       bg='transparent'
     >
-      <Flex alignItems="center">
-        <Icon as={FaCircle} mr={2} color={colors[2]} />
+      <Flex alignItems='center'>
+        <Icon as={FaCircle} mr={2} color={colors[2]} aria-hidden='true' />
         <Text
           fontSize='14px'
           color='base.700'
@@ -60,40 +45,11 @@ const VirusLegend = ({ title, color, value, handleChange }) => {
           {customTitle}
         </Text>
       </Flex>
-      <Popover placement='bottom-end'>
-        <PopoverTrigger>
-          <Flex>
-            <Icon as={PiDrop} boxSize={4} color='gray.500' cursor='pointer' />
-          </Flex>
-        </PopoverTrigger>
-        <PopoverContent
-          w='163px'
-          px={2}
-          pt={0}
-          mt={0}
-          ml='127px'
-          _focus={{ outline: 'none' }}
-          zIndex={10}
-        >
-          <PopoverArrow />
-          <PopoverCloseButton boxSize={3} />
-          <PopoverBody p={1}>
-            <Text fontSize='12px' m={0}>
-              {LEGEND_OPACITY}
-            </Text>
-            <Slider
-              aria-label='slider-ex-1'
-              defaultValue={opacity}
-              onChange={handleChangeOpacity}
-            >
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb boxSize={4} />
-            </Slider>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+      <LayerOpacityControl
+        name={title}
+        value={opacity}
+        handleChange={handleChangeOpacity}
+      />
     </Flex>
   );
 };
@@ -110,6 +66,8 @@ const HotSpotLegend = ({ labels = [], value = {}, handleChange = null }) => {
   ));
   return (
     <Box
+      as='section'
+      aria-labelledby='legend-hotspot-title'
       w={`${W_LEGEND}px`}
       h='auto'
       p={2}
@@ -122,23 +80,27 @@ const HotSpotLegend = ({ labels = [], value = {}, handleChange = null }) => {
       position='relative'
       justifyContent='space-between'
     >
-      <Text
+      <Heading
+        as='h2'
+        id='legend-hotspot-title'
         fontSize='14px'
         fontWeight={600}
         color='base.700'
         textTransform='uppercase'
       >
         {LEGEND_HOTSPOT_TITLE}
-      </Text>
+      </Heading>
       <Text fontSize='xs' color='base.700' textTransform='lowercase'>
         {LEGEND_HOTSPOT_DESC}
       </Text>
       <Box
+        as='ul'
+        listStyleType='none'
         display='flex'
         flexDirection='column'
         mt={2}
         gap={2}
-        alignItems="center"
+        alignItems='center'
         width='full'
       >
         {renderBoxLegend}

@@ -1,3 +1,9 @@
 .mapboxgl-ctrl-logo {
   display: none !important;
 }
+
+/* Keyboard focus on the map canvas, matching the theme's focus ring. */
+.mapboxgl-canvas:focus-visible {
+  outline: 3px solid #2c3f85;
+  outline-offset: -3px;
+}

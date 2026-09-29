@@ -2,6 +2,7 @@ import { extendTheme } from '@chakra-ui/react';
 import Tabs from '@/config/styles/components.tabs';
 import Card from '@/config/styles/components.card';
 import Drawer from '@/config/styles/components.drawer';
+import Button from '@/config/styles/components.button';
 
 const theme = extendTheme({
   breakpoints: {
@@ -50,6 +51,12 @@ const theme = extendTheme({
       900: '#383842',
     },
   },
+  shadows: {
+    // Focus ring: a 2px light gap plus a 2px blue.900 ring. blue.900 measures
+    // 9.4:1 against the page background (WCAG 1.4.11 needs 3:1), and the gap
+    // keeps the ring distinguishable from dark blue buttons.
+    outline: '0 0 0 2px #FFFFFF, 0 0 0 4px #2C3F85',
+  },
   fonts: {
     body: `'Montserrat Variable', sans-serif`,
     heading: `'Montserrat Variable', sans-serif`,
@@ -67,6 +74,7 @@ const theme = extendTheme({
     Tabs,
     Card,
     Drawer,
+    Button,
   },
 });
 export default theme;
