@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }) {
     <ChakraProvider theme={theme}>
       <FontCss />
       <Head>
-        <title>{PAGE_TITLE}</title>
+        <title key='title'>{PAGE_TITLE}</title>
         <meta charSet='UTF-8' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />

@@ -3,10 +3,13 @@ import { Container, Box } from '@chakra-ui/react';
 import { getMdContent } from '@/libs/markdown';
 
 import InnerHeading from '@/components/custom/InnerHeading';
+import PageTitle from '@/components/custom/PageTitle';
+import { buildPageTitle } from '@/config/constants/general';
 
 const Methodology = ({ pageData }) => {
   return (
     <Container maxW='container.lg' p={4}>
+      <PageTitle title={buildPageTitle('Methodology')} />
       <Box my={4}>
         <InnerHeading {...pageData} />
       </Box>

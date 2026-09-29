@@ -19,6 +19,13 @@ import {
 import FoiVectorLayer from '@/components/explore/FoiVectorLayer';
 import HotSpotLegend from '@/components/explore/HotSpotLegend';
 import HeadMapLayer from '@/components/explore/HeadMapLayer';
+import MapSummary, {
+  MAP_SUMMARY_TEXT_ID,
+} from '@/components/explore/MapSummary';
+import PageTitle from '@/components/custom/PageTitle';
+import { buildPageTitle } from '@/config/constants/general';
+import { MAP_REGION_LABEL } from '@/config/constants/constants.explore';
+import { getHotspotSummary } from '@/libs/hotspots';
 
 const MAPBOX_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const MAPBOX_STYLE = process.env.NEXT_PUBLIC_MAPBOX_STYLE_EXPLORE;
@@ -30,7 +37,7 @@ const initialViewState = {
   zoom: 3.1,
 };
 
-const Explore = ({ mddata }) => {
+const Explore = ({ mddata, hotspotSummary = {} }) => {
   const { raw_data } = useAppContext();
 
   const mapRef = useRef(null);
@@ -116,6 +123,18 @@ const Explore = ({ mddata }) => {
     setLayerStyle({ ...tmpOpacityFilter });
   };
 
+  // "Show only this layer": hide every other legend layer
+  const handleShowOnlyLayer = (title) => {
+    const allLayers = [...labelSDM, ...labelsHotSpot].map((i) => i.title);
+    setLayerStyle(
+      Object.fromEntries(allLayers.map((i) => [i, i === title ? 100 : 0]))
+    );
+  };
+
+  const handleShowAllLayers = () => {
+    setLayerStyle({});
+  };
+
   const buildRender = filterTilesId
     .filter((i) => i.tileset_id)
     .map((item) => (
@@ -157,12 +176,31 @@ const Explore = ({ mddata }) => {
   );
   return (
     <Flex position='relative' flexDirection={{ base: 'column', md: 'row' }}>
+      <PageTitle title={buildPageTitle('Explore')} />
       <Sidebar
         handleFilterTilesId={handleFilterTilesId}
         filterTilesId={filterTilesId}
-      />
+      >
+        <MapSummary
+          summary={hotspotSummary}
+          timeFrame={dataFilter.time_frame}
+          model={dataFilter.model}
+          hotspotLayers={labelsHotSpot}
+          sdmLayers={labelSDM}
+          opacity={opacityFilter}
+        />
+      </Sidebar>
       <Box flex={1} position='relative'>
-        <Box h={`calc(100vh - ${H_HEADER}px)`} flex={1}>
+        <Box
+          id='explore-map'
+          role='region'
+          aria-label={MAP_REGION_LABEL}
+          aria-describedby={MAP_SUMMARY_TEXT_ID}
+          tabIndex={-1}
+          _focus={{ outline: 'none' }}
+          h={`calc(100vh - ${H_HEADER}px)`}
+          flex={1}
+        >
           <Box h='100%' w='100%'>
             <StaticMap
               ref={mapRef}
@@ -211,11 +249,15 @@ const Explore = ({ mddata }) => {
             value={opacityFilter}
             isDelta={hasDeltaValue}
             handleChange={handleChangeLayerStyle}
+            handleShowOnly={handleShowOnlyLayer}
+            handleShowAll={handleShowAllLayers}
           />
           <HotSpotLegend
             labels={labelsHotSpot}
             value={opacityFilter}
             handleChange={handleChangeLayerStyle}
+            handleShowOnly={handleShowOnlyLayer}
+            handleShowAll={handleShowAllLayers}
           />
         </Box>
         <SidePanel dataVirus={dataVirus} />
@@ -237,6 +279,7 @@ export async function getStaticProps() {
   return {
     props: {
       mddata: result,
+      hotspotSummary: getHotspotSummary(),
     },
   };
 }

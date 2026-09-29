@@ -20,6 +20,7 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box
+      as='header'
       bg='secondary.50'
       py={4}
       px={6}
@@ -30,14 +31,16 @@ const Header = () => {
         <IconButton
           size={'md'}
           icon={<Icon as={isOpen ? RiCloseFill : RxHamburgerMenu} />}
-          aria-label={'Open Menu'}
-          color="blue.800"
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isOpen}
+          aria-controls='mobile-nav'
+          color='blue.800'
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
         <Box>
           <NextLink
-            display='flex' 
+            display='flex'
             alignItems='center'
             href={'/'}
             _hover={{
@@ -46,14 +49,15 @@ const Header = () => {
           >
             <Image
               src={AALogo.src}
+              alt=''
               height='70px'
               objectFit='cover'
               m='-6'
-              pt="2"
+              pt='2'
             />
             <Text
               fontSize='xl'
-              ml="-2"
+              ml='-2'
               color='blue.800'
               fontWeight={500}
               lineHeight='21px'
@@ -64,7 +68,12 @@ const Header = () => {
             </Text>
           </NextLink>
         </Box>
-        <HStack as={'nav'} spacing={4} py="2" display={{ base: 'none', md: 'flex' }}>
+        <HStack
+          as={'nav'}
+          spacing={4}
+          py='2'
+          display={{ base: 'none', md: 'flex' }}
+        >
           {LINK_HEADER.map((item) => (
             <NavLink key={item.text} {...item} />
           ))}
@@ -79,7 +88,7 @@ const Header = () => {
           bg='secondary.50'
           sx={{ borderBottomRadius: '10px' }}
         >
-          <Stack as={'nav'} spacing={4}>
+          <Stack as={'nav'} id='mobile-nav' spacing={4}>
             {LINK_HEADER.map((item) => (
               <NavLink key={item.text} {...item} />
             ))}

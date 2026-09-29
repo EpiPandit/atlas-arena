@@ -3,6 +3,11 @@ export const PAGE_TITLE = 'AtlasArena';
 export const PAGE_KEYWORDS = 'AtlasArena';
 export const PAGE_DESCRIPTION = 'AtlasArena';
 export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
+export const HOME_PAGE_TITLE = `${PAGE_TITLE} | Predicting Arenavirus Risk`;
+
+// Unique, descriptive <title> per route (WCAG 2.4.2)
+export const buildPageTitle = (page = '') =>
+  page ? `${page} | ${PAGE_TITLE}` : PAGE_TITLE;
 
 // HEADER LINKS
 export const LINK_HEADER = [

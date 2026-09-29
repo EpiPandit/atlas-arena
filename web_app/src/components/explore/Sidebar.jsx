@@ -29,7 +29,7 @@ import {
 } from '@/config/constants/constants.explore';
 
 const DEFAULT_SDM_TOGGLE = true;
-const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
+const Sidebar = ({ handleFilterTilesId, filterTilesId, children }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -193,6 +193,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       maxH={`calc(100vh - ${H_HEADER}px)`}
     >
       <Box
+        id='explore-filters'
         w={
           isCollapsed
             ? { base: '0px', md: '330px' }
@@ -247,12 +248,15 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               handleAction={handleModelChange}
               isDisabled={!selectedHotSpot}
             />
+            {children}
           </>
         )}
       </Box>
 
       <IconButton
-        aria-label='Toggle Sidebar'
+        aria-label={isCollapsed ? 'Show filters' : 'Hide filters'}
+        aria-expanded={!isCollapsed}
+        aria-controls='explore-filters'
         backgroundColor='white'
         sx={{ border: '1px solid gray' }}
         icon={<Icon as={isCollapsed ? FiChevronRight : FiChevronLeft} />}

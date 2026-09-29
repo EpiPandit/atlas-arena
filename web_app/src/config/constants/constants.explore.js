@@ -26,6 +26,8 @@ export const MODEL_INFO = 'model';
 
 // LEGEND
 export const LEGEND_OPACITY = 'Opacity';
+export const LEGEND_SHOW_ONLY = 'Show only this layer';
+export const LEGEND_SHOW_ALL = 'Show all layers';
 export const LEGEND_SDM_TITLE = 'Species distribution';
 export const LEGEND_HOTSPOT_TITLE = 'Viral hotspot probability';
 export const LEGEND_HOTSPOT_DESC =
@@ -33,6 +35,16 @@ export const LEGEND_HOTSPOT_DESC =
 
 export const UNIT_SDM = 'probability';
 export const UNIT_DELTA = 'change';
+
+// MAP TEXT ALTERNATIVE
+export const MAP_REGION_LABEL = 'Arenavirus risk map';
+export const MAP_SUMMARY_TITLE = 'Map summary';
+export const MAP_TABLE_SHOW = 'Show hotspot data table';
+export const MAP_TABLE_HIDE = 'Hide hotspot data table';
+export const MAP_TABLE_CAPTION =
+  'Viral hotspot grid cells by country for the current filters';
+export const MAP_SDM_NOTE =
+  'Species distribution probability values are drawn from map tiles and are not yet available as text.';
 // MODAL
 
 export const FIRST_LINE_MODAL = 'About the virus';
