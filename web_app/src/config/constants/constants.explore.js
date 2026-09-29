@@ -46,6 +46,13 @@ export const UPLOAD_SPECIES_LABEL = 'Species';
 export const UPLOAD_DROPZONE_TEXT = 'Drop a file here, or click to upload';
 export const UPLOAD_CANCEL = 'Cancel';
 export const UPLOAD_SUBMIT = 'Upload';
+export const UPLOAD_SUCCESS_TITLE = 'Upload successful';
+export const UPLOAD_SUCCESS_TEXT = (count = 0) =>
+  `${count.toLocaleString('en-US')} points uploaded`;
+export const UPLOAD_DONE = 'Done';
+export const UPLOAD_ERROR_TITLE = 'Upload Failed';
+export const UPLOAD_ERROR_TEXT = 'We couldn’t process this file.';
+export const UPLOAD_RETRY = 'Choose a different file';
 
 // MODAL
 
