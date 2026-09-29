@@ -33,6 +33,8 @@ import {
 } from '@/config/constants/constants.explore';
 import { LuUpload } from 'react-icons/lu';
 
+// Shared by the locked controls (aria-describedby) while custom data is shown
+const CUSTOM_DATA_NOTICE_ID = 'custom-data-notice';
 const DEFAULT_SDM_TOGGLE = true;
 const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
@@ -240,6 +242,9 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               options={allTimeFrame}
               info={TIMEFRAME_INFO}
               handleAction={handleTimeFrameChange}
+              isLocked={!!customData}
+              lockedValue={customData ? customData.scenario : ''}
+              describedBy={CUSTOM_DATA_NOTICE_ID}
             />
             <FormControlSwitch
               label={SDM_TOGGLE_LABEL}
@@ -255,7 +260,8 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               filterValue={selectedVirus}
               isDisabled={!selectedHotSpot}
               isLocked={!!customData}
-              notice={customData ? CUSTOM_DATA_NOTICE : ''}
+              notice={customData ? CUSTOM_DATA_NOTICE(customData.species) : ''}
+              noticeId={CUSTOM_DATA_NOTICE_ID}
             />
             <FormControlSelect
               label={MODEL_LABEL}
@@ -264,6 +270,8 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
               value={selectedModel}
               handleAction={handleModelChange}
               isDisabled={!selectedHotSpot}
+              isLocked={!!customData}
+              describedBy={CUSTOM_DATA_NOTICE_ID}
             />
             <Stack spacing={2} mt='auto' pt={4}>
               {customData && (

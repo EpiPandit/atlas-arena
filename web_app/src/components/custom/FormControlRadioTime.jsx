@@ -15,6 +15,9 @@ const FormControlRadioTime = ({
   handleAction,
   info = '',
   isDisabled = false,
+  isLocked = false,
+  lockedValue = '',
+  describedBy,
 }) => {
   const [selectRadio, setSelectRadio] = useState(DEFAULT_TIME);
   const [selectCheck, setSelectCheck] = useState(false);
@@ -22,13 +25,16 @@ const FormControlRadioTime = ({
 
   if (!options.length) return null;
 
+  // while locked, show the scenario the locked results were produced for
+  const shownRadio = isLocked && lockedValue ? lockedValue : selectRadio;
+
   // filter
   const renderOptions = options
     .filter((i) => !`${i.name}`.toLowerCase().includes('delta'))
     .map((item) => {
       return (
         <Radio
-          isChecked={selectRadio === item.name}
+          isChecked={shownRadio === item.name}
           key={item.key}
           value={item.key}
         >
@@ -82,7 +88,12 @@ const FormControlRadioTime = ({
   };
 
   return (
-    <FormControl my={4} isDisabled={isDisabled} aria-labelledby={headingId}>
+    <FormControl
+      my={4}
+      isDisabled={isDisabled}
+      aria-labelledby={headingId}
+      aria-describedby={isLocked ? describedBy : undefined}
+    >
       <FormLabelFlex
         id={headingId}
         label={label}
@@ -92,9 +103,9 @@ const FormControlRadioTime = ({
       />
       <RadioGroup
         aria-labelledby={headingId}
-        defaultValue={selectRadio}
+        value={shownRadio}
         onChange={handleChangeRadio}
-        isDisabled={isDisabled}
+        isDisabled={isDisabled || isLocked}
       >
         <Stack pl={0} py={1} spacing={1}>
           {renderOptions}
@@ -103,8 +114,8 @@ const FormControlRadioTime = ({
       <Stack pl={0} pt={2} spacing={1}>
         <Checkbox
           onChange={handleChangeCheck}
-          isChecked={selectCheck}
-          isDisabled={selectRadio == DEFAULT_TIME}
+          isChecked={selectCheck && !isLocked}
+          isDisabled={isLocked || selectRadio == DEFAULT_TIME}
           fontSize='xs'
         >
           Show Delta

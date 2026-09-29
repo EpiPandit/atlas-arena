@@ -29,6 +29,8 @@ import {
   UPLOAD_SCENARIO_LABEL,
   UPLOAD_SPECIES_LABEL,
   UPLOAD_DROPZONE_TEXT,
+  UPLOAD_DROPZONE_HINT,
+  UPLOAD_ACCEPT,
   UPLOAD_CANCEL,
   UPLOAD_SUBMIT,
   UPLOAD_SUCCESS_TITLE,
@@ -80,7 +82,7 @@ const UploadModal = ({
   onClose,
   onUpload = null,
   onUploadSuccess = null,
-  accept,
+  accept = UPLOAD_ACCEPT,
   initialStatus = STATUS.FORM,
 }) => {
   const { allTimeFrame, allSpecies } = useAppContext();
@@ -172,28 +174,7 @@ const UploadModal = ({
         {UPLOAD_DESCRIPTION}
       </Text>
 
-      <FormControl
-        as='fieldset'
-        mb={4}
-        isDisabled={status === STATUS.UPLOADING}
-      >
-        <FormLabel as='legend' fontSize='sm' fontWeight={700} mb={2}>
-          {UPLOAD_SCENARIO_LABEL}
-        </FormLabel>
-        <RadioGroup value={scenario} onChange={setScenario}>
-          <Stack spacing={1}>
-            {scenarios.map((item) => (
-              <Radio key={item.key} value={item.key} size='md'>
-                <Text as='span' fontSize='sm'>
-                  {item.name}
-                </Text>
-              </Radio>
-            ))}
-          </Stack>
-        </RadioGroup>
-      </FormControl>
-
-      <FormControl mb={3} isDisabled={status === STATUS.UPLOADING}>
+      <FormControl mb={4} isDisabled={status === STATUS.UPLOADING}>
         <FormLabel fontSize='sm' fontWeight={700} mb={2}>
           {UPLOAD_SPECIES_LABEL}
         </FormLabel>
@@ -228,6 +209,7 @@ const UploadModal = ({
         border='1px dashed'
         borderColor={isDragging ? 'blue.500' : 'gray.300'}
         borderRadius='md'
+        mb={4}
         bg={isDragging ? 'blue.50' : 'gray.100'}
         transition='background-color 0.2s, border-color 0.2s'
         _hover={{ borderColor: 'gray.400' }}
@@ -246,6 +228,9 @@ const UploadModal = ({
         <Text fontSize='sm' color='gray.800'>
           {file ? file.name : UPLOAD_DROPZONE_TEXT}
         </Text>
+        <Text fontSize='xs' color='gray.600'>
+          {UPLOAD_DROPZONE_HINT}
+        </Text>
         <Input
           type='file'
           accept={accept}
@@ -254,6 +239,26 @@ const UploadModal = ({
           srOnly
         />
       </Box>
+      <FormControl
+        as='fieldset'
+        mb={4}
+        isDisabled={status === STATUS.UPLOADING}
+      >
+        <FormLabel as='legend' fontSize='sm' fontWeight={700} mb={2}>
+          {UPLOAD_SCENARIO_LABEL}
+        </FormLabel>
+        <RadioGroup value={scenario} onChange={setScenario}>
+          <Stack spacing={1}>
+            {scenarios.map((item) => (
+              <Radio key={item.key} value={item.key} size='md'>
+                <Text as='span' fontSize='sm'>
+                  {item.name}
+                </Text>
+              </Radio>
+            ))}
+          </Stack>
+        </RadioGroup>
+      </FormControl>
     </>
   );
 

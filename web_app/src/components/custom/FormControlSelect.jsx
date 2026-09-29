@@ -8,15 +8,22 @@ const FormControlSelect = ({
   value = '',
   isDisabled = false,
   info = '',
+  isLocked = false,
+  describedBy,
 }) => {
   return (
-    <FormControl py={2} isDisabled={isDisabled}>
+    <FormControl
+      py={2}
+      isDisabled={isDisabled}
+      aria-describedby={isLocked ? describedBy : undefined}
+    >
       <FormLabelFlex label={label} info={info} isDisabled={isDisabled} />
       <Select
         bg='white'
         borderColor='gray.200'
         value={value}
         onChange={handleAction}
+        isDisabled={isDisabled || isLocked}
       >
         {options.map((i) => (
           <option key={i.key} value={i.key}>

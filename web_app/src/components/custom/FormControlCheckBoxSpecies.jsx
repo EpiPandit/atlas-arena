@@ -13,9 +13,9 @@ const FormControlCheckBoxSpecies = ({
   isDisabled = false,
   isLocked = false,
   notice = '',
+  noticeId,
 }) => {
   const headingId = useId();
-  const noticeId = useId();
   if (!options.length) return null;
 
   // filter
