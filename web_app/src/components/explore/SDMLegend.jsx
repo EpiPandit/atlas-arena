@@ -19,8 +19,6 @@ const ColorLegend = ({
   title = '',
   labels = [],
   handleChange = null,
-  handleShowOnly = null,
-  handleShowAll = null,
   value = {},
   has_many = false,
 }) => {
@@ -70,8 +68,6 @@ const ColorLegend = ({
           name={title}
           value={opacity}
           handleChange={handleChangeOpacity}
-          handleShowOnly={() => handleShowOnly(title)}
-          handleShowAll={handleShowAll}
         />
       </Flex>
       <Box
@@ -106,8 +102,6 @@ const SDMLegend = ({
   value = {},
   isDelta = false,
   handleChange = null,
-  handleShowOnly = null,
-  handleShowAll = null,
 }) => {
   const labelsUnits = isDelta ? LEGEND_DELTA_VALUE : DEFAULT_LEGEND_VALUE;
   const unit = isDelta ? UNIT_DELTA : UNIT_SDM;
@@ -121,8 +115,6 @@ const SDMLegend = ({
       labels={labelsUnits}
       value={value}
       handleChange={handleChange}
-      handleShowOnly={handleShowOnly}
-      handleShowAll={handleShowAll}
     />
   ));
 

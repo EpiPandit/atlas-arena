@@ -29,7 +29,7 @@ import {
 } from '@/config/constants/constants.explore';
 
 const DEFAULT_SDM_TOGGLE = true;
-const Sidebar = ({ handleFilterTilesId, filterTilesId, children }) => {
+const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   const { allVirus, allSpecies, allTimeFrame, allModels } = useAppContext();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -248,7 +248,6 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId, children }) => {
               handleAction={handleModelChange}
               isDisabled={!selectedHotSpot}
             />
-            {children}
           </>
         )}
       </Box>

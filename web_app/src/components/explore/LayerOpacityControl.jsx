@@ -1,5 +1,4 @@
 import {
-  Button,
   Icon,
   IconButton,
   Popover,
@@ -12,27 +11,19 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  Stack,
   Text,
 } from '@chakra-ui/react';
 import { PiDrop } from 'react-icons/pi';
-import {
-  LEGEND_OPACITY,
-  LEGEND_SHOW_ONLY,
-  LEGEND_SHOW_ALL,
-} from '@/config/constants/constants.explore';
+import { LEGEND_OPACITY } from '@/config/constants/constants.explore';
 
-// Per-layer controls in the map legend: opacity, plus "show only this layer"
-// so overlapping layers can be read one at a time instead of by blended
-// color alone (WCAG 1.4.1).
+// Per-layer opacity control in the map legend. The trigger is a real,
+// labelled button so it is reachable by keyboard and screen readers.
 const LayerOpacityControl = ({
   name = '',
   value = 100,
   handleChange = null,
-  handleShowOnly = null,
-  handleShowAll = null,
 }) => {
-  const controlLabel = `Layer options for ${name}`;
+  const controlLabel = `Adjust opacity of ${name}`;
   return (
     <Popover placement='bottom-end' isLazy>
       <PopoverTrigger>
@@ -48,10 +39,11 @@ const LayerOpacityControl = ({
       </PopoverTrigger>
       <PopoverContent
         aria-label={controlLabel}
-        w='180px'
+        w='163px'
         px={2}
         pt={0}
         mt={0}
+        ml='127px'
         _focus={{ outline: 'none' }}
         zIndex={10}
       >
@@ -64,7 +56,7 @@ const LayerOpacityControl = ({
           <Slider
             aria-label={`${LEGEND_OPACITY} of ${name}`}
             getAriaValueText={(v) => `${v}%`}
-            value={value}
+            defaultValue={value}
             onChange={handleChange}
           >
             <SliderTrack>
@@ -72,14 +64,6 @@ const LayerOpacityControl = ({
             </SliderTrack>
             <SliderThumb boxSize={4} />
           </Slider>
-          <Stack spacing={1} mt={1}>
-            <Button size='xs' variant='outline' onClick={handleShowOnly}>
-              {LEGEND_SHOW_ONLY}
-            </Button>
-            <Button size='xs' variant='ghost' onClick={handleShowAll}>
-              {LEGEND_SHOW_ALL}
-            </Button>
-          </Stack>
         </PopoverBody>
       </PopoverContent>
     </Popover>

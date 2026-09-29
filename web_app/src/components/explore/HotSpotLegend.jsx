@@ -11,14 +11,7 @@ import {
 import { FaCircle } from 'react-icons/fa';
 import LayerOpacityControl from '@/components/explore/LayerOpacityControl';
 
-const VirusLegend = ({
-  title,
-  color,
-  value,
-  handleChange,
-  handleShowOnly,
-  handleShowAll,
-}) => {
+const VirusLegend = ({ title, color, value, handleChange }) => {
   const handleChangeOpacity = (ev) => {
     handleChange(title, ev);
   };
@@ -56,20 +49,12 @@ const VirusLegend = ({
         name={title}
         value={opacity}
         handleChange={handleChangeOpacity}
-        handleShowOnly={() => handleShowOnly(title)}
-        handleShowAll={handleShowAll}
       />
     </Flex>
   );
 };
 
-const HotSpotLegend = ({
-  labels = [],
-  value = {},
-  handleChange = null,
-  handleShowOnly = null,
-  handleShowAll = null,
-}) => {
+const HotSpotLegend = ({ labels = [], value = {}, handleChange = null }) => {
   if (!labels || labels.length == 0) return null;
   const renderBoxLegend = labels.map((i) => (
     <VirusLegend
@@ -77,8 +62,6 @@ const HotSpotLegend = ({
       {...i}
       value={value}
       handleChange={handleChange}
-      handleShowOnly={handleShowOnly}
-      handleShowAll={handleShowAll}
     />
   ));
   return (
