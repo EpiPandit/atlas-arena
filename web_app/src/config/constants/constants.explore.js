@@ -4,6 +4,8 @@
 
 export const SIDEBAR_TITLE = 'EXPLORE';
 export const SIDEBAR_SUBTITLE = 'Explore the risk of Arenaviruses';
+export const FILTERS_SHOW = 'Show filters';
+export const FILTERS_HIDE = 'Hide filters';
 
 // VIRUS FILTER
 export const VIRUS_LABEL = 'virus';

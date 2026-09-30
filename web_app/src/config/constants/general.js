@@ -166,6 +166,9 @@ export const LEGEND_DELTA_VALUE = ['-1', '0', '1'];
 // HEIGHT HEADER
 export const H_HEADER = 54;
 
+// HEIGHT MOBILE FILTER BAR (Explore)
+export const H_FILTER_BAR = 44;
+
 // LEGEND
 export const W_LEGEND = 232;
 

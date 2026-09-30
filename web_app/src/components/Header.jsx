@@ -21,19 +21,11 @@ const Header = () => {
     <Box
       bg='secondary.50'
       py={4}
-      px={6}
+      px={[4, null, 6]}
       borderBottom={'1px'}
       borderBottomColor='gray.200'
     >
       <Flex alignItems={'center'} justifyContent={'space-between'}>
-        <IconButton
-          size={'md'}
-          icon={<Icon as={isOpen ? LuX : LuMenu} />}
-          aria-label={'Open Menu'}
-          color="blue.800"
-          display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
-        />
         <Box>
           <NextLink
             display='flex' 
@@ -45,14 +37,14 @@ const Header = () => {
           >
             <Image
               src={AALogo.src}
-              height='70px'
+              height={['50px', null, '70px']}
               objectFit='cover'
               m='-6'
               pt="2"
             />
             <Text
               fontSize='xl'
-              ml="-2"
+              ml={[0, null, "-2"]}
               color='blue.800'
               fontWeight={500}
               lineHeight='21px'
@@ -68,15 +60,23 @@ const Header = () => {
             <NavLink key={item.text} {...item} />
           ))}
         </HStack>
+        <IconButton
+          size={'sm'}
+          icon={<Icon as={isOpen ? LuX : LuMenu} />}
+          aria-label={'Open Menu'}
+          colorScheme="blue"
+          display={{ md: 'none' }}
+          variant='ghost'
+          onClick={isOpen ? onClose : onOpen}
+        />
       </Flex>
       {isOpen ? (
         <Box
-          p={2}
           display={{ md: 'none' }}
           zIndex={100}
           position='relative'
+          mt={6}
           bg='secondary.50'
-          sx={{ borderBottomRadius: '10px' }}
         >
           <Stack as={'nav'} spacing={4}>
             {LINK_HEADER.map((item) => (

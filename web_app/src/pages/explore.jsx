@@ -13,6 +13,7 @@ import SidePanel from '@/components/explore/SidePanel';
 import {
   ALL_VIRUS,
   H_HEADER,
+  H_FILTER_BAR,
   MAX_ZOOM_MAP,
   MIN_ZOOM_MAP,
 } from '@/config/constants/general';
@@ -174,7 +175,13 @@ const Explore = ({ mddata }) => {
         filterTilesId={filterTilesId}
       />
       <Box flex={1} position='relative'>
-        <Box h={`calc(100vh - ${H_HEADER}px)`} flex={1}>
+        <Box
+          h={{
+            base: `calc(100vh - ${H_HEADER + H_FILTER_BAR}px)`,
+            md: `calc(100vh - ${H_HEADER}px)`,
+          }}
+          flex={1}
+        >
           <Box ref={mapContainerRef} h='100%' w='100%'>
             <StaticMap
               ref={mapRef}
@@ -208,7 +215,10 @@ const Explore = ({ mddata }) => {
         </Box>
         <Box
           position='absolute'
-          maxH={`calc(100vh - ${H_HEADER}px)`}
+          maxH={{
+            base: `calc(100vh - ${H_HEADER + H_FILTER_BAR}px)`,
+            md: `calc(100vh - ${H_HEADER}px)`,
+          }}
           bottom={4}
           left={4}
           display='flex'
