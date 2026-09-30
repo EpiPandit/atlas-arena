@@ -6,7 +6,7 @@ import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
 import FormControlSwitch from '@/components/custom/FormControlSwitch';
 import FormControlText from '@/components/custom/FormControlText';
 import { Box, Icon, IconButton, Flex } from '@chakra-ui/react';
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { LuPanelLeftClose, LuPanelLeftOpen } from 'react-icons/lu';
 
 import {
   ALL_VIRUS,
@@ -193,76 +193,90 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
       maxH={`calc(100vh - ${H_HEADER}px)`}
     >
       <Box
-        w={
-          isCollapsed
-            ? { base: '0px', md: '330px' }
-            : { base: '100%', md: '330px' }
-        }
+        id='explore-filters'
+        w={isCollapsed ? '0px' : { base: '100%', md: '330px' }}
         maxW={{ base: '100%', md: '330px' }}
         bg={isCollapsed ? 'transparent' : 'secondary.50'}
         h='100%'
         p={isCollapsed ? 0 : { base: '16px', md: '24px' }}
+        overflowX='hidden'
         overflowY='auto'
-        boxShadow='sm'
-        borderRight='1px solid'
+        boxShadow={isCollapsed ? 'none' : 'sm'}
+        borderRight={isCollapsed ? 'none' : '1px solid'}
         borderColor='blackAlpha.400'
         transition='all 0.3s ease'
       >
-        {!isCollapsed && (
-          <>
-            <FormControlText label={SIDEBAR_TITLE} text={SIDEBAR_SUBTITLE} />
-            <FormControlSelect
-              label={VIRUS_LABEL}
-              options={allVirus}
-              info={VIRUS_INFO}
-              value={selectedVirus}
-              handleAction={handleVirusChange}
-            />
+        <Box display={isCollapsed ? 'none' : 'block'} minW={{ md: '282px' }}>
+          <FormControlText label={SIDEBAR_TITLE} text={SIDEBAR_SUBTITLE} />
+          <FormControlSelect
+            label={VIRUS_LABEL}
+            options={allVirus}
+            info={VIRUS_INFO}
+            value={selectedVirus}
+            handleAction={handleVirusChange}
+          />
 
-            <FormControlRadioTime
-              label={TIMEFRAME_LABEL}
-              options={allTimeFrame}
-              info={TIMEFRAME_INFO}
-              handleAction={handleTimeFrameChange}
-            />
-            <FormControlSwitch
-              label={SDM_TOGGLE_LABEL}
-              value={selectedHotSpot}
-              handleAction={handleHotSpotChange}
-            />
-            <FormControlCheckBoxSpecies
-              label={SPECIES_LABEL}
-              options={allSpecies}
-              info={SPECIES_INFO}
-              values={selectedSpecies}
-              handleAction={handleSpeciesChange}
-              filterValue={selectedVirus}
-              isDisabled={!selectedHotSpot}
-            />
-            <FormControlSelect
-              label={MODEL_LABEL}
-              options={allModels}
-              info={MODEL_INFO}
-              value={selectedModel}
-              handleAction={handleModelChange}
-              isDisabled={!selectedHotSpot}
-            />
-          </>
-        )}
+          <FormControlRadioTime
+            label={TIMEFRAME_LABEL}
+            options={allTimeFrame}
+            info={TIMEFRAME_INFO}
+            handleAction={handleTimeFrameChange}
+          />
+          <FormControlSwitch
+            label={SDM_TOGGLE_LABEL}
+            value={selectedHotSpot}
+            handleAction={handleHotSpotChange}
+          />
+          <FormControlCheckBoxSpecies
+            label={SPECIES_LABEL}
+            options={allSpecies}
+            info={SPECIES_INFO}
+            values={selectedSpecies}
+            handleAction={handleSpeciesChange}
+            filterValue={selectedVirus}
+            isDisabled={!selectedHotSpot}
+          />
+          <FormControlSelect
+            label={MODEL_LABEL}
+            options={allModels}
+            info={MODEL_INFO}
+            value={selectedModel}
+            handleAction={handleModelChange}
+            isDisabled={!selectedHotSpot}
+          />
+        </Box>
       </Box>
-
+      {/* Desktop: a tab docked to the sidebar's right edge (square on the
+          left, flush with the panel), following it when collapsed.
+          Mobile: floats top-right in the panel, or top-left over the map. */}
       <IconButton
-        aria-label='Toggle Sidebar'
-        backgroundColor='white'
-        sx={{ border: '1px solid gray' }}
-        icon={<Icon as={isCollapsed ? LuChevronRight : LuChevronLeft} />}
+        aria-label={isCollapsed ? 'Show filters' : 'Hide filters'}
+        aria-expanded={!isCollapsed}
+        aria-controls='explore-filters'
+        icon={
+          <Icon
+            as={isCollapsed ? LuPanelLeftOpen : LuPanelLeftClose}
+            boxSize={4}
+          />
+        }
+        size='sm'
+        bg={{ base: 'white', md: 'secondary.50' }}
+        color='blue.800'
+        border='1px solid'
+        borderColor={{ base: 'gray.300', md: 'blackAlpha.400' }}
+        borderLeftWidth={{ base: '1px', md: 0 }}
+        borderLeftRadius={{ base: 'md', md: 0 }}
+        boxShadow='sm'
+        _hover={{ bg: { base: 'gray.50', md: 'secondary.100' } }}
         position='absolute'
         top='10px'
-        left={isCollapsed ? '-5px' : '345px'}
-        size='md'
+        left={
+          isCollapsed ? { base: '10px', md: 0 } : { base: 'auto', md: '330px' }
+        }
+        right={isCollapsed ? 'auto' : { base: '10px', md: 'auto' }}
+        transition='left 0.3s ease, background-color 0.2s'
         onClick={toggleSidebar}
         zIndex={1000}
-        display={{ base: 'block', md: 'none' }}
       />
     </Flex>
   );
