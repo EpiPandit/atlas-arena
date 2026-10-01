@@ -164,7 +164,10 @@ export const DEFAULT_LEGEND_VALUE = ['0', '0.5', '1'];
 export const LEGEND_DELTA_VALUE = ['-1', '0', '1'];
 
 // HEIGHT HEADER
-export const H_HEADER = 54;
+// Fallback only: the real height is measured by Header and exposed as the
+// --header-h CSS variable. Use HEADER_HEIGHT_CSS in styles.
+export const H_HEADER = 66;
+export const HEADER_HEIGHT_CSS = `var(--header-h, ${H_HEADER}px)`;
 
 // HEIGHT MOBILE FILTER BAR (Explore)
 export const H_FILTER_BAR = 44;

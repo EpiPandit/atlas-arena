@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { LuMenu, LuX } from 'react-icons/lu';
 import { Icon } from '@chakra-ui/react';
+import { useEffect, useRef } from 'react';
 import { Link as NextLink } from '@chakra-ui/next-js';
 import AALogo from '/public/assets/img/AALogo.svg';
 import NavLink from '@/components/custom/NavLink';
@@ -17,8 +18,26 @@ import { LINK_HEADER, PAGE_TITLE } from '@/config/constants/general';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const headerRef = useRef(null);
+
+  // Publish the real header height as --header-h for elements that sit
+  // below it but can't use the page's flex layout (e.g. portaled drawers).
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header || typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        '--header-h',
+        `${header.offsetHeight}px`
+      );
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Box
+      ref={headerRef}
       bg='secondary.50'
       py={4}
       px={[4, null, 6]}
@@ -28,7 +47,7 @@ const Header = () => {
       <Flex alignItems={'center'} justifyContent={'space-between'}>
         <Box>
           <NextLink
-            display='flex' 
+            display='flex'
             alignItems='center'
             href={'/'}
             _hover={{
@@ -40,11 +59,11 @@ const Header = () => {
               height={['50px', null, '70px']}
               objectFit='cover'
               m='-6'
-              pt="2"
+              pt='2'
             />
             <Text
               fontSize='xl'
-              ml={[0, null, "-2"]}
+              ml={[0, null, '-2']}
               color='blue.800'
               fontWeight={500}
               lineHeight='21px'
@@ -55,7 +74,12 @@ const Header = () => {
             </Text>
           </NextLink>
         </Box>
-        <HStack as={'nav'} spacing={4} py="2" display={{ base: 'none', md: 'flex' }}>
+        <HStack
+          as={'nav'}
+          spacing={4}
+          py='2'
+          display={{ base: 'none', md: 'flex' }}
+        >
           {LINK_HEADER.map((item) => (
             <NavLink key={item.text} {...item} />
           ))}
@@ -64,7 +88,7 @@ const Header = () => {
           size={'sm'}
           icon={<Icon as={isOpen ? LuX : LuMenu} />}
           aria-label={'Open Menu'}
-          colorScheme="blue"
+          colorScheme='blue'
           display={{ md: 'none' }}
           variant='ghost'
           onClick={isOpen ? onClose : onOpen}

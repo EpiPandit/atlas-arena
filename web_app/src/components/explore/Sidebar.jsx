@@ -25,7 +25,6 @@ import {
   ALL_VIRUS,
   DEFAULT_MODEL,
   DEFAULT_TIME,
-  H_HEADER,
   H_FILTER_BAR,
 } from '@/config/constants/general';
 import {
@@ -258,7 +257,9 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
 
   if (isMobile) {
     return (
-      <Box position='relative' w='100%' zIndex={1000}>
+      // Not positioned: the panel below is placed against the Explore area,
+      // so it can fill exactly the space under the bar.
+      <Box w='100%'>
         <Button
           w='100%'
           h={`${H_FILTER_BAR}px`}
@@ -286,14 +287,17 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
           </Box>
         </Button>
         {/* Panel slides down from under the bar, over the map. The clip box
-            only takes pointer events while open so the map stays usable. */}
+            spans the area below the bar but never takes pointer events, so
+            the map stays usable around (and without) the panel. */}
         <Box
           position='absolute'
-          top='100%'
+          top={`${H_FILTER_BAR}px`}
+          bottom={0}
           left={0}
           right={0}
           overflow='hidden'
-          pointerEvents={isMobileOpen ? 'auto' : 'none'}
+          pointerEvents='none'
+          zIndex={1000}
         >
           <Box
             id='explore-filters'
@@ -301,8 +305,9 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
             px={4}
             pt={2}
             pb={4}
-            maxH={`calc(100vh - ${H_HEADER + H_FILTER_BAR}px)`}
+            maxH='100%'
             overflowY='auto'
+            pointerEvents={isMobileOpen ? 'auto' : 'none'}
             borderBottom='1px solid'
             borderColor='blackAlpha.400'
             boxShadow='md'
@@ -320,11 +325,7 @@ const Sidebar = ({ handleFilterTilesId, filterTilesId }) => {
   }
 
   return (
-    <Flex
-      direction='column'
-      position='relative'
-      maxH={`calc(100vh - ${H_HEADER}px)`}
-    >
+    <Flex direction='column' position='relative' h='100%'>
       <Box
         id='explore-filters'
         w={isCollapsed ? '0px' : '330px'}

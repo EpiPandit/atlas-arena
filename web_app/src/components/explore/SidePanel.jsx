@@ -13,7 +13,7 @@ import ReactMarkdown from 'react-markdown';
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import markdownTheme from '@/config/md/markdownTheme';
 import rehypeRaw from 'rehype-raw';
-import { H_HEADER } from '@/config/constants/general';
+import { HEADER_HEIGHT_CSS } from '@/config/constants/general';
 import { LuMoveLeft, LuMoveRight } from 'react-icons/lu';
 
 const SidePanel = ({ dataVirus = {} }) => {
@@ -84,8 +84,8 @@ const SidePanel = ({ dataVirus = {} }) => {
         size='md'
       >
         <DrawerContent
-          maxH={`calc(100vh - ${H_HEADER}px)`}
-          mt={`${H_HEADER}px`}
+          maxH={`calc(100vh - ${HEADER_HEIGHT_CSS})`}
+          mt={HEADER_HEIGHT_CSS}
           bg='secondary.50'
         >
           <DrawerCloseButton

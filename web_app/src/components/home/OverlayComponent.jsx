@@ -18,9 +18,8 @@ const OverlayComponent = ({
       top={0}
       left={0}
       right={0}
+      bottom={0}
       w='100vw'
-      minH={{ base: '100vh', md: 'auto' }}
-      maxH={{ base: '100vh', md: 'auto' }}
       zIndex={2}
       display='flex'
       flexDirection='column'
@@ -40,12 +39,13 @@ const OverlayComponent = ({
           subTitle={subTitle}
           contentHtml={contentHtml}
         />
-        <Flex
-          py={2}
-          mx='auto'
-          gap={2}
-        >
-          <ButtonLink href='/resources' text='Learn more' colorScheme='blue' variant='outline' />
+        <Flex py={2} mx='auto' gap={2}>
+          <ButtonLink
+            href='/resources'
+            text='Learn more'
+            colorScheme='blue'
+            variant='outline'
+          />
           <ButtonLink
             href='/explore'
             text='Start Exploring'
