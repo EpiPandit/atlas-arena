@@ -8,7 +8,7 @@ layout: publications
 An interactive dashboard of human cases of three South American hemorrhagic fevers, each caused by a New World arenavirus carried by rodents:
 
 <iframe
-  src="https://arenavirus-atlas.streamlit.app/?embed=true&embed_options=light_theme"
+  src="[https://arenavirus-atlas.streamlit.app/?embed=true&embed_options=light_theme](https://atlas-arena-cases-dashboard.streamlit.app)"
   title="Infections by New World Arenaviruses dashboard"
   style="width: 100%; height: 820px; border: 0;"
   loading="lazy">
