@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd web_app && yarn install && yarn add sharp
+          cd web_app && yarn install --frozen-lockfile
 
       - name: Configure path alias
         run: |
