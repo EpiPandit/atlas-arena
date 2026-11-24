@@ -26,6 +26,7 @@ import {
   readPresence,
   submitJob,
 } from '@/libs/jobs';
+import { addRun, updateRun } from '@/libs/runHistory';
 import {
   JOB_FAILED_TITLE,
   JOB_NOT_AVAILABLE_TEXT,
@@ -42,7 +43,11 @@ import {
 // needs a signed-in user.
 export const useCustomJob = () => {
   const { job: jobParam, scenario: scenarioParam } = useHashParams();
-  const { status: authStatus } = useAuth();
+  const { status: authStatus, user } = useAuth();
+  // For the run history (libs/runHistory), which is kept per account.
+  const email = user?.email || null;
+  const emailRef = useRef(email);
+  emailRef.current = email;
 
   const jobId = jobParam || null;
   const requestedScenario = isScenario(scenarioParam)
@@ -105,11 +110,14 @@ export const useCustomJob = () => {
         .catch(() => {});
     }
 
+    const markRun = (status) => updateRun(emailRef.current, jobId, { status });
+
     const fail = (err) => {
       if (cancelled) return;
-      if (err instanceof JobNotAvailable)
+      if (err instanceof JobNotAvailable) {
+        markRun('UNAVAILABLE');
         dropJob(JOB_NOT_AVAILABLE_TITLE, JOB_NOT_AVAILABLE_TEXT);
-      else dropJob(JOB_FAILED_TITLE, err.message);
+      } else dropJob(JOB_FAILED_TITLE, err.message);
     };
 
     const loadResult = async () => {
@@ -133,14 +141,17 @@ export const useCustomJob = () => {
         const status = err.response?.status;
         // apiFetch has signed out, which reloads the job as anonymous.
         if (status === 401) return;
-        if (status === 404) dropJob(JOB_NOT_FOUND_TITLE);
-        else
+        if (status === 404) {
+          markRun('UNAVAILABLE');
+          dropJob(JOB_NOT_FOUND_TITLE);
+        } else
           dropJob(JOB_FAILED_TITLE, err.response?.data?.detail || err.message);
         return;
       }
       if (cancelled) return;
       if (TERMINAL_STATUSES.includes(data.status)) clearInterval(timer);
       if (data.status === 'FAILED' || data.status === 'UNKNOWN') {
+        markRun(data.status);
         dropJob(JOB_FAILED_TITLE, data.error || `Job status ${data.status}`);
       } else if (data.status === 'SUCCEEDED') {
         loadResult().catch(fail);
@@ -166,10 +177,23 @@ export const useCustomJob = () => {
     };
   }, [active, signedIn, jobId, dropJob]);
 
+  // Keeps the history's status up to date while the run is loaded (failures
+  // are recorded where they're caught, since they drop the job).
+  const jobStatus = job?.status;
+  useEffect(() => {
+    if (jobId && jobStatus)
+      updateRun(emailRef.current, jobId, { status: jobStatus });
+  }, [jobId, jobStatus]);
+
   // Run Models hooks (RunModelsPanel's onUpload / onUploadSuccess / onFileChange).
   const upload = async ({ species, pathogens, file }) => {
     const { fc, pointCount } = await readPresence(file);
     const newJobId = await submitJob({ species, pathogens, presence: fc });
+    addRun(email, {
+      id: newJobId,
+      species,
+      viruses: pathogens.map(({ virus }) => virus),
+    });
     return { pointCount, jobId: newJobId, fc };
   };
 

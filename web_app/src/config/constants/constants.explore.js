@@ -151,6 +151,23 @@ export const JOB_STATUS_TEXT = {
   RUNNING: 'Model running: this can take a few minutes',
   SUCCEEDED: 'Results ready',
 };
+export const RUN_HISTORY_TITLE = 'Previous jobs';
+export const RUN_HISTORY_COUNT = (n) => `Previous jobs (${n})`;
+export const RUN_HISTORY_NOTE = 'Jobs submitted from this browser';
+export const RUN_HISTORY_REMOVE = (species) =>
+  `Remove ${species} from previous jobs`;
+export const RUN_HISTORY_EMPTY =
+  'No previous jobs yet. Jobs you submit from this browser will appear here.';
+export const RUN_HISTORY_CLEAR = 'Clear list';
+export const RUN_HISTORY_CURRENT = 'Showing';
+export const RUN_HISTORY_STATUS = {
+  SUBMITTED: 'Queued',
+  RUNNING: 'Running',
+  SUCCEEDED: 'Ready',
+  FAILED: 'Failed',
+  UNKNOWN: 'Failed',
+  UNAVAILABLE: 'Unavailable',
+};
 export const SHOW_POINTS_LABEL = 'Show uploaded presence points';
 export const SHOW_FOI_LABEL = 'Show Force of Infection';
 export const LEGEND_FOI_TITLE = 'Force of infection';

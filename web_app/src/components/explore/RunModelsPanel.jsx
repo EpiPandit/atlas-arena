@@ -38,6 +38,7 @@ import { speciesKey, useFoiParams } from '@/libs/foiParams';
 import { downloadJobResults } from '@/libs/jobs';
 import { toaster } from '@/components/ui/toaster';
 import FormControlRadioTime from '@/components/custom/FormControlRadioTime';
+import RunHistory from '@/components/explore/RunHistory';
 import FormControlSwitch from '@/components/custom/FormControlSwitch';
 import ComboboxSingle from '@/components/custom/ComboboxSingle';
 import {
@@ -532,6 +533,7 @@ const RunModelsPanel = ({
             )}
           </Box>
         )}
+        <RunHistory currentJobId={customData.jobId} defaultOpen={false} />
         <Button
           mt='auto'
           variant='solid'
@@ -917,6 +919,7 @@ const RunModelsPanel = ({
             {RUN_SERVER_NOTICE}
           </Alert.Description>
         </Alert.Root>
+        <RunHistory currentJobId={loadedJobId} />
       </Stack>
     </Flex>
   );

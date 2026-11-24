@@ -21,6 +21,8 @@ import DeckOverlay from '@/components/explore/DeckOverlay';
 import { buildCogLayer } from '@/components/explore/cogLayer';
 import PresenceLayer from '@/components/explore/PresenceLayer';
 import { useCustomJob } from '@/components/explore/useCustomJob';
+import { setHashParams, useHashParams } from '@/libs/hashParams';
+import { showRuns } from '@/libs/runHistory';
 import { FOI_RANGE, distinctColors } from '@/libs/catalog';
 import {
   LEGEND_FOI_TITLE,
@@ -82,6 +84,17 @@ const Explore = ({ mddata }) => {
     if (authStatus !== 'signedIn' && !customJobId)
       setSidebarTab(SIDEBAR_TABS.EXPLORE);
   }, [authStatus, customJobId]);
+  // #tab=run (the account menu's "Previous jobs") opens Run Models once signed in,
+  // then leaves the URL.
+  const { tab: tabParam } = useHashParams();
+  useEffect(() => {
+    if (tabParam !== SIDEBAR_TABS.RUN || authStatus === 'loading') return;
+    if (authStatus === 'signedIn') {
+      setSidebarTab(SIDEBAR_TABS.RUN);
+      showRuns();
+    }
+    setHashParams({ tab: null });
+  }, [tabParam, authStatus]);
   const pointCount = customJob.points ? customJob.points.features.length : null;
   const showPointsHint = sidebarTab === SIDEBAR_TABS.RUN && !customData;
 
