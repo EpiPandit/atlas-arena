@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-// import { loadContent } from '@/libs/yaml';
 import { Container, Box, Heading, Text } from '@chakra-ui/react';
 import InnerHeading from '@/components/custom/InnerHeading';
 import { getMdContent } from '@/libs/markdown';
