@@ -1,11 +1,5 @@
-import {
-  FormControl,
-  Stack,
-  Radio,
-  RadioGroup,
-  Checkbox,
-} from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, Stack, RadioGroup, Checkbox } from '@chakra-ui/react';
+import { useId, useState } from 'react';
 import { DEFAULT_TIME } from '@/config/constants/general';
 import FormLabelFlex from '@/components/custom/FormLabelFlex';
 
@@ -15,30 +9,57 @@ const FormControlRadioTime = ({
   handleAction,
   info = '',
   isDisabled = false,
+  // Controlled by a model run: value is the shown time frame (possibly a delta
+  // one), and availableValues, when non-empty, the ones the run has.
+  value,
+  availableValues = [],
+  describedBy,
 }) => {
-  const [selectRadio, setSelectRadio] = useState(DEFAULT_TIME);
-  const [selectCheck, setSelectCheck] = useState(false);
+  const [localRadio, setLocalRadio] = useState(DEFAULT_TIME);
+  const [localCheck, setLocalCheck] = useState(false);
+  const headingId = useId();
 
   if (!options.length) return null;
 
-  // filter
-  const renderOptions = options
-    .filter((i) => !`${i.name}`.toLowerCase().includes('delta'))
-    .map((item) => {
-      return (
-        <Radio
-          isChecked={selectRadio === item.name}
-          key={item.key}
-          value={item.key}
-        >
-          {item.name}
-        </Radio>
-      );
-    });
+  const isDeltaName = (name) => `${name}`.toLowerCase().includes('delta');
+  const radioOptions = options.filter((i) => !isDeltaName(i.name));
   const deltaOptions = options
-    .filter((i) => `${i.name}`.toLowerCase().includes('delta'))
+    .filter((i) => isDeltaName(i.name))
     .map((item) => item.name);
+  // The delta time frame for a scenario, e.g. 'SSP 2 (...)' -> 'Delta SSP 2 - current'.
+  const deltaFor = (radioVal) => {
+    const typeSSP = `${radioVal}`.substring(0, 6).trim().toLowerCase();
+    return deltaOptions.find((item) => item.toLowerCase().includes(typeSSP));
+  };
+  const isControlled = value !== undefined;
+  const isAvailable = (val) =>
+    !isControlled || !availableValues.length || availableValues.includes(val);
 
+  const valueIsDelta = isControlled && deltaOptions.includes(value);
+  const selectRadio = !isControlled
+    ? localRadio
+    : valueIsDelta
+      ? radioOptions.find((i) => deltaFor(i.name) === value)?.name ||
+        DEFAULT_TIME
+      : value;
+  const selectCheck = isControlled ? valueIsDelta : localCheck;
+  const deltaAvailable =
+    selectRadio !== DEFAULT_TIME && isAvailable(deltaFor(selectRadio));
+
+  // filter
+  const renderOptions = radioOptions.map((item) => {
+    return (
+      <RadioGroup.Item
+        key={item.key}
+        value={item.key}
+        disabled={!isAvailable(item.name)}
+      >
+        <RadioGroup.ItemHiddenInput />
+        <RadioGroup.ItemIndicator />
+        <RadioGroup.ItemText>{item.name}</RadioGroup.ItemText>
+      </RadioGroup.Item>
+    );
+  });
   // action
   const sendAction = (radioVal = '', checkVal = false) => {
     const newVal = [];
@@ -46,12 +67,8 @@ const FormControlRadioTime = ({
     if (!radioVal || radioVal === DEFAULT_TIME) {
       newVal.push(DEFAULT_TIME);
     } else {
-      const typeSSP = radioVal.substring(0, 6).trim().toLowerCase();
-
       if (checkVal) {
-        const filteredOption = deltaOptions.find((item) =>
-          item.toLowerCase().includes(typeSSP)
-        );
+        const filteredOption = deltaFor(radioVal);
         if (filteredOption) {
           newVal.push(filteredOption);
         }
@@ -64,45 +81,64 @@ const FormControlRadioTime = ({
   };
 
   const handleChangeRadio = (val) => {
-    if (val == DEFAULT_TIME) {
-      setSelectRadio(val);
-      setSelectCheck(false);
-      sendAction(val, false);
-    } else {
-      setSelectRadio(val);
-      sendAction(val, selectCheck);
+    // Keep showing the delta only if the run has it for the new scenario.
+    const check =
+      val != DEFAULT_TIME && selectCheck && isAvailable(deltaFor(val));
+    if (!isControlled) {
+      setLocalRadio(val);
+      setLocalCheck(check);
     }
+    sendAction(val, check);
   };
   const handleChangeCheck = () => {
     let newValue = !selectCheck;
 
-    setSelectCheck(newValue);
+    if (!isControlled) setLocalCheck(newValue);
     sendAction(selectRadio, newValue);
   };
 
   return (
-    <FormControl my={4} isDisabled={isDisabled}>
-      <FormLabelFlex label={label} info={info} isDisabled={isDisabled} />
-      <RadioGroup
-        defaultValue={selectRadio}
-        onChange={handleChangeRadio}
+    // A plain group, not a Field: the Show Delta checkbox would take the
+    // Field's ids.
+    <Box
+      my={4}
+      role='group'
+      aria-labelledby={headingId}
+      aria-describedby={describedBy}
+    >
+      <FormLabelFlex
+        id={headingId}
+        label={label}
+        info={info}
         isDisabled={isDisabled}
+        isGroup
+      />
+      <RadioGroup.Root
+        aria-labelledby={headingId}
+        size='sm'
+        colorPalette='blue'
+        value={selectRadio}
+        onValueChange={(e) => handleChangeRadio(e.value)}
+        disabled={isDisabled}
       >
-        <Stack pl={0} py={1} spacing={1}>
+        <Stack pl={0} py={1} gap={1}>
           {renderOptions}
         </Stack>
-      </RadioGroup>
-      <Stack pl={0} pt={2} spacing={1}>
-        <Checkbox
-          onChange={handleChangeCheck}
-          isChecked={selectCheck}
-          isDisabled={selectRadio == DEFAULT_TIME}
-          fontSize="xs"
+      </RadioGroup.Root>
+      <Stack pl={0} pt={2} gap={1}>
+        <Checkbox.Root
+          size='sm'
+          colorPalette='blue'
+          checked={selectCheck}
+          onCheckedChange={handleChangeCheck}
+          disabled={!deltaAvailable}
         >
-          Show Delta
-        </Checkbox>
+          <Checkbox.HiddenInput />
+          <Checkbox.Control />
+          <Checkbox.Label fontWeight='normal'>Show Delta</Checkbox.Label>
+        </Checkbox.Root>
       </Stack>
-    </FormControl>
+    </Box>
   );
 };
 export default FormControlRadioTime;

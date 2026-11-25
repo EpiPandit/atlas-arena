@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 const IconoSVG = () => (
   <svg
+    aria-hidden='true'
+    focusable='false'
     width='128'
     height='128'
     viewBox='0 0 128 128'

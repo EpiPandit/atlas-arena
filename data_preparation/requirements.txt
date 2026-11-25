@@ -1,16 +1,4 @@
-click  
-fiona 
-geopandas
-idna 
-mapbox 
-mapboxcli 
-numpy 
-pandas
-pyproj 
-rasterio
-requests
-shapely
-six 
-tqdm 
-tzdata 
-zipp
+# For src/make_cogs.py. The GDAL Python bindings must match the system GDAL
+# (e.g. `pip install GDAL==$(gdal-config --version)`), or use conda-forge.
+numpy
+GDAL

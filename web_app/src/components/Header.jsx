@@ -1,88 +1,124 @@
+import NextLink from 'next/link';
 import {
   Box,
   Flex,
   HStack,
   IconButton,
   Image,
-  useDisclosure,
-  Text,
+  Link,
   Stack,
+  Text,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { RiCloseFill } from 'react-icons/ri';
-import { Icon } from '@chakra-ui/react';
-import { Link as NextLink } from '@chakra-ui/next-js';
+import { LuMenu, LuX } from 'react-icons/lu';
+import { useEffect, useRef } from 'react';
 import AALogo from '/public/assets/img/AALogo.svg';
 import NavLink from '@/components/custom/NavLink';
-import { LINK_HEADER, PAGE_TITLE } from '@/config/constants/general';
+import AuthButton from '@/components/AuthButton';
+import {
+  LINK_HEADER,
+  MENU_CLOSE,
+  MENU_OPEN,
+  PAGE_TITLE,
+} from '@/config/constants/general';
 
 const Header = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open, onToggle } = useDisclosure();
+  const headerRef = useRef(null);
+
+  // Publish the real header height as --header-h for elements that sit
+  // below it but can't use the page's flex layout (e.g. portaled drawers).
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header || typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        '--header-h',
+        `${header.offsetHeight}px`
+      );
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Box
-      bg='secondary.50'
-      py={4}
-      px={6}
-      borderBottom={'1px'}
-      borderBottomColor='gray.200'
+      as='header'
+      bg='white'
+      ref={headerRef}
+      py={2}
+      px={[4, null, 6]}
+      borderBottom='1px solid'
+      borderBottomColor='gray.100'
+      boxShadow='sm'
     >
       <Flex alignItems={'center'} justifyContent={'space-between'}>
-        <IconButton
-          size={'md'}
-          icon={<Icon as={isOpen ? RiCloseFill : RxHamburgerMenu} />}
-          aria-label={'Open Menu'}
-          color="blue.800"
-          display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
-        />
         <Box>
-          <NextLink
-            display='flex' 
+          <Link
+            display='flex'
             alignItems='center'
-            href={'/'}
             _hover={{
               textDecoration: 'none',
             }}
+            asChild
           >
-            <Image
-              src={AALogo.src}
-              height='70px'
-              objectFit='cover'
-              m='-6'
-              pt="2"
-            />
-            <Text
-              fontSize='xl'
-              ml="-2"
-              color='blue.800'
-              fontWeight={500}
-              lineHeight='21px'
-              letterSpacing={-0.5}
-              textTransform='uppercase'
-            >
-              {PAGE_TITLE}
-            </Text>
-          </NextLink>
+            <NextLink href={'/'}>
+              <Image
+                src={AALogo.src}
+                alt=''
+                height='48px'
+                objectFit='cover'
+                m='-4'
+                pt='2'
+              />
+              <Text
+                fontSize='md'
+                ml='-1'
+                color='blue.800'
+                fontWeight={600}
+                lineHeight='21px'
+                letterSpacing={0.5}
+                textTransform='uppercase'
+              >
+                {PAGE_TITLE}
+              </Text>
+            </NextLink>
+          </Link>
         </Box>
-        <HStack as={'nav'} spacing={4} py="2" display={{ base: 'none', md: 'flex' }}>
+        <HStack as='nav' gap={4} py='2' display={{ base: 'none', md: 'flex' }}>
           {LINK_HEADER.map((item) => (
             <NavLink key={item.text} {...item} />
           ))}
+          <AuthButton />
         </HStack>
+        <IconButton
+          size='sm'
+          aria-label={open ? MENU_CLOSE : MENU_OPEN}
+          aria-expanded={open}
+          aria-controls='mobile-nav'
+          colorPalette='blue'
+          display={{ md: 'none' }}
+          variant='ghost'
+          onClick={onToggle}
+        >
+          {open ? <LuX /> : <LuMenu />}
+        </IconButton>
       </Flex>
-      {isOpen ? (
+      {open ? (
         <Box
-          p={2}
           display={{ md: 'none' }}
           zIndex={100}
           position='relative'
-          bg='secondary.50'
-          sx={{ borderBottomRadius: '10px' }}
+          mt={6}
+          bg='white'
         >
-          <Stack as={'nav'} spacing={4}>
+          <Stack as='nav' id='mobile-nav' gap={4}>
             {LINK_HEADER.map((item) => (
               <NavLink key={item.text} {...item} />
             ))}
+            <Box>
+              <AuthButton />
+            </Box>
           </Stack>
         </Box>
       ) : null}

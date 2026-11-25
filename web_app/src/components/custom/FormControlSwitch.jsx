@@ -1,5 +1,4 @@
-import { Flex, FormControl, Switch, Text } from '@chakra-ui/react';
-import FormLabelFlex from '@/components/custom/FormLabelFlex';
+import { Switch, Field } from '@chakra-ui/react';
 
 const FormControlSwitch = ({
   label,
@@ -8,15 +7,26 @@ const FormControlSwitch = ({
   isDisabled = false,
 }) => {
   return (
-    <FormControl py={2} isDisabled={isDisabled}>
-      <FormLabelFlex />
-      <Flex justifyContent='start' alignItems='center'>
-        <Switch size='md' mr={2} onChange={handleAction} isChecked={value} />
-        <Text as='label' fontSize='xs' color='gray.700'>
+    <Field.Root py={2} disabled={isDisabled}>
+      {/* Switch.Root is a <label> wrapping the input, so the label text
+          becomes the switch's accessible name. */}
+      <Switch.Root
+        size='sm'
+        colorPalette='blue'
+        checked={value}
+        onCheckedChange={handleAction}
+        display='flex'
+        alignItems='center'
+      >
+        <Switch.HiddenInput />
+        <Switch.Control>
+          <Switch.Thumb />
+        </Switch.Control>
+        <Switch.Label fontSize='xs' fontWeight='normal' color='gray.700'>
           {label}
-        </Text>
-      </Flex>
-    </FormControl>
+        </Switch.Label>
+      </Switch.Root>
+    </Field.Root>
   );
 };
 export default FormControlSwitch;

@@ -1,18 +1,10 @@
-import {
-  Text,
-  Heading,
-  Link,
-  UnorderedList,
-  OrderedList,
-  ListItem,
-} from '@chakra-ui/react';
+import { Text, Heading, Link, List } from '@chakra-ui/react';
 
 const MarkdownThemeHome = {
   p: (props) => {
     const { children } = props;
     return (
       <Text
-        variant='secondary-text'
         lineHeight='tall'
         fontSize='lg'
         color='gray.700'
@@ -26,13 +18,7 @@ const MarkdownThemeHome = {
   h1: (props) => {
     const { children } = props;
     return (
-      <Heading
-        as='h1'
-        variant='secondary-heading'
-        fontSize='2xl'
-        lineHeight='taller'
-        py={4}
-      >
+      <Heading as='h1' fontSize='2xl' lineHeight='taller' py={4}>
         {children}
       </Heading>
     );
@@ -40,13 +26,7 @@ const MarkdownThemeHome = {
   h2: (props) => {
     const { children } = props;
     return (
-      <Heading
-        as='h2'
-        variant='secondary-heading'
-        fontSize='xl'
-        lineHeight='taller'
-        py={3}
-      >
+      <Heading as='h2' fontSize='xl' lineHeight='taller' py={3}>
         {children}
       </Heading>
     );
@@ -112,6 +92,7 @@ const MarkdownThemeHome = {
     return (
       <Link
         href={href}
+        display='inline'
         textDecoration='none'
         lineHeight='tall'
         rel='noopener noreferrer'
@@ -139,20 +120,26 @@ const MarkdownThemeHome = {
   },
   ul: (props) => {
     const { children } = props;
-    return <UnorderedList pl={4}>{children}</UnorderedList>;
+    return (
+      <List.Root as='ul' pl={4}>
+        {children}
+      </List.Root>
+    );
   },
   ol: (props) => {
     const { children } = props;
-    return <OrderedList pl={4}>{children}</OrderedList>;
+    return (
+      <List.Root as='ol' pl={4}>
+        {children}
+      </List.Root>
+    );
   },
   li: (props) => {
     const { children } = props;
     return (
-      <ListItem>
-        <Text variant='secondary-text' lineHeight='tall'>
-          {children}
-        </Text>
-      </ListItem>
+      <List.Item>
+        <Text lineHeight='tall'>{children}</Text>
+      </List.Item>
     );
   },
 };

@@ -17,11 +17,12 @@ const UserCard = ({
         fontSize='xs'
         key={key}
         href={item.is_mail ? `mailto:${item.link}` : item.link}
-        isExternal={true}
         textDecoration='underline'
         _hover={{
           color: 'blue.800',
         }}
+        target='_blank'
+        rel='noopener noreferrer'
       >
         {item.text}
       </Link>
@@ -38,6 +39,7 @@ const UserCard = ({
     >
       <Image
         src={image}
+        alt={`${title}'s profile image`}
         boxSize='100px'
         mb={3}
         color='blue.900'

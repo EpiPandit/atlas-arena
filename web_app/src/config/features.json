@@ -1,0 +1,184 @@
+{
+  "groups": {
+    "temperature": { "label": "Temperature", "color": "orange.500" },
+    "precipitation": { "label": "Precipitation", "color": "blue.500" },
+    "land_use": { "label": "Land use", "color": "green.600" },
+    "terrain": { "label": "Terrain", "color": "gray.500" }
+  },
+  "features": {
+    "bio_1": {
+      "label": "Annual mean temp.",
+      "name": "Annual Mean Temperature",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO1",
+      "group": "temperature"
+    },
+    "bio_2": {
+      "label": "Mean diurnal range",
+      "name": "Mean Diurnal Range (mean of monthly (max temp - min temp))",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO2",
+      "group": "temperature"
+    },
+    "bio_3": {
+      "label": "Isothermality",
+      "name": "Isothermality (BIO2/BIO7 x 100)",
+      "units": "%",
+      "source": "WorldClim 2.1 BIO3",
+      "group": "temperature"
+    },
+    "bio_4": {
+      "label": "Temp. seasonality",
+      "name": "Temperature Seasonality (standard deviation x 100)",
+      "units": "°C x 100",
+      "source": "WorldClim 2.1 BIO4",
+      "group": "temperature"
+    },
+    "bio_5": {
+      "label": "Max temp. warmest month",
+      "name": "Max Temperature of Warmest Month",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO5",
+      "group": "temperature"
+    },
+    "bio_6": {
+      "label": "Min temp. coldest month",
+      "name": "Min Temperature of Coldest Month",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO6",
+      "group": "temperature"
+    },
+    "bio_7": {
+      "label": "Temp. annual range",
+      "name": "Temperature Annual Range (BIO5 - BIO6)",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO7",
+      "group": "temperature"
+    },
+    "bio_8": {
+      "label": "Temp. wettest quarter",
+      "name": "Mean Temperature of Wettest Quarter",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO8",
+      "group": "temperature"
+    },
+    "bio_9": {
+      "label": "Temp. driest quarter",
+      "name": "Mean Temperature of Driest Quarter",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO9",
+      "group": "temperature"
+    },
+    "bio_10": {
+      "label": "Temp. warmest quarter",
+      "name": "Mean Temperature of Warmest Quarter",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO10",
+      "group": "temperature"
+    },
+    "bio_11": {
+      "label": "Temp. coldest quarter",
+      "name": "Mean Temperature of Coldest Quarter",
+      "units": "°C",
+      "source": "WorldClim 2.1 BIO11",
+      "group": "temperature"
+    },
+    "bio_12": {
+      "label": "Annual precip.",
+      "name": "Annual Precipitation",
+      "units": "mm",
+      "source": "WorldClim 2.1 BIO12",
+      "group": "precipitation"
+    },
+    "bio_13": {
+      "label": "Precip. wettest month",
+      "name": "Precipitation of Wettest Month",
+      "units": "mm",
+      "source": "WorldClim 2.1 BIO13",
+      "group": "precipitation"
+    },
+    "bio_14": {
+      "label": "Precip. driest month",
+      "name": "Precipitation of Driest Month",
+      "units": "mm",
+      "source": "WorldClim 2.1 BIO14",
+      "group": "precipitation"
+    },
+    "bio_15": {
+      "label": "Precip. seasonality",
+      "name": "Precipitation Seasonality (coefficient of variation)",
+      "units": "%",
+      "source": "WorldClim 2.1 BIO15",
+      "group": "precipitation"
+    },
+    "bio_16": {
+      "label": "Precip. wettest quarter",
+      "name": "Precipitation of Wettest Quarter",
+      "units": "mm",
+      "source": "WorldClim 2.1 BIO16",
+      "group": "precipitation"
+    },
+    "bio_17": {
+      "label": "Precip. driest quarter",
+      "name": "Precipitation of Driest Quarter",
+      "units": "mm",
+      "source": "WorldClim 2.1 BIO17",
+      "group": "precipitation"
+    },
+    "bio_18": {
+      "label": "Precip. warmest quarter",
+      "name": "Precipitation of Warmest Quarter",
+      "units": "mm",
+      "source": "WorldClim 2.1 BIO18",
+      "group": "precipitation"
+    },
+    "bio_19": {
+      "label": "Precip. coldest quarter",
+      "name": "Precipitation of Coldest Quarter",
+      "units": "mm",
+      "source": "WorldClim 2.1 BIO19",
+      "group": "precipitation"
+    },
+    "elev": {
+      "label": "Elevation",
+      "name": "Elevation",
+      "units": "m",
+      "group": "terrain"
+    },
+    "lu_urbn": {
+      "label": "Urban land",
+      "name": "Urban Land",
+      "units": "fraction of grid cell",
+      "source": "LUH2",
+      "group": "land_use"
+    },
+    "lu_crop": {
+      "label": "Cropland",
+      "name": "Cropland",
+      "units": "fraction of grid cell",
+      "source": "LUH2",
+      "group": "land_use"
+    },
+    "lu_othr": {
+      "label": "Other land",
+      "name": "Other Land",
+      "units": "fraction of grid cell",
+      "source": "LUH2",
+      "group": "land_use"
+    },
+    "lu_past": {
+      "label": "Pasture land",
+      "name": "Pasture Land",
+      "units": "fraction of grid cell",
+      "source": "LUH2",
+      "group": "land_use"
+    },
+    "lu_secd": {
+      "label": "Secondary/forested land",
+      "name": "Secondary Land / Forested Land",
+      "units": "fraction of grid cell",
+      "source": "LUH2",
+      "group": "land_use"
+    }
+  }
+}

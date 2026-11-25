@@ -1,46 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
   Button,
+  CloseButton,
+  Drawer,
+  Portal,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import ReactMarkdown from 'react-markdown';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import markdownTheme from '@/config/md/markdownTheme';
+import { markdownComponents } from '@/config/md/markdownComponents';
 import rehypeRaw from 'rehype-raw';
-import { H_HEADER } from '@/config/constants/general';
-import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
+import { HEADER_HEIGHT_CSS } from '@/config/constants/general';
+import { LuMoveLeft, LuMoveRight } from 'react-icons/lu';
+
+const components = markdownComponents(markdownTheme);
 
 const SidePanel = ({ dataVirus = {} }) => {
   const { contentHtml } = dataVirus || {};
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const togglePanel = () => {
-    if (isExpanded) {
-      onClose();
-    } else {
-      onOpen();
-    }
-    setIsExpanded(!isExpanded);
-  };
+  const { open, onToggle, setOpen } = useDisclosure();
 
   const renderContent = contentHtml && (
     <Box py={2} px={2}>
       <ReactMarkdown
-        components={ChakraUIRenderer(markdownTheme)}
+        components={components}
         rehypePlugins={[rehypeRaw]}
         children={contentHtml}
         skipHtml={false}
       />
     </Box>
   );
-  const hasData = contentHtml && contentHtml != '';
+  const hasData = Boolean(contentHtml);
+
+  useEffect(() => {
+    if (!hasData) setOpen(false);
+  }, [hasData]);
   return (
     <Box
       position='absolute'
@@ -53,51 +48,53 @@ const SidePanel = ({ dataVirus = {} }) => {
       gap={0}
     >
       <Button
-        onClick={togglePanel}
+        onClick={onToggle}
         minH='fit-content'
-        colorScheme='blue'
+        colorPalette='blue'
         fontSize='xs'
         fontWeight={700}
-        right={isExpanded ? 'auto' : '0'}
+        right={open ? 'auto' : '0'}
         display='flex'
         alignItems='center'
         justifyContent='center'
         rounded='sm'
-        isDisabled={!hasData}
+        disabled={!hasData}
         px={4}
         gap={2}
         textTransform='uppercase'
-        sx={{
+        css={{
           writingMode: 'vertical-rl',
           transform: 'rotate(180deg)',
         }}
         zIndex={11}
       >
-        {isExpanded ? <FaArrowLeftLong /> : <FaArrowRightLong />} About the virus
+        {open ? <LuMoveLeft /> : <LuMoveRight />} About the virus
       </Button>
-
-      <Drawer
-        variant='alwaysOpen'
-        isOpen={isOpen}
-        placement='right'
-        onClose={togglePanel}
+      {/* Non-modal: the map stays usable while the panel is open. */}
+      <Drawer.Root
+        open={open}
+        onOpenChange={(e) => setOpen(e.open)}
+        placement='end'
         size='md'
+        modal={false}
+        closeOnInteractOutside={false}
       >
-        <DrawerContent
-          maxH={`calc(100vh - ${H_HEADER}px)`}
-          mt={`${H_HEADER}px`}
-          bg='secondary.50'
-        >
-          <DrawerCloseButton
-            top='4'
-            right='4'
-            size='md'
-            fontWeight={700}
-            color='blue.500'
-          />
-          <DrawerBody px={2}>{renderContent}</DrawerBody>
-        </DrawerContent>
-      </Drawer>
+        <Portal>
+          <Drawer.Positioner pointerEvents='none'>
+            <Drawer.Content
+              pointerEvents='auto'
+              maxH={`calc(100vh - ${HEADER_HEIGHT_CSS})`}
+              mt={HEADER_HEIGHT_CSS}
+              bg='secondary.50'
+            >
+              <Drawer.CloseTrigger asChild top='4' right='4'>
+                <CloseButton size='sm' color='blue.500' />
+              </Drawer.CloseTrigger>
+              <Drawer.Body px={2}>{renderContent}</Drawer.Body>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
     </Box>
   );
 };

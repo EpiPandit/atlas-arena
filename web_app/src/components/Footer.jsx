@@ -1,10 +1,15 @@
-import { Box, Flex, Text, Image, Link } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, Link } from '@chakra-ui/react';
 
 import { PRESENTED_BY, LOGOS } from '@/config/constants/constants.home';
 
 const Footer = () => {
   const renderLogos = (LOGOS || []).map((item) => (
-    <Link key={item.id} href={item.href} isExternal>
+    <Link
+      key={item.id}
+      href={item.href}
+      target='_blank'
+      rel='noopener noreferrer'
+    >
       <Image
         src={item.image}
         alt={item.alt}
@@ -16,6 +21,7 @@ const Footer = () => {
   ));
   return (
     <Box
+      as='footer'
       py={3}
       mt={4}
       mb={8}
@@ -24,15 +30,17 @@ const Footer = () => {
       w='100%'
       position='relative'
     >
-      <Text
+      <Heading
+        as='h2'
         fontSize='lg'
         fontWeight={600}
+        lineHeight='shorter'
         color='blue.900'
         mb={4}
         textTransform='uppercase'
       >
         {PRESENTED_BY}
-      </Text>
+      </Heading>
 
       <Flex
         justifyContent='center'

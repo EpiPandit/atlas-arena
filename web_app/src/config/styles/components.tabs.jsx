@@ -1,24 +1,28 @@
-import { tabsAnatomy } from '@chakra-ui/anatomy';
-import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
+import { defineSlotRecipe } from '@chakra-ui/react';
+import { tabsAnatomy } from '@chakra-ui/react/anatomy';
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(tabsAnatomy.keys);
-
-const baseStyle = definePartsStyle({
-  tab: {
-    fontWeight: '500',
-    fontSize: '14px',
-    lineHeight: '20px',
-    borderBottom: '2px solid',
-    color: 'gray.800',
-    _selected: {
-      color: 'blue.600',
+export default defineSlotRecipe({
+  slots: tabsAnatomy.keys(),
+  base: {
+    content: {
+      paddingLeft: '0px',
+      paddingRight: '0px',
     },
   },
-  tabpanel: {
-    paddingLeft: '0px',
-    paddingRight: '0px',
+  variants: {
+    variant: {
+      line: {
+        trigger: {
+          fontWeight: '500',
+          fontSize: '14px',
+          lineHeight: '20px',
+          borderBottom: '2px solid',
+          color: 'gray.800',
+          _selected: {
+            color: 'blue.600',
+          },
+        },
+      },
+    },
   },
 });
-
-export default defineMultiStyleConfig({ baseStyle });
