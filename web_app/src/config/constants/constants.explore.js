@@ -181,5 +181,3 @@ export const JOB_NOT_FOUND_TITLE = 'Model run not found';
 // MAP
 export const MAP_REGION_LABEL = 'Arenavirus risk map';
 // MODAL
-
-export const FIRST_LINE_MODAL = 'About the virus';

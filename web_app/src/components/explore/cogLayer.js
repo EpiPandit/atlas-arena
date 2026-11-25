@@ -112,7 +112,7 @@ const onTileUnload = (tile) => tile.content?.texture?.destroy();
  */
 export const buildCogLayer = ({ item, opacity, onGeoTIFFLoad }) => {
   const [rangeMin, rangeMax] = item.range;
-  // Like the Mapbox version, zero probability is transparent; ranges that go
+  // Zero probability is transparent; ranges that go
   // negative (differences) only hide nodata, which is NaN or out of range
   // (model runs write -9999).
   const minValue = rangeMin < 0 ? rangeMin - 0.000001 : 0.000001;

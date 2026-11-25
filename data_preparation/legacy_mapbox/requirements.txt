@@ -1,0 +1,16 @@
+click  
+fiona 
+geopandas
+idna 
+mapbox 
+mapboxcli 
+numpy 
+pandas
+pyproj 
+rasterio
+requests
+shapely
+six 
+tqdm 
+tzdata 
+zipp

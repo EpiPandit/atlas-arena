@@ -9,14 +9,16 @@ DISTRIBUTION_ID="${STAGING_DISTRIBUTION_ID:?set STAGING_DISTRIBUTION_ID}"
 
 cd "$(dirname "$0")"
 
-# yarn.lock is Yarn Berry lockfile format 8; Yarn 4.14+ rewrites it to 10.
-YARN="npx --yes @yarnpkg/cli-dist@4.13.0"
+# Use the Yarn version pinned in package.json's packageManager field, so the
+# lockfile format and .yarnrc.yml settings always match.
+YARN_VERSION="$(node -p "require('./package.json').packageManager.split('@')[1]")"
+YARN="npx --yes @yarnpkg/cli-dist@$YARN_VERSION"
 $YARN install --immutable
 $YARN build
 
 # Hashed build assets never change, so cache them for a year; everything else
 # (HTML, markdown, data) is revalidated on every request. cogs/ holds the
-# rasters uploaded by data_preparation/make_cogs.py and must survive --delete.
+# rasters uploaded by data_preparation/src/make_cogs.py and must survive --delete.
 aws s3 sync --only-show-errors out/_next/static "s3://$BUCKET/_next/static" \
   --cache-control "public, max-age=31536000, immutable"
 aws s3 sync --only-show-errors out/ "s3://$BUCKET/" --delete \

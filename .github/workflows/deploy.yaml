@@ -1,64 +1,75 @@
 name: Build and Publish Arena Site
 
+# Production deploy. Staging is deployed by hand with web_app/deploy-staging.sh,
+# which this mirrors.
+
 on:
   push:
     branches:
       - "main"
       - "deploy"
 
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
-  rapid:
+  deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web_app
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.8.0
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Corepack provides the Yarn version from package.json's packageManager
+      # field; it has to be enabled before setup-node can cache with yarn.
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          access_token: ${{ github.token }}
-
-      - name: Set environment variables
-        uses: allenevans/set-env@v2.0.0
-        with:
-          ARENA_S3_BUCKET: ${{ secrets.ARENA_S3_BUCKET }}
-          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-
-      - name: Checkout current repository
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 18
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18
-
-      - name: Install Yarn
-        run: |
-          npm install -g yarn
+          node-version-file: web_app/.nvmrc
+          cache: yarn
+          cache-dependency-path: web_app/yarn.lock
 
       - name: Install dependencies
-        run: |
-          cd web_app && yarn install && yarn add sharp
+        run: yarn install --immutable
 
-      - name: Configure path alias
-        run: |
-          echo '{ "compilerOptions": { "baseUrl": ".", "paths": { "@/*": ["src/*"] } } }' > web_app/jsconfig.json
+      - name: Build
+        run: yarn build
 
-      - name: Build rapid frontend
-        run: |
-          cd web_app && yarn build
-
-      - uses: actions/setup-python@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          python-version: "3.8"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-      - name: Install aws cli
-        run: |
-          python -m pip install --upgrade pip
-          pip install awscli
-
-      - name: Push data to S3 and clean CloudFront cache
-        if: ${{ success() }}
-        run: |
-          aws s3 sync web_app/out/ s3://${{ env.ARENA_S3_BUCKET }}/ --acl public-read --delete
-          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths=/
+      # Hashed build assets never change, so cache them for a year; everything
+      # else (HTML, markdown, data) is revalidated on every request. cogs/ is
+      # excluded from --delete in case rasters are ever hosted in this bucket.
+      - name: Upload to S3
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          BUCKET: ${{ secrets.ARENA_S3_BUCKET }}
+        run: |
+          aws s3 sync --only-show-errors out/_next/static "s3://$BUCKET/_next/static" \
+            --acl public-read \
+            --cache-control "public, max-age=31536000, immutable"
+          aws s3 sync --only-show-errors out/ "s3://$BUCKET/" --delete \
+            --acl public-read \
+            --exclude "_next/static/*" \
+            --exclude "cogs/*" \
+            --cache-control "no-cache"
+
+      - name: Invalidate CloudFront
+        env:
+          DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*" --query "Invalidation.Id" --output text
