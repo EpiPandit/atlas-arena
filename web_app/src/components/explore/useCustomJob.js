@@ -130,8 +130,19 @@ export const useCustomJob = () => {
       }
     };
 
-    // Signed in: follows a job that isn't finished until it is.
+    // Signed in: follows a job that isn't finished until it is. A tick is
+    // skipped while the previous poll is still waiting on a slow API.
+    let polling = false;
     const poll = async () => {
+      if (polling) return;
+      polling = true;
+      try {
+        await pollOnce();
+      } finally {
+        polling = false;
+      }
+    };
+    const pollOnce = async () => {
       let data;
       try {
         data = await getJob(jobId);
@@ -275,12 +286,14 @@ export const useCustomJob = () => {
     speciesColor,
     isDelta: isDeltaScenario(scenario),
     setScenario,
-    // [{ virus (catalog name), color, foiUrl }] once it succeeded; empty when
-    // the species has no FOI parameters.
-    foiLayers: foiOutputs.map(({ name, foi }, i) => ({
+    // [{ virus (catalog name), color, foiUrl, range }] once it succeeded;
+    // empty when the species has no FOI parameters. range is the virus's
+    // catalog foi_range, undefined for a virus outside the catalog.
+    foiLayers: foiOutputs.map(({ name, foi, foi_range: range }, i) => ({
       virus: name,
       color: colors[i],
       foiUrl: foi,
+      range,
     })),
     showFoi,
     setShowFoi,

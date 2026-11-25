@@ -43,7 +43,7 @@ export const getMetadataMd = (customPath, mdContent = false) => {
 
 export const getMdContent = async (filename = '', mdContent = false) => {
   const markdownDirectory = path.join(process.cwd(), ...['public', 'markdown']);
-  if (!filename && !i.endsWith('.md')) {
+  if (!filename || !filename.endsWith('.md')) {
     return {
       filename,
     };

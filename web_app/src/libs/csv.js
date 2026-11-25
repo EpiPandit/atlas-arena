@@ -8,6 +8,8 @@ export const parseRows = (text) => {
     .trim()
     .split(/\r?\n/)
     .filter((line) => line.trim());
+  // An empty file has no rows.
+  if (!header) return [];
   const columns = header.split(',').map((c) => c.replace(/"/g, '').trim());
   return lines.map((line) => {
     const values = line.split(',').map((v) => v.replace(/"/g, '').trim());

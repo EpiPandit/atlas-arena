@@ -26,7 +26,6 @@ import { showRuns } from '@/libs/runHistory';
 import { FOI_RANGE, distinctColors } from '@/libs/catalog';
 import {
   LEGEND_FOI_TITLE,
-  LEGEND_FOI_TICKS,
   MAP_POINTS_EMPTY,
   MAP_POINTS_LOADED,
 } from '@/config/constants/constants.explore';
@@ -251,17 +250,22 @@ const Explore = ({ mddata }) => {
       .filter((i) => i.foiUrl)
       .map((i) =>
         buildCogLayer({
-          item: { url: i.foiUrl, range: FOI_RANGE, color: i.color },
+          item: { url: i.foiUrl, range: i.range || FOI_RANGE, color: i.color },
           opacity:
             (opacityFilter[foiOpacityKey(i.virus)] ?? foiDefaultOpacity) / 100,
         })
       ),
   ];
-  const labelsFoi = shownFoi.map((i) => ({
-    title: foiOpacityKey(i.virus),
-    name: i.virus,
-    color: i.color,
-  }));
+  // Same per-virus ranges as the catalog's FOI layers.
+  const labelsFoi = shownFoi.map((i) => {
+    const [min, max] = i.range || FOI_RANGE;
+    return {
+      title: foiOpacityKey(i.virus),
+      name: i.virus,
+      color: i.color,
+      ticks: [min, (min + max) / 2, max].map(formatTick),
+    };
+  });
 
   const labelSDM = sortList(
     getUniqueCombinations(
@@ -379,7 +383,6 @@ const Explore = ({ mddata }) => {
             labels={labelsFoi}
             value={opacityFilter}
             heading={LEGEND_FOI_TITLE}
-            ticks={LEGEND_FOI_TICKS}
             handleChange={handleChangeLayerStyle}
           />
           <SDMLegend

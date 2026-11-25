@@ -116,7 +116,9 @@ export async function apiFetch(
       headers,
     });
   } catch (err) {
-    if (err.response?.status === 401 && token) {
+    // Also when getToken just dropped an expired token: the UI still thinks
+    // it is signed in until told otherwise.
+    if (err.response?.status === 401 && auth) {
       setToken(null);
       onUnauthorized();
     }

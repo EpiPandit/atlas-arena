@@ -171,7 +171,6 @@ export const RUN_HISTORY_STATUS = {
 export const SHOW_POINTS_LABEL = 'Show uploaded presence points';
 export const SHOW_FOI_LABEL = 'Show Force of Infection';
 export const LEGEND_FOI_TITLE = 'Force of infection';
-export const LEGEND_FOI_TICKS = ['0', '0.025', '0.05'];
 export const JOB_NOT_AVAILABLE_TITLE = 'Results not available yet';
 export const JOB_NOT_AVAILABLE_TEXT =
   'This model run hasn’t finished, or the link is wrong. Check back later.';
