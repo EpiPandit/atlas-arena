@@ -41,7 +41,17 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      # Production talks to the prod backend (AtlasArenaProdStack in
+      # atlasarena-model-infra). Set these three repository variables
+      # (Settings > Secrets and variables > Actions > Variables) from that
+      # stack's ApiUrl, JobsPublicUrl and DataPublicUrl outputs before the
+      # first deploy: an unset variable builds as an empty URL, not as the
+      # dev default.
       - name: Build
+        env:
+          NEXT_PUBLIC_ATLASARENA_API_URL: ${{ vars.ATLASARENA_API_URL }}
+          NEXT_PUBLIC_ATLASARENA_JOBS_URL: ${{ vars.ATLASARENA_JOBS_URL }}
+          NEXT_PUBLIC_ATLASARENA_DATA_URL: ${{ vars.ATLASARENA_DATA_URL }}
         run: yarn build
 
       - name: Configure AWS credentials

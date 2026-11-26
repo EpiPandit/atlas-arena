@@ -1,6 +1,7 @@
 import catalog from '@/config/catalog.json';
 import {
   ALL_VIRUS,
+  COGS_URL,
   DEFAULT_MODEL,
   DEFAULT_TIME,
   FALLBACK_COLOR_ORDER,
@@ -15,8 +16,7 @@ const layerRange = (layer) =>
   catalog.variables[layer.variable].range;
 
 export const getCatalogRows = () => {
-  const { cog_base_url, viruses, species, time_frames, models, variables } =
-    catalog;
+  const { viruses, species, time_frames, models } = catalog;
 
   return catalog.layers
     .filter((layer) => layer.enabled !== false)
@@ -27,7 +27,7 @@ export const getCatalogRows = () => {
       model: models[layer.model].name,
       variable: layer.variable,
       range: layerRange(layer),
-      url: `${cog_base_url}${layer.path}`,
+      url: `${COGS_URL}${layer.path}`,
       color: species[layer.species].color,
       color_virus: viruses[layer.virus].color,
     }));
