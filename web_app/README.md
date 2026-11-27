@@ -39,8 +39,9 @@ They are inlined at build time, so a change needs a rebuild.
 The backend has two environments, **dev** and **prod**, and each has its own
 API and jobs bucket. The first two variables must always come from the same
 one. The data bucket is shared by both. The defaults point at dev, which is
-what local development and staging use; the production workflow sets the prod
-values (see [Deploying](#deploying)).
+what local development uses; the deploy workflow sets the values for staging
+(dev) and production (prod) from repository variables (see
+[Deploying](#deploying)).
 
 ## How it fits together
 
@@ -142,18 +143,38 @@ Images go in `public/markdown/images` and are referenced relatively, as
 
 ## Deploying
 
-- **Staging**: run `deploy-staging.sh` by hand with AWS credentials,
-  `STAGING_BUCKET` and `STAGING_DISTRIBUTION_ID`. It builds, syncs `out/` to
-  the bucket (leaving `cogs/` alone) and invalidates CloudFront.
-- **Production**: `.github/workflows/deploy.yaml` does the same on every push
-  to `main` or `deploy`, using the `ARENA_S3_BUCKET`,
-  `CLOUDFRONT_DISTRIBUTION_ID`, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
-  repository secrets. It builds against the prod backend, from the
-  `ATLASARENA_API_URL`, `ATLASARENA_JOBS_URL` and `ATLASARENA_DATA_URL`
-  repository variables (the prod stack's `ApiUrl`, `JobsPublicUrl` and
-  `DataPublicUrl` outputs). These must be set before the first deploy.
+`.github/workflows/deploy.yaml` builds the site, syncs `out/` to the site's S3
+bucket and invalidates CloudFront:
 
-Staging builds with the defaults, so it talks to the dev backend.
+| Push to   | Deploys    | Built against                        |
+| --------- | ---------- | ------------------------------------ |
+| `staging` | staging    | dev backend (`AtlasArenaDevStack`)   |
+| `main`    | production | prod backend (`AtlasArenaProdStack`) |
+
+It reads these repository settings (Settings > Secrets and variables >
+Actions). The run fails before building if one it needs is missing.
+
+| Name                                 | Kind     | Used for                         |
+| ------------------------------------ | -------- | -------------------------------- |
+| `AWS_ACCESS_KEY_ID`                  | secret   | both sites                       |
+| `AWS_SECRET_ACCESS_KEY`              | secret   | both sites                       |
+| `ARENA_S3_BUCKET`                    | secret   | production site bucket           |
+| `CLOUDFRONT_DISTRIBUTION_ID`         | secret   | production distribution          |
+| `ATLASARENA_API_URL`                 | variable | production: prod `ApiUrl`        |
+| `ATLASARENA_JOBS_URL`                | variable | production: prod `JobsPublicUrl` |
+| `ATLASARENA_DATA_URL`                | variable | production: `DataPublicUrl`      |
+| `STAGING_ATLASARENA_API_URL`         | variable | staging: dev `ApiUrl`            |
+| `STAGING_ATLASARENA_JOBS_URL`        | variable | staging: dev `JobsPublicUrl`     |
+| `STAGING_ATLASARENA_DATA_URL`        | variable | staging: `DataPublicUrl`         |
+| `STAGING_ARENA_S3_BUCKET`            | variable | staging site bucket              |
+| `STAGING_CLOUDFRONT_DISTRIBUTION_ID` | variable | staging distribution             |
+
+The URLs are CloudFormation outputs of the `atlasarena-model-infra` stacks and
+must end in `/`.
+
+`deploy-staging.sh` does the staging deploy by hand, if it is ever needed. It
+takes AWS credentials, `STAGING_BUCKET` and `STAGING_DISTRIBUTION_ID`, and
+builds with the code defaults, which are the dev backend.
 
 For Google sign-in to work on a new origin, add it to `allowed_return_origins`
 for that environment in `atlasarena-model-infra`'s `infra/app.py` and redeploy

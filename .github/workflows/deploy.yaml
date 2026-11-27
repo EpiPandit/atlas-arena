@@ -1,16 +1,33 @@
 name: Build and Publish Arena Site
 
-# Production deploy. Staging is deployed by hand with web_app/deploy-staging.sh,
-# which this mirrors.
+# A push to "staging" deploys the staging site, built against the dev backend.
+# A push to "main" deploys production, built against the prod backend.
+# (web_app/deploy-staging.sh does the staging deploy by hand, if ever needed.)
+#
+# Repository settings this needs (Settings > Secrets and variables > Actions):
+#
+#   Secrets, both sites:  AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+#   Secrets, production:  ARENA_S3_BUCKET, CLOUDFRONT_DISTRIBUTION_ID
+#   Variables, production:
+#     ATLASARENA_API_URL, ATLASARENA_JOBS_URL, ATLASARENA_DATA_URL
+#   Variables, staging:
+#     STAGING_ATLASARENA_API_URL, STAGING_ATLASARENA_JOBS_URL,
+#     STAGING_ATLASARENA_DATA_URL, STAGING_ARENA_S3_BUCKET,
+#     STAGING_CLOUDFRONT_DISTRIBUTION_ID
+#
+# The three URLs are CloudFormation outputs of the atlasarena-model-infra
+# stacks (ApiUrl, JobsPublicUrl, DataPublicUrl): AtlasArenaProdStack for
+# production, AtlasArenaDevStack for staging. Each must end in "/".
 
 on:
   push:
     branches:
       - "main"
-      - "deploy"
+      - "staging"
 
+# One deploy at a time per site; a staging run never cancels a production run.
 concurrency:
-  group: deploy-production
+  group: deploy-${{ github.ref_name }}
   cancel-in-progress: true
 
 permissions:
@@ -19,6 +36,15 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Each value is picked by branch here, so the steps are the same for both
+    # sites. A staging run can never resolve to a production value.
+    env:
+      IS_PROD: ${{ github.ref_name == 'main' }}
+      NEXT_PUBLIC_ATLASARENA_API_URL: ${{ github.ref_name == 'main' && vars.ATLASARENA_API_URL || vars.STAGING_ATLASARENA_API_URL }}
+      NEXT_PUBLIC_ATLASARENA_JOBS_URL: ${{ github.ref_name == 'main' && vars.ATLASARENA_JOBS_URL || vars.STAGING_ATLASARENA_JOBS_URL }}
+      NEXT_PUBLIC_ATLASARENA_DATA_URL: ${{ github.ref_name == 'main' && vars.ATLASARENA_DATA_URL || vars.STAGING_ATLASARENA_DATA_URL }}
+      BUCKET: ${{ github.ref_name == 'main' && secrets.ARENA_S3_BUCKET || vars.STAGING_ARENA_S3_BUCKET }}
+      DISTRIBUTION_ID: ${{ github.ref_name == 'main' && secrets.CLOUDFRONT_DISTRIBUTION_ID || vars.STAGING_CLOUDFRONT_DISTRIBUTION_ID }}
     defaults:
       run:
         working-directory: web_app
@@ -41,17 +67,26 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      # Production talks to the prod backend (AtlasArenaProdStack in
-      # atlasarena-model-infra). Set these three repository variables
-      # (Settings > Secrets and variables > Actions > Variables) from that
-      # stack's ApiUrl, JobsPublicUrl and DataPublicUrl outputs before the
-      # first deploy: an unset variable builds as an empty URL, not as the
-      # dev default.
-      - name: Build
+      # A missing setting would otherwise build a site with empty URLs, or, on
+      # main, fall through to the staging value and build production against
+      # the dev backend, in both cases without any error.
+      - name: Check settings
         env:
-          NEXT_PUBLIC_ATLASARENA_API_URL: ${{ vars.ATLASARENA_API_URL }}
-          NEXT_PUBLIC_ATLASARENA_JOBS_URL: ${{ vars.ATLASARENA_JOBS_URL }}
-          NEXT_PUBLIC_ATLASARENA_DATA_URL: ${{ vars.ATLASARENA_DATA_URL }}
+          PROD_SETTINGS_PRESENT: ${{ vars.ATLASARENA_API_URL != '' && vars.ATLASARENA_JOBS_URL != '' && vars.ATLASARENA_DATA_URL != '' && secrets.ARENA_S3_BUCKET != '' && secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        run: |
+          if [ "$IS_PROD" = "true" ] && [ "$PROD_SETTINGS_PRESENT" != "true" ]; then
+            echo "::error::A production variable or secret is not set. See the list at the top of .github/workflows/deploy.yaml."
+            exit 1
+          fi
+          for name in NEXT_PUBLIC_ATLASARENA_API_URL NEXT_PUBLIC_ATLASARENA_JOBS_URL \
+            NEXT_PUBLIC_ATLASARENA_DATA_URL BUCKET DISTRIBUTION_ID; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is empty: a repository variable for this branch is not set. See the list at the top of .github/workflows/deploy.yaml."
+              exit 1
+            fi
+          done
+
+      - name: Build
         run: yarn build
 
       - name: Configure AWS credentials
@@ -64,22 +99,22 @@ jobs:
       # Hashed build assets never change, so cache them for a year; everything
       # else (HTML, markdown, data) is revalidated on every request. cogs/ is
       # excluded from --delete in case rasters are ever hosted in this bucket.
+      # The production bucket serves objects through a public-read ACL; the
+      # staging bucket is read through CloudFront only and takes no ACL.
       - name: Upload to S3
-        env:
-          BUCKET: ${{ secrets.ARENA_S3_BUCKET }}
         run: |
+          acl=()
+          if [ "$IS_PROD" = "true" ]; then acl=(--acl public-read); fi
           aws s3 sync --only-show-errors out/_next/static "s3://$BUCKET/_next/static" \
-            --acl public-read \
+            "${acl[@]}" \
             --cache-control "public, max-age=31536000, immutable"
           aws s3 sync --only-show-errors out/ "s3://$BUCKET/" --delete \
-            --acl public-read \
+            "${acl[@]}" \
             --exclude "_next/static/*" \
             --exclude "cogs/*" \
             --cache-control "no-cache"
 
       - name: Invalidate CloudFront
-        env:
-          DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
           aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" \
             --paths "/*" --query "Invalidation.Id" --output text

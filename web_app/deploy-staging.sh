@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # Build the static site and publish it to the staging bucket behind CloudFront.
-# Run from anywhere; needs AWS credentials. For Google sign-in to work, the
-# staging origin must be in the API's allowedReturnOrigins.
+# Staging is normally deployed by .github/workflows/deploy.yaml on every push
+# to the staging branch; this does the same by hand. Run from anywhere; needs
+# AWS credentials. It builds with the code defaults, which are the dev backend.
+# For Google sign-in to work, the staging origin must be in the dev stack's
+# allowed_return_origins (infra/app.py in atlasarena-model-infra).
 set -euo pipefail
 
 BUCKET="${STAGING_BUCKET:?set STAGING_BUCKET}"
