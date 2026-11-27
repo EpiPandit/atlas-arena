@@ -3,6 +3,33 @@ export const PAGE_TITLE = 'AtlasArena';
 export const PAGE_KEYWORDS = 'AtlasArena';
 export const PAGE_DESCRIPTION = 'AtlasArena';
 export const PAGE_AUTHOR = 'Developmentseed & GeoCompas';
+export const HOME_PAGE_TITLE = `${PAGE_TITLE} | Predicting Arenavirus Risk`;
+
+// Unique, descriptive <title> per route (WCAG 2.4.2)
+export const buildPageTitle = (page = '') =>
+  page ? `${page} | ${PAGE_TITLE}` : PAGE_TITLE;
+
+// ATLASARENA API (atlasarena-model-infra, the CDK "ApiUrl" output). Must end in
+// '/'. Set NEXT_PUBLIC_ATLASARENA_API_URL (e.g. in .env.local) to point
+// elsewhere; set it to an empty value to hide sign-in.
+export const API_URL =
+  process.env.NEXT_PUBLIC_ATLASARENA_API_URL ??
+  'https://epem44ggt1.execute-api.us-west-2.amazonaws.com/';
+
+// FOI params CSV (species/virus prevalence and K), read by the Run Models tab
+// at runtime so it can be updated without a deploy. The same object the API
+// falls back to. Set NEXT_PUBLIC_FOI_PARAMS_URL to point elsewhere.
+export const FOI_PARAMS_URL =
+  process.env.NEXT_PUBLIC_FOI_PARAMS_URL ??
+  'https://atlasarena-dev-data.s3.us-west-2.amazonaws.com/data/FOI/FOI_params_processed.csv';
+
+// Public job outputs (atlasarena-model-infra, the CDK "JobsPublicUrl" output):
+// a finished job's result.json, rasters and presence points, readable without
+// signing in. Must end in '/'. Set NEXT_PUBLIC_ATLASARENA_JOBS_URL to point
+// elsewhere.
+export const JOBS_URL =
+  process.env.NEXT_PUBLIC_ATLASARENA_JOBS_URL ??
+  'https://atlasarena-dev-jobs.s3.us-west-2.amazonaws.com/';
 
 // HEADER LINKS
 export const LINK_HEADER = [
@@ -17,126 +44,22 @@ export const LINK_HEADER = [
     isExternal: true,
   },
 ];
+export const MENU_OPEN = 'Open menu';
+export const MENU_CLOSE = 'Close menu';
+export const SKIP_TO_MAIN = 'Skip to main content';
+export const SKIP_TO_MAP = 'Skip to map';
+
+// INFO POPOVERS
+export const INFO_BUTTON_LABEL = (name = '') =>
+  name ? `More information about ${name}` : 'More information';
+export const INFO_POPOVER_LABEL = (name = '') =>
+  name ? `About ${name}` : 'More information';
 // FOOTER
 
 // ==============
 // DATA VALUES
 // ==============
 
-// API EQUIVALENCE
-// similar from https://github.com/developmentseed/atlasarena/blob/main/data_preparation/name_equivalence.json
-export const DATA_EQUIVALENCE = {
-  'Guanarito virus': {
-    short: 'g',
-    spreadsheet: 'Guanarito virus',
-    folder_name: 'Guanarito_virus',
-  },
-  'Junin virus': {
-    short: 'j',
-    spreadsheet: 'Junin virus',
-    folder_name: 'Junin_virus',
-  },
-  'Machupo virus': {
-    short: 'm',
-    spreadsheet: 'Machupo virus',
-    folder_name: 'Machupo_virus',
-  },
-  'Zygodontomys brevicauda': {
-    short: 'zb',
-    spreadsheet: 'Zygodontomys brevicauda',
-    folder_name: 'Zygodontomys_brevicauda',
-  },
-  'Sigmodon alstoni': {
-    short: 'sa',
-    spreadsheet: 'Sigmodon alstoni',
-    folder_name: 'Sigmodon_alstoni',
-  },
-  'Calomys callosus': {
-    short: 'cc',
-    spreadsheet: 'Calomys callosus',
-    folder_name: 'Calomys_callosus',
-  },
-  'Calomys musculinus': {
-    short: 'cm',
-    spreadsheet: 'Calomys musculinus',
-    folder_name: 'Calomys_musculinus',
-  },
-  'Calomys laucha': {
-    short: 'cl',
-    spreadsheet: 'Calomys laucha',
-    folder_name: 'Calomys_laucha',
-  },
-  'Oligoryzomys flavescens': {
-    short: 'of',
-    spreadsheet: 'Oligoryzomys flavescens',
-    folder_name: 'Oligoryzomys_flavescens',
-  },
-  'Current (year 1990-2010)': {
-    short: 'cu',
-    spreadsheet: 'Current (year 1990-2010)',
-    folder_name: 'current_1990-2010',
-  },
-  'SSP 2 (years 2041-2060)': {
-    short: 's2',
-    spreadsheet: 'SSP 2 (years 2041-2060)',
-    folder_name: 'SSP2_2041-2060',
-  },
-  'SSP 5 (years 2041-2060)': {
-    short: 's5',
-    spreadsheet: 'SSP 5 (years 2041-2060)',
-    folder_name: 'SSP5_2041-2060',
-  },
-  'Delta SSP 2 - current': {
-    short: 'ds2',
-    spreadsheet: 'Delta SSP 2 - current',
-    folder_name: 'delta_SSP2',
-  },
-  'Delta SSP 5 - current': {
-    short: 'ds5',
-    spreadsheet: 'Delta SSP 5 - current',
-    folder_name: 'delta_SSP5',
-  },
-  Combined: {
-    short: 'co',
-    spreadsheet: 'Combined',
-    folder_name: 'combined',
-  },
-  'Random Forest': {
-    short: 'rf',
-    spreadsheet: 'Random Forest',
-    folder_name: 'rf',
-  },
-  'Extra Trees': {
-    short: 'et',
-    spreadsheet: 'Extra Trees',
-    folder_name: 'et',
-  },
-  'Extra Gradient Boost': {
-    short: 'xgb',
-    spreadsheet: 'Extra Gradient Boost',
-    folder_name: 'xgb',
-  },
-  'Light GBM': {
-    short: 'lgbm',
-    spreadsheet: 'Light GBM',
-    folder_name: 'lgbm',
-  },
-  'Difference in probabilities.tif': {
-    short: 'dp',
-    spreadsheet: 'Difference in probabilities.tif',
-    folder_name: 'diff_in_probabilities.tif',
-  },
-  'Probability_presence.tif': {
-    short: 'pp',
-    spreadsheet: 'Probability_presence.tif',
-    folder_name: 'probability_presence.tif',
-  },
-  'Force of Infection.tif': {
-    short: 'foi',
-    spreadsheet: 'Force of Infection.tif',
-    folder_name: 'force_of_infection.tif',
-  },
-};
 // MAP_COLORS
 export const MAP_COLORS = {
   default: ['#D1FAE5', '#A7F3D0', '#6EE7B7', '#34D399', '#059669'],
@@ -150,30 +73,48 @@ export const MAP_COLORS = {
   purple: ['#E9D8FD', '#B794F4', '#805AD5', '#553C9A', '#322659'],
   pink: ['#FED7E2', '#F687B3', '#D53F8C', '#97266D', '#521B41'],
 };
+// Ramps handed out, in order, to layers shown together that have no catalog
+// colour or would repeat one (see distinctColors). Neighbours differ in hue.
+export const FALLBACK_COLOR_ORDER = [
+  'default',
+  'orange',
+  'purple',
+  'pink',
+  'teal',
+  'red',
+  'blue',
+  'yellow',
+  'cyan',
+  'green',
+];
 // DEFAULT VALUES
 export const ALL_VIRUS = 'All (combined)';
 export const DEFAULT_TIME = 'Current (year 1990-2010)';
 export const DEFAULT_MODEL = 'Combined';
 
 // DEFAULT LEGEND OPACITY
-export const DEFAULT_OPACITY_SINGLE = 100;
-export const DEFAULT_OPACITY_MULTIPLE = 50;
+export const DEFAULT_OPACITY_SINGLE = 50;
+export const DEFAULT_OPACITY_MULTIPLE = 25;
 
 // LEGEND LABEL
 export const DEFAULT_LEGEND_VALUE = ['0', '0.5', '1'];
 export const LEGEND_DELTA_VALUE = ['-1', '0', '1'];
 
 // HEIGHT HEADER
-export const H_HEADER = 54;
+// Fallback only: the real height is measured by Header and exposed as the
+// --header-h CSS variable. Use HEADER_HEIGHT_CSS in styles.
+export const H_HEADER = 65;
+export const HEADER_HEIGHT_CSS = `var(--header-h, ${H_HEADER}px)`;
+
+// HEIGHT MOBILE FILTER BAR (Explore)
+export const H_FILTER_BAR = 44;
 
 // LEGEND
-export const W_LEGEND = 232;
+export const W_LEGEND = 250;
+
+// BASEMAP (OpenFreeMap, no key needed)
+export const BASEMAP_STYLE = 'https://tiles.openfreemap.org/styles/positron';
 
 // ZOOM VALUES
 export const MIN_ZOOM_MAP = 2;
 export const MAX_ZOOM_MAP = 11;
-
-export const MIN_ZOOM_HOTSPOT = 8;
-export const MAX_ZOOM_HOTSPOT = MAX_ZOOM_MAP + 0.5;
-export const MIN_ZOOM_HOTSPOT_HEADMAP = MIN_ZOOM_MAP - 0.5;
-export const MAX_ZOOM_HOTSPOT_HEADMAP = MIN_ZOOM_HOTSPOT + 1;

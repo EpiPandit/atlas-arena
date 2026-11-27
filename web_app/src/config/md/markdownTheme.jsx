@@ -3,26 +3,17 @@ import {
   Heading,
   Link,
   Code,
-  UnorderedList,
-  OrderedList,
-  ListItem,
   Box,
-  Blockquote,
   Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  useColorModeValue,
   AspectRatio,
+  List,
 } from '@chakra-ui/react';
 
 const MarkdownTheme = {
   p: (props) => {
     const { children } = props;
     return (
-      <Text variant='secondary-text' fontSize='md' lineHeight='tall' py={2}>
+      <Text fontSize='md' lineHeight='tall' py={2}>
         {children}
       </Text>
     );
@@ -38,13 +29,7 @@ const MarkdownTheme = {
   h2: (props) => {
     const { children } = props;
     return (
-      <Heading
-        as='h2'
-        variant='secondary-heading'
-        fontSize='xl'
-        lineHeight='taller'
-        py={3}
-      >
+      <Heading as='h2' fontSize='xl' lineHeight='taller' py={3}>
         {children}
       </Heading>
     );
@@ -112,6 +97,7 @@ const MarkdownTheme = {
     return (
       <Link
         href={isExternal ? href : `/${href}`}
+        display='inline'
         color='blue.500'
         textDecoration='underline'
         fontWeight='bold'
@@ -129,7 +115,7 @@ const MarkdownTheme = {
     if (children.includes('\n')) {
       return (
         <Code
-          colorScheme='purple'
+          colorPalette='purple'
           width='100%'
           p={4}
           borderRadius='md'
@@ -140,7 +126,7 @@ const MarkdownTheme = {
       );
     } else {
       return (
-        <Code colorScheme='gray' p={1} borderRadius='md' bg='gray.100'>
+        <Code colorPalette='gray' p={1} borderRadius='md' bg='gray.100'>
           {children}
         </Code>
       );
@@ -150,7 +136,8 @@ const MarkdownTheme = {
     const { children } = props;
     const bgColor = 'gray.100';
     return (
-      <Blockquote
+      <Box
+        as='blockquote'
         bg={bgColor}
         borderLeft='4px solid'
         borderColor='gray.400'
@@ -159,7 +146,7 @@ const MarkdownTheme = {
         borderRadius='md'
       >
         {children}
-      </Blockquote>
+      </Box>
     );
   },
   i: (props) => {
@@ -180,60 +167,55 @@ const MarkdownTheme = {
   },
   ul: (props) => {
     const { children } = props;
-    return <UnorderedList pl={4}>{children}</UnorderedList>;
+    return (
+      <List.Root as='ul' pl={4}>
+        {children}
+      </List.Root>
+    );
   },
   ol: (props) => {
     const { children } = props;
-    return <OrderedList pl={4}>{children}</OrderedList>;
+    return (
+      <List.Root as='ol' pl={4}>
+        {children}
+      </List.Root>
+    );
   },
   li: (props) => {
     const { children } = props;
     return (
-      <ListItem>
-        <Text variant='secondary-text' lineHeight='tall'>
-          {children}
-        </Text>
-      </ListItem>
+      <List.Item>
+        <Text lineHeight='tall'>{children}</Text>
+      </List.Item>
     );
   },
   table: (props) => {
     return (
-      <Table variant='simple' my={4} width='100%' textAlign='left'>
+      <Table.Root variant='line' my={4} width='100%' textAlign='left'>
         {props.children}
-      </Table>
+      </Table.Root>
     );
   },
   thead: (props) => {
-    return (
-      <Thead bg={useColorModeValue('gray.200', 'gray.600')}>
-        {props.children}
-      </Thead>
-    );
+    return <Table.Header bg='gray.200'>{props.children}</Table.Header>;
   },
   tbody: (props) => {
-    return <Tbody>{props.children}</Tbody>;
+    return <Table.Body>{props.children}</Table.Body>;
   },
   tr: (props) => {
-    return <Tr>{props.children}</Tr>;
+    return <Table.Row>{props.children}</Table.Row>;
   },
   th: (props) => {
     return (
-      <Th
-        fontWeight='bold'
-        borderColor={useColorModeValue('gray.300', 'gray.600')}
-      >
+      <Table.ColumnHeader fontWeight='bold' borderColor='gray.300'>
         {props.children}
-      </Th>
+      </Table.ColumnHeader>
     );
   },
   td: (props) => {
-    return (
-      <Td borderColor={useColorModeValue('gray.300', 'gray.600')}>
-        {props.children}
-      </Td>
-    );
+    return <Table.Cell borderColor='gray.300'>{props.children}</Table.Cell>;
   },
-  iframe: (props) => {
+  iframe: ({ node, ...props }) => {
     return (
       <AspectRatio maxW='100%' ratio={16 / 9}>
         <Box

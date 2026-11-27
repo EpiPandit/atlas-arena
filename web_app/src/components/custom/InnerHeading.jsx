@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box, Text, Flex } from '@chakra-ui/react';
+import { Box, Text, Flex, Heading } from '@chakra-ui/react';
 import ReactMarkdown from 'react-markdown';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 import MarkdownThemeHome from '@/config/md/markdownThemeHome';
+import { markdownComponents } from '@/config/md/markdownComponents';
 
 const InnerHeading = ({
   kicker = '',
@@ -11,9 +11,9 @@ const InnerHeading = ({
   contentHtml = null,
 }) => {
   const renderContent = contentHtml && (
-    <Box py={0} px={0} maxW={{xs: null, md:"70ch"}}>
+    <Box py={0} px={0} maxW={{ xs: null, md: '70ch' }}>
       <ReactMarkdown
-        components={ChakraUIRenderer(MarkdownThemeHome)}
+        components={markdownComponents(MarkdownThemeHome)}
         children={contentHtml}
         skipHtml={false}
       />
@@ -51,18 +51,19 @@ const InnerHeading = ({
   );
 
   return (
-    <Box p={1} mx='auto' >
+    <Box p={1} mx='auto'>
       {renderKicker}
       <Box py={{ base: 2, md: 4 }}>
-        <Text
-          fontSize={['3xl', '4xl', '5xl', '6xl']}
+        <Heading
+          as='h1'
+          fontSize={['3xl', '4xl', '5xl']}
           fontWeight={600}
           color='blue.900'
           lineHeight='shorter'
           letterSpacing='wider'
           textAlign='start'
           textTransform='uppercase'
-          sx={{
+          css={{
             '&::first-letter': {
               textDecoration: 'underline',
               textUnderlineOffset: '16px',
@@ -71,7 +72,7 @@ const InnerHeading = ({
           mb={4}
         >
           {title}
-        </Text>
+        </Heading>
         {renderSubTitle}
       </Box>
       {renderContent}

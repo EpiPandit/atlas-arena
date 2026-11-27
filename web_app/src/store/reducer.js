@@ -2,7 +2,6 @@ import { actionTypes, processRawData } from '@/store/actions';
 
 const initialData = {
   raw_data: [],
-  tree: {},
   allVirus: [],
   allSpecies: [],
   allTimeFrame: [],

@@ -1,4 +1,4 @@
-import { ALL_VIRUS, MAP_COLORS } from '@/config/constants/general';
+import { ALL_VIRUS } from '@/config/constants/general';
 export const dynamicFilter = (dataList, filterObj) => {
   if (!filterObj || Object.keys(filterObj).length === 0) return [];
 
@@ -58,25 +58,4 @@ export const sortList = (data, field = 'title') => {
 
   data.sort((a, b) => a[field].localeCompare(b[field]));
   return data;
-};
-export const buildColorLayer = (color) => {
-  let colors = MAP_COLORS[color];
-  if (!color) {
-    colors = [...MAP_COLORS.default];
-  }
-  return [
-    'interpolate',
-    ['linear'],
-    ['raster-value'],
-    0,
-    colors[0],
-    0.25,
-    colors[1],
-    0.5,
-    colors[2],
-    0.75,
-    colors[3],
-    1,
-    colors[4],
-  ];
 };

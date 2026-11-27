@@ -1,15 +1,12 @@
 import { useAppContext } from '@/store/context';
 import Header from '@/components/Header';
+import SkipLink from '@/components/custom/SkipLink';
+import { SKIP_TO_MAIN, SKIP_TO_MAP } from '@/config/constants/general';
+import { useRouter } from 'next/router';
 import { Box, Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import axios from 'axios';
-import {
-  setRawData,
-  delRawData,
-  buildRawDataGoodleSheet,
-} from '@/store/actions';
-
-const DATA_API = process.env.NEXT_PUBLIC_DATA_API;
+import { setRawData } from '@/store/actions';
+import { getCatalogRows } from '@/libs/catalog';
 
 const MainApp = ({ children }) => {
   return (
@@ -23,32 +20,47 @@ const Layout = ({ children }) => {
   const { dispatch } = useAppContext();
 
   useEffect(() => {
-    let isMounted = true;
-
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(DATA_API);
-        const raw_data = buildRawDataGoodleSheet(data);
-        if (isMounted && raw_data && raw_data.length) {
-          dispatch(setRawData(raw_data));
-        }
-      } catch (err) {
-        console.error(err);
-        if (isMounted) {
-          dispatch(delRawData());
-        }
-      }
-    };
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
+    dispatch(setRawData(getCatalogRows()));
   }, []);
 
+  // Home and Explore fill exactly the viewport: the header takes its
+  // natural height and main gets the rest, so no fixed header height is
+  // assumed. dvh accounts for mobile browser toolbars where supported.
+  const router = useRouter();
+  const isFullHeight = ['/', '/explore'].includes(router.pathname);
+  const isExplore = router.pathname === '/explore';
+
   return (
-    <Flex direction='column' minH='100vh' p={0} m={0}>
+    <Flex
+      direction='column'
+      minH='100vh'
+      h={isFullHeight ? '100vh' : undefined}
+      css={
+        isFullHeight
+          ? {
+              '@supports (height: 100dvh)': {
+                height: '100dvh',
+                minHeight: '100dvh',
+              },
+            }
+          : undefined
+      }
+      p={0}
+      m={0}
+    >
+      {isExplore && <SkipLink href='#explore-map'>{SKIP_TO_MAP}</SkipLink>}
+      <SkipLink href='#main-content'>{SKIP_TO_MAIN}</SkipLink>
       <Header />
-      <Flex as='main' flex='1' direction='column' overflow='hidden'>
+      <Flex
+        as='main'
+        id='main-content'
+        tabIndex={-1}
+        flex='1'
+        minH={0}
+        direction='column'
+        overflow='hidden'
+        _focus={{ outline: 'none' }}
+      >
         <MainApp>{children}</MainApp>
       </Flex>
     </Flex>
