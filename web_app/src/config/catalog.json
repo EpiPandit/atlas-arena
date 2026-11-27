@@ -1,5 +1,4 @@
 {
-  "cog_base_url": "https://d1liif11zpcab8.cloudfront.net/cogs/",
   "viruses": {
     "junin_virus": {
       "name": "Junin virus",

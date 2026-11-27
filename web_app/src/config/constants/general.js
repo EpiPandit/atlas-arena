@@ -10,23 +10,35 @@ export const buildPageTitle = (page = '') =>
   page ? `${page} | ${PAGE_TITLE}` : PAGE_TITLE;
 
 // ATLASARENA API (atlasarena-model-infra, the CDK "ApiUrl" output). Must end in
-// '/'. Set NEXT_PUBLIC_ATLASARENA_API_URL (e.g. in .env.local) to point
-// elsewhere; set it to an empty value to hide sign-in.
+// '/'. The default is the dev stack, which local development and staging use;
+// the production build sets the prod stack's URL (.github/workflows/deploy.yaml).
+// Set NEXT_PUBLIC_ATLASARENA_API_URL (e.g. in .env.local) to point elsewhere;
+// set it to an empty value to hide sign-in.
 export const API_URL =
   process.env.NEXT_PUBLIC_ATLASARENA_API_URL ??
   'https://epem44ggt1.execute-api.us-west-2.amazonaws.com/';
 
+// Shared static data (atlasarena-model-infra, the CDK "DataPublicUrl" output):
+// one public S3 bucket used by every environment, dev and prod alike. Must end
+// in '/'. Set NEXT_PUBLIC_ATLASARENA_DATA_URL to point elsewhere.
+export const DATA_URL =
+  process.env.NEXT_PUBLIC_ATLASARENA_DATA_URL ??
+  'https://atlasarena-data.s3.us-west-2.amazonaws.com/';
+
 // FOI params CSV (species/virus prevalence and K), read by the Run Models tab
 // at runtime so it can be updated without a deploy. The same object the API
-// falls back to. Set NEXT_PUBLIC_FOI_PARAMS_URL to point elsewhere.
-export const FOI_PARAMS_URL =
-  process.env.NEXT_PUBLIC_FOI_PARAMS_URL ??
-  'https://atlasarena-dev-data.s3.us-west-2.amazonaws.com/data/FOI/FOI_params_processed.csv';
+// falls back to.
+export const FOI_PARAMS_URL = `${DATA_URL}data/FOI/FOI_params_processed.csv`;
+
+// Base URL of the explore page's COGs; a catalog layer's `path` is relative
+// to it.
+export const COGS_URL = `${DATA_URL}cogs/`;
 
 // Public job outputs (atlasarena-model-infra, the CDK "JobsPublicUrl" output):
 // a finished job's result.json, rasters and presence points, readable without
-// signing in. Must end in '/'. Set NEXT_PUBLIC_ATLASARENA_JOBS_URL to point
-// elsewhere.
+// signing in. Must end in '/'. Belongs to the same stack as API_URL: a job
+// only resolves against the jobs bucket of the API that ran it. Set
+// NEXT_PUBLIC_ATLASARENA_JOBS_URL to point elsewhere.
 export const JOBS_URL =
   process.env.NEXT_PUBLIC_ATLASARENA_JOBS_URL ??
   'https://atlasarena-dev-jobs.s3.us-west-2.amazonaws.com/';
