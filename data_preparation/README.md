@@ -63,18 +63,18 @@ python3 src/make_cogs.py \
   --out_folder_path=data/cogs \
   --name_equivalence_path=name_equivalence.json
 
-aws s3 sync data/cogs/ s3://atlasarena-staging-frontend/cogs/ \
+aws s3 sync data/cogs/ s3://atlasarena-data/cogs/ \
   --content-type image/tiff --cache-control "public, max-age=3600"
 ```
 
-Replacing a file under the same name needs a CloudFront invalidation of `/cogs/*`
-to show up within the hour.
-
-Production reads its rasters from this same staging bucket, through the same
-CloudFront URL (`cog_base_url` in the catalog). Never overwrite or delete a key
-under `cogs/` that a live catalog points at.
+`s3://atlasarena-data` is the shared data bucket (see `infra/README.md` in the
+`atlasarena-model-infra` repository). Staging and production both read their
+rasters from it, straight from S3 (`COGS_URL` in
+`web_app/src/config/constants/general.js`). Never overwrite or delete a key
+under `cogs/` that a live catalog points at. Browsers cache a raster for up to
+an hour, so a file replaced under the same name takes that long to show up.
 
 To add a new layer, upload the COG and add an entry to `layers` in
 `web_app/src/config/catalog.json` (with `virus`, `species`, `time_frame`, `model`
 and `variable` keys that exist in the catalog, and a `path` relative to
-`cog_base_url`).
+`cogs/`).
